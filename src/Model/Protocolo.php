@@ -7,6 +7,7 @@ use DateTimeImmutable;
 class Protocolo {
 
     public function __construct(
+        private readonly string $id, //id único de cada protocolo
         private string $numero,
         private int $quantidadeDePaginas,
         private DateTimeImmutable $data
@@ -14,6 +15,10 @@ class Protocolo {
     }
 
     //GETTERS
+    public function id(): string {
+        return $this->id;
+    }
+
     public function numero(): string {
         return $this->numero;
     }
@@ -33,6 +38,7 @@ class Protocolo {
     public static function fromArray(array $dados): self
     {
         return new self(
+            $dados['id'],
             $dados['numero'],
             $dados['quantidadeDePaginas'],
             new DateTimeImmutable($dados['data'])
@@ -45,6 +51,7 @@ class Protocolo {
     public function toArray(): array
     {
         return [
+            'id' => $this->id,
             'numero' => $this->numero,
             'quantidadeDePaginas' => $this->quantidadeDePaginas,
             'data' => $this->data->format(\DATE_ATOM),
