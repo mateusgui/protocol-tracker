@@ -1,6 +1,27 @@
 <?php
 
-$uri = $_SERVER['REQUEST_URI'];
+// CARREGAMENTO E CONFIGURAÇÃO
+require __DIR__ . '/../vendor/autoload.php';
+use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
+// ... e outras classes
+
+// LÓGICA DE NEGÓCIO
+$caminhoJson = __DIR__ . '/../data/protocolos.json';
+$repositorio = new ProtocoloRepository($caminhoJson);
+
+// (Aqui no futuro entrará a lógica para tratar o envio do formulário - POST)
+
+// Busca os dados para exibir na página
+$listaDeProtocolos = $repositorio->all();
+$tituloDaPagina = "Controle de Protocolos";
+
+
+// RENDERIZAÇÃO DA VIEW
+// No final, ele simplesmente "chama" o arquivo de template, que terá acesso
+// a todas as variáveis criadas acima ($listaDeProtocolos, $tituloDaPagina, etc).
+require __DIR__ . '/../templates/home.php';
+
+/* $uri = $_SERVER['REQUEST_URI'];
 //BARRANDO REQUISIÇÕES QUE NÃO SEJAM PARA A RAIZ
 if ($uri !== '/' && pathinfo($uri, PATHINFO_EXTENSION) !== '') {
     return;
@@ -19,16 +40,4 @@ echo "ID: " . $protocolo->id() . " | Número do protocolo: " . $protocolo->numer
 
 $protocoloRepository = new ProtocoloRepository(__DIR__ . '/../data/protocolos.json');
 
-$protocoloRepository->add($protocolo);
-
-/* $protocolo = Protocolo::fromArray(
-    [
-        'id' => $protocolo_id,
-        'numero' => '123456',
-        'quantidadeDePaginas' => 15,
-        'data' => (new DateTime('now', new DateTimeZone('America/Campo_Grande')))->format('Y-m-d H:i:s'),
-    ]);
-var_dump($protocolo);
-
-$array = $protocolo->toArray();
-echo "Dados do Array: " . $array['numero'] . " " . $array['quantidadeDePaginas'] . " " . $array['data']; */
+$protocoloRepository->add($protocolo); */
