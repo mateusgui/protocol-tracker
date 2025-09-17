@@ -1,5 +1,7 @@
 <?php
 
+namespace Mateus\ProtocolTracker\Model;
+
 use DateTimeImmutable;
 
 class Protocolo {
@@ -11,16 +13,42 @@ class Protocolo {
     ) {
     }
 
-    public function getNumero(): string {
+    //GETTERS
+    public function numero(): string {
         return $this->numero;
     }
 
-    public function getPaginas(){
+    public function paginas(){
         return $this->quantidadeDePaginas;
     }
 
-    public function getData(){
+    public function data(){
         return $this->data;
+    }
+
+    //TRADUTORES
+    /**
+     * Função que recebe um array, trata os dados e chama o construtor padrão para retornar um objeto do tipo Protocolo.
+     */
+    public static function fromArray(array $dados): self
+    {
+        return new self(
+            $dados['numero'],
+            $dados['quantidadeDePaginas'],
+            new DateTimeImmutable($dados['data'])
+        );
+    }
+
+    /**
+     * Função que retorna o objeto utilizado para chama-la em um array associativo.
+     */
+    public function toArray(): array
+    {
+        return [
+            'numero' => $this->numero,
+            'quantidadeDePaginas' => $this->quantidadeDePaginas,
+            'data' => $this->data->format(\DATE_ATOM),
+        ];
     }
 
 }
