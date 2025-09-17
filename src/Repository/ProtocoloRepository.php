@@ -97,6 +97,7 @@ final class ProtocoloRepository
      */
     public function buscaPorNumero(string $numero): ?Protocolo
     {
+        //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
         $listaDeProtocolos = $this->all();
 
         //Iterando a lista de protocolos e se achar um protocolo com número igual ao que está sendo procurado retorna aquele protocolo
@@ -117,42 +118,94 @@ final class ProtocoloRepository
      */
     public function add(Protocolo $novoProtocolo): void
     {
-        // Lógica do ciclo "Ler > Modificar > Escrever" que já discutimos.
+        //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
         $listaDeProtocolos = $this->all();
 
         array_unshift($listaDeProtocolos, $novoProtocolo); //Adiciona o $novoProtocolo à $listaDeProtocolos
 
-        //Mapea a $listaDeProtocolos e salva ela como um array associativo usando a função toArray para cada Protocolo iterado
-        $listaParaSalvar = array_map(function(Protocolo $protocolo){
-            return $protocolo->toArray();
-        },$listaDeProtocolos);
-
-        //Converte $listaParaSalvar de um array associativo para um JSON contendo os dados atualizados e formatados com JSON_PRETTY_PRINT
-        $novoConteudoJson = json_encode($listaParaSalvar,JSON_PRETTY_PRINT);
-        
-        //Salva a string JSON atualizada, sobrescrevendo o conteúdo do arquivo
-        file_put_contents($this->caminhoArquivoJson, $novoConteudoJson, LOCK_EX);
+        $this->salvarLista($listaDeProtocolos);
     }
 
     /**
-     * Atualiza um protocolo existente. Para a funcionalidade de edição.
+     * Atualiza um protocolo existente no arquivo de dados.
+     * @param Protocolo $protocoloParaAtualizar O objeto com o ID do alvo e os dados novos.
      * @return bool Retorna true se a atualização foi bem-sucedida, false se o protocolo não foi encontrado.
      */
     public function update(Protocolo $protocoloParaAtualizar): bool
     {
-        // Lógica para ler tudo, encontrar o protocolo pelo número, substituí-lo no array
-        // e salvar o array completo de volta.
-        return false; // Retorno de exemplo
+        //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
+        $listaDeProtocolos = $this->all();
+
+        //Índice sendo criado com número inválido
+        $indiceParaSubstituir = -1;
+
+        //Procura pelo Protocolo com o mesmo ID do protocolo a ser atualizado.
+        foreach($listaDeProtocolos as $indice => $protocolo){
+            if($protocolo->id() === $protocoloParaAtualizar->id()){
+                //Salva o índice encontrado para substituir
+                 $indiceParaSubstituir = $indice;
+                 break;
+            }
+        }
+
+        //Se não encontrar nenhuma correspondência para atualizar chega aqui e retorna false para indicar que o update não ocorreu
+        if($indiceParaSubstituir === -1){
+            return false;
+        }
+
+        //Substitui o objeto $protocoloParaAtualizar no índice que foi encontrada a correpondência de ID
+        $listaDeProtocolos[$indiceParaSubstituir] = $protocoloParaAtualizar;
+
+        $this->salvarLista($listaDeProtocolos);
+
+        return true;
     }
 
     /**
      * Deleta um protocolo pelo seu número. Para a funcionalidade de exclusão.
      * @return bool Retorna true se a exclusão foi bem-sucedida, false se o protocolo não foi encontrado.
      */
-    public function delete(string $numero): bool
+    public function delete(string $id): bool
     {
-        // Lógica para ler tudo, criar um novo array sem o protocolo a ser deletado (array_filter)
-        // e salvar o novo array de volta.
-        return false; // Retorno de exemplo
+        //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
+        $listaDeProtocolos = $this->all();
+
+        //Variável de controle para saber se a exclusão ocorreu ou não
+        $encontrou = false;
+
+        //Filtra o array $listaDeProtocolos e só adiciona ao array $listaAtualizada o que não tiver mesmo ID do que será excluído
+        $listaAtualizada = array_filter($listaDeProtocolos, function(Protocolo $protocolo) use ($id, &$encontrou)
+        {
+            if($protocolo->id() !== $id){
+                return true; //ID não corresponde, então é mantido em $listaAtualizada
+            } else {
+                $encontrou = true; //ID corresponde, então é excluído de $listaAtualizada e $encontrou é sinalizada como true
+                return false;
+            }
+        });
+
+        if ($encontrou) {
+            // Só vai salver se encontrou
+            $this->salvarLista($listaAtualizada);
+        }
+
+        return $encontrou;
+    }
+
+    /**
+     * Pega um array de objetos Protocolo, converte e salva no arquivo JSON.
+     * @param Protocolo[] $protocolos A lista completa de protocolos a ser salva.
+     */
+    private function salvarLista(array $protocolos): void
+    {
+        // Mapeia a lista de objetos para uma lista de arrays associativos
+        $listaParaSalvar = array_map(
+            fn(Protocolo $protocolo) => $protocolo->toArray(),
+            $protocolos
+        );
+
+        // Converte para JSON e salva no arquivo
+        $novoConteudoJson = json_encode($listaParaSalvar, JSON_PRETTY_PRINT);
+        file_put_contents($this->caminhoArquivoJson, $novoConteudoJson, LOCK_EX);
     }
 }
