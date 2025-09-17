@@ -28,8 +28,7 @@ final class ProtocoloRepository
         }
     }
 
-    // --- MÉTODOS PÚBLICOS DE LEITURA ---
-
+    //MÉTODOS PÚBLICOS BUSCA
     /**
      * Retorna TODOS os protocolos do arquivo.
      * @return Protocolo[]
@@ -111,8 +110,7 @@ final class ProtocoloRepository
         return null;
     }
 
-    // --- MÉTODOS PÚBLICOS DE ESCRITA ---
-
+    //MÉTODO PÚBLICO ESCRITA
     /**
      * Adiciona um novo objeto Protocolo ao arquivo de dados.
      */
@@ -185,13 +183,14 @@ final class ProtocoloRepository
         });
 
         if ($encontrou) {
-            // Só vai salver se encontrou
+            // Só vai salvar se encontrou
             $this->salvarLista($listaAtualizada);
         }
 
         return $encontrou;
     }
 
+    //MÉTODOS PRIVADOS
     /**
      * Pega um array de objetos Protocolo, converte e salva no arquivo JSON.
      * @param Protocolo[] $protocolos A lista completa de protocolos a ser salva.

@@ -3,6 +3,7 @@
 namespace Mateus\ProtocolTracker\Model;
 
 use DateTimeImmutable;
+use Exception;
 
 class Protocolo {
 
@@ -23,11 +24,11 @@ class Protocolo {
         return $this->numero;
     }
 
-    public function paginas(){
+    public function paginas(): int {
         return $this->quantidadeDePaginas;
     }
 
-    public function data(){
+    public function data(): DateTimeImmutable {
         return $this->data;
     }
 
@@ -37,16 +38,24 @@ class Protocolo {
      */
     public static function fromArray(array $dados): self
     {
+        //Tenta criar um DateTimeImmutable usando a data informada pelo usuário
+        try {
+            $data = new DateTimeImmutable($dados['data']);
+        } catch (Exception $e) {
+            throw new Exception("Falha ao criar data a partir do valor: " . $dados['data']);
+        }
+
+        //Chamada para o construtor da classe
         return new self(
             $dados['id'],
             $dados['numero'],
             $dados['quantidadeDePaginas'],
-            new DateTimeImmutable($dados['data'])
+            $data
         );
     }
 
     /**
-     * Função que retorna o objeto utilizado para chama-la em um array associativo.
+     * Função que retorna o objeto utilizado para chama-la como um array associativo.
      */
     public function toArray(): array
     {
