@@ -16,16 +16,14 @@ $protocoloService = new ProtocoloService($repositorio); //Instanciação de Prot
 // Variável para guardar possíveis erros de validação do formulário
 $erro = null;
 
-
 // LÓGICA DE ROTEAMENTO 
 // ---------------------
-
 $uri = $_SERVER['REQUEST_URI'];
 
 switch ($uri) {
     // ----- ROTA BASE '/' -----
     case '/':
-        
+        // REQUEST_METHOD = POST - Executa o bloco if
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             try {
                 // Pega os dados do formulário de forma segura
@@ -48,22 +46,21 @@ switch ($uri) {
 
         // REQUEST_METHOD = GET - Executa tudo abaixo
         //Chamando os cálculos das métricas e armazenando para renderizar o dashboard na home
-        $listaDeProtocolos = $repositorio->all(); // ------- SERÁ REMOVIDO --------- Só deve ser chamado na renderização da view require __DIR__ . '/../templates/busca.php';
         $metricas = $dashboardService->getTodasAsMetricas();
 
-        $tituloDaPagina = "Controle de Protocolos";
-
-        $server = $_SERVER;
-
         // -- RENDERIZAÇÃO DA VIEW --
-        // Todas as variáveis necessárias ($listaDeProtocolos, $metricas) já foram preparadas.
-        // Incluo o template 'home.php' para renderizar o HTML final.
+        $tituloDaPagina = "Controle de Protocolos";
         require __DIR__ . '/../templates/home.php';
         break;
     
     // ----- ROTA DE BUSCA '/busca' -----
     case '/busca':
-        echo "Página de busca";
+        echo "Página para buscas de protocolos";
+        $tituloDaPagina = "Página de busca";
+        $listaDeProtocolos = $repositorio->all();
+
+        // -- RENDERIZAÇÃO DA VIEW --
+        require __DIR__ . '/../templates/busca.php';
         break;
 
     default:
