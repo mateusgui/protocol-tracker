@@ -32,8 +32,14 @@
                     <td><?= $protocolo->data()->format('d/m/Y H:i:s') ?></td>
                 </tr>
             <?php endforeach; ?>
+
+            <h2>Dados Brutos do Array de Métricas (para Debug)</h2>
+            
         </tbody>
     </table>
 
+    <pre>
+       <?php print_r($metricas); ?>
+    </pre>
 </body>
 </html>

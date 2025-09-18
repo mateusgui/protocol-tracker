@@ -23,10 +23,10 @@ $erro = null;
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     try {
         // Pega os dados do formulário de forma segura
-        $numero = $_POST['numero'] ?? '';
-        $paginas = isset($_POST['paginas']) ? (int)$_POST['paginas'] : 0;
+        $numero = $_POST['numero'] ?? ''; // Armazena o valor de $_POST['numero']; se não existir ou for nulo, usa '' (string vazia) como padrão.
+        $paginas = (int)($_POST['paginas'] ?? 0); // Armazena o valor de $_POST['páginas']; se não existir ou for nulo, usa 0 como padrão.
         
-        // Delega a lógica de negócio para a Service
+        // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
         $protocoloService->registrarNovoProtocolo($numero, $paginas);
 
         // Se o registro foi bem-sucedido, redireciona para a página inicial
@@ -42,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 // REQUEST_METHOD = GET - Executa tudo abaixo
 //Chamando os cálculos das métricas e armazenando para renderizar o dashboard na home
+$listaDeProtocolos = $repositorio->all();
 $metricas = $dashboardService->getTodasAsMetricas();
 
 $tituloDaPagina = "Controle de Protocolos";
