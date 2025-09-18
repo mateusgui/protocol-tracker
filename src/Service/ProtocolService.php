@@ -8,9 +8,9 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Exception; // Usaremos para reportar erros de validação
 
-final class ProtocolService
+final class ProtocoloService
 {
-    // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe ProtocolService
+    // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe ProtocoloService
     public function __construct(
         private ProtocoloRepository $repositorio
     ) {}
