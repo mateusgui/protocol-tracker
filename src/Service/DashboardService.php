@@ -31,9 +31,9 @@ class DashboardService{
             'media_protocolos_dia'     => $this->mediaDeProtocolosDia($todosOsProtocolos),
             
             'quantidade_paginas_mes'   => $this->quantidadeDePaginasMes($todosOsProtocolos, $agora),
-            'media_paginas_mes'        => $this->mediaDePaginasMes($todosOsProtocolos),
+            'media_paginas_mes'        => $this->mediaDePaginasMes($todosOsProtocolos, $agora),
             'quantidade_protocolos_mes'  => $this->quantidadeDeProtocolosMes($todosOsProtocolos, $agora),
-            'media_protocolos_mes'     => $this->mediaDeProtocolosMes($todosOsProtocolos),
+            'media_protocolos_mes'     => $this->mediaDeProtocolosMes($todosOsProtocolos, $agora),
             
             'quantidade_paginas_total'   => $this->quantidadeDePaginasTotal($todosOsProtocolos),
             'quantidade_protocolos_total'  => $this->quantidadeDeProtocolosTotal($todosOsProtocolos),
@@ -129,16 +129,18 @@ class DashboardService{
     }
 
     //RF14: O dashboard deve exibir a "Média de páginas por mês " (Quantidade de páginas total / Quantidade total de meses [Nessa soma, considerar somente meses que já passaram por completo]).
-    private function mediaDePaginasMes(array $todosOsProtocolos): int
+    private function mediaDePaginasMes(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
-        //Vai chamar a função $this->quantidadeDePaginasTotal();
-        //Vai chamar a função $this->quantidadeTotalDeMeses();
         $totalPaginas = $this->quantidadeDePaginasTotal($todosOsProtocolos);
-        //$totalMeses = $this->quantidadeTotalDeMeses($todosOsProtocolos); MEXENDO AQUIII !!!!
+        $totalMeses = $this->quantidadeTotalDeMeses($todosOsProtocolos, $agora);
 
-        $mediaDePaginasMes = 1 / 1;
+        if($totalPaginas === 0 || $totalMeses === 0){
+            return 0;
+        }
 
-        return 0;
+        $mediaDePaginasMes = $totalPaginas / $totalMeses;
+
+        return (int) round($mediaDePaginasMes);
     }
 
     //RF15: O dashboard deve exibir a "Quantidade de lotes do mês " (Contagem de protocolos registrados no mês corrente).
@@ -160,15 +162,18 @@ class DashboardService{
     }
 
     //RF16: O dashboard deve exibir a "Média de lotes por mês " (Quantidade de lotes total / Quantidade total de meses [Nessa soma, considerar somente meses que já passaram por completo]).
-    private function mediaDeProtocolosMes(array $todosOsProtocolos): int
+    private function mediaDeProtocolosMes(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
-        //Vai chamar a função $this->quantidadeDeProtocolosTotal();
-        //Vai chamar a função $this->quantidadeTotalDeMeses();
-        
+        $totalProtocolos = $this->quantidadeDeProtocolosTotal($todosOsProtocolos);
+        $totalMeses = $this->quantidadeTotalDeMeses($todosOsProtocolos, $agora);
 
-        $mediaDeProtocolosMes = 1 / 1;
+        if($totalProtocolos === 0 || $totalMeses === 0){
+            return 0;
+        }
 
-        return 0;
+        $mediaDeProtocolosMes = $totalProtocolos / $totalMeses;
+
+        return (int) round($mediaDeProtocolosMes);
     }
 
     //RF17: O dashboard deve exibir a "Quantidade de páginas total" (soma das páginas de todos os protocolos registrados).
