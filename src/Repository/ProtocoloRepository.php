@@ -110,6 +110,22 @@ final class ProtocoloRepository
         return null;
     }
 
+    public function buscaPorId(string $id): ?Protocolo
+    {
+        //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
+        $listaDeProtocolos = $this->all();
+
+        //Iterando a lista de protocolos e se achar um protocolo com número igual ao que está sendo procurado retorna aquele protocolo
+        foreach($listaDeProtocolos as $protocolo){
+            if($protocolo->id() === $id){
+                return $protocolo;
+            }
+        }
+
+        //Se na Iteração acima não for encontrado nenhum número que corresponda ao protocolo que está sendo procurado retorna null
+        return null;
+    }
+
     //MÉTODO PÚBLICO ESCRITA
     /**
      * Adiciona um novo objeto Protocolo ao arquivo de dados.

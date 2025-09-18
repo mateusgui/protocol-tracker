@@ -11,7 +11,7 @@ class Protocolo {
         private readonly string $id, //id único de cada protocolo
         private string $numero,
         private int $quantidadeDePaginas,
-        private DateTimeImmutable $data
+        private readonly DateTimeImmutable $data
     ) {
     }
 

@@ -47,5 +47,51 @@ final class ProtocoloService
         return $protocolo;
     }
     
-    // No futuro, métodos como editarProtocolo() e deletarProtocolo() poderiam vir aqui.
+    //USE public function update(Protocolo $protocoloParaAtualizar): bool
+    public function editarProtocolo(string $id, string $numero, int $quantidadeDePaginas): Protocolo
+    {
+        //Busca o objeto Protocolo original que vai ser editado
+        $protocoloOriginal = $this->repositorio->buscaPorId($id);
+
+        //Vai cair aqui o id que vem da requisição não coincidir com nenhum id dos protocolos da lista completa de protocolos
+        if($protocoloOriginal === null){
+            throw new Exception("O número do protocolo informado não foi localizado");
+        }
+
+        //validação se numero tem 6 dígitos e se foi digitado somente numerais
+        if(strlen($numero) !== 6 || !ctype_digit($numero)){
+            throw new Exception("O número do protocolo precisa ter exatamente 6 dígitos e possuir somente números");
+        }
+
+        //validação da quantidade de páginas
+        if($quantidadeDePaginas < 1){
+            throw new Exception("A quantidade de páginas precisa ser maior que zero");
+        }
+
+        //Criando o objeto do tipo Protocolo para ser feito o update
+        $protocoloAtualizado = new Protocolo(
+            $id,
+            $numero,
+            $quantidadeDePaginas,
+            $protocoloOriginal->data()
+        );
+
+        //chama a função update para atualizar um protocolo usando a instancia de protocolo que foi criada acima
+        $this->repositorio->update($protocoloAtualizado);
+
+        //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO EDITADO
+        return $protocoloAtualizado;
+    }
+
+    //USE public function delete(string $id): bool
+    public function deletarProtocolo(string $id): void
+    {
+        //Delega a função para ProtocoloRepository.php que vai retornar true se a exclusão ocorrer e false caso não encontra o ID
+        $sucesso = $this->repositorio->delete($id);
+
+        //Se não houve exclusão lança uma exceção
+        if (!$sucesso) {
+            throw new Exception("O protocolo com o ID informado não foi localizado para exclusão.");
+        }
+    }
 }
