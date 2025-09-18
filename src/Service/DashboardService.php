@@ -7,14 +7,11 @@ use DateTimeImmutable;
 use DateTimeZone;
 
 class DashboardService{
-    // Instância do repositório para poder usá-lo.
-    private ProtocoloRepository $repositorio;
 
     // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe DashboardService
-    public function __construct(ProtocoloRepository $repositorio)
-    {
-        $this->repositorio = $repositorio;
-    }
+    public function __construct(
+        private ProtocoloRepository $repositorio
+    ) {}
 
     // -- MÉTODO PÚBLICO --
 
