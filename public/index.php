@@ -19,57 +19,55 @@ $erro = null;
 
 // LÓGICA DE ROTEAMENTO 
 // ---------------------
-// REQUEST_METHOD = POST
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    try {
-        // Pega os dados do formulário de forma segura
-        $numero = $_POST['numero'] ?? ''; // Armazena o valor de $_POST['numero']; se não existir ou for nulo, usa '' (string vazia) como padrão.
-        $paginas = (int)($_POST['paginas'] ?? 0); // Armazena o valor de $_POST['páginas']; se não existir ou for nulo, usa 0 como padrão.
+
+$uri = $_SERVER['REQUEST_URI'];
+
+switch ($uri) {
+    // ----- ROTA BASE '/' -----
+    case '/':
         
-        // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
-        $protocoloService->registrarNovoProtocolo($numero, $paginas);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            try {
+                // Pega os dados do formulário de forma segura
+                $numero = $_POST['numero'] ?? ''; // Armazena o valor de $_POST['numero']; se não existir ou for nulo, usa '' (string vazia) como padrão.
+                $paginas = (int)($_POST['paginas'] ?? 0); // Armazena o valor de $_POST['páginas']; se não existir ou for nulo, usa 0 como padrão.
+                
+                // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
+                $protocoloService->registrarNovoProtocolo($numero, $paginas);
 
-        // Se o registro foi bem-sucedido, redireciona para a página inicial
-        // Isso evita o reenvio do formulário se o usuário atualizar a página (Padrão PRG)
-        header('Location: /');
-        exit();
+                // Se o registro foi bem-sucedido, redireciona para a página inicial
+                // Isso evita o reenvio do formulário se o usuário atualizar a página (Padrão PRG)
+                header('Location: /');
+                exit();
 
-    } catch (Exception $e) {
-        // Se a Service lançou uma exceção (erro de validação), guardamos a mensagem
-        $erro = $e->getMessage();
-    }
+            } catch (Exception $e) {
+                // Se a Service lançou uma exceção (erro de validação), guardamos a mensagem
+                $erro = $e->getMessage();
+            }
+        }
+
+        // REQUEST_METHOD = GET - Executa tudo abaixo
+        //Chamando os cálculos das métricas e armazenando para renderizar o dashboard na home
+        $listaDeProtocolos = $repositorio->all(); // ------- SERÁ REMOVIDO --------- Só deve ser chamado na renderização da view require __DIR__ . '/../templates/busca.php';
+        $metricas = $dashboardService->getTodasAsMetricas();
+
+        $tituloDaPagina = "Controle de Protocolos";
+
+        $server = $_SERVER;
+
+        // -- RENDERIZAÇÃO DA VIEW --
+        // Todas as variáveis necessárias ($listaDeProtocolos, $metricas) já foram preparadas.
+        // Incluo o template 'home.php' para renderizar o HTML final.
+        require __DIR__ . '/../templates/home.php';
+        break;
+    
+    // ----- ROTA DE BUSCA '/busca' -----
+    case '/busca':
+        echo "Página de busca";
+        break;
+
+    default:
+        http_response_code(404);
+        echo "Página não encontrada.";
+        break;
 }
-
-// REQUEST_METHOD = GET - Executa tudo abaixo
-//Chamando os cálculos das métricas e armazenando para renderizar o dashboard na home
-$listaDeProtocolos = $repositorio->all();
-$metricas = $dashboardService->getTodasAsMetricas();
-
-$tituloDaPagina = "Controle de Protocolos";
-
-
-// -- RENDERIZAÇÃO DA VIEW --
-// Todas as variáveis necessárias ($listaDeProtocolos, $metricas) já foram preparadas.
-// Incluo o template 'home.php' para renderizar o HTML final.
-require __DIR__ . '/../templates/home.php';
-
-/* $uri = $_SERVER['REQUEST_URI'];
-//BARRANDO REQUISIÇÕES QUE NÃO SEJAM PARA A RAIZ
-if ($uri !== '/' && pathinfo($uri, PATHINFO_EXTENSION) !== '') {
-    return;
-}
-
-require __DIR__ . '/../vendor/autoload.php';
-
-use Mateus\ProtocolTracker\Model\Protocolo;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
-
-$protocolo_id = uniqid('protocolo_');
-
-$protocolo = new Protocolo($protocolo_id, '123456', 30, new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande')));
-
-echo "ID: " . $protocolo->id() . " | Número do protocolo: " . $protocolo->numero() . " | Quantidade de páginas: " . $protocolo->paginas() . " | Data de criação: " . $protocolo->data()->format('d/m/Y H:i');
-
-$protocoloRepository = new ProtocoloRepository(__DIR__ . '/../data/protocolos.json');
-
-$protocoloRepository->add($protocolo); */

@@ -32,14 +32,23 @@
                     <td><?= $protocolo->data()->format('d/m/Y H:i:s') ?></td>
                 </tr>
             <?php endforeach; ?>
-
-            <h2>Dados Brutos do Array de Métricas (para Debug)</h2>
-            
         </tbody>
     </table>
 
+    <h2>Dados Brutos do Array de Métricas (para Debug)</h2>
     <pre>
        <?php print_r($metricas); ?>
+    </pre>
+
+    <a href="/busca">
+        <button>
+            BUSCAR
+        </button>
+    </a>
+
+    <h2>Dados Servidor</h2>
+    <pre>
+       <?php print_r($server); ?>
     </pre>
 </body>
 </html>
