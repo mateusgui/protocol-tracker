@@ -31,6 +31,10 @@ final class ProtocoloService
             throw new Exception("A quantidade de páginas precisa ser maior que zero");
         }
 
+        if(!is_null($this->repositorio->buscaPorNumero($numero))){
+            throw new Exception("O número do protocolo informado já foi registrado");
+        }
+
         // 2. Lógica de Criação do Objeto
         //Instanciação de um novo protocolo para ser adicionado
         $protocolo = new Protocolo(

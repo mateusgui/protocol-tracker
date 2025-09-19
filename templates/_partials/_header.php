@@ -14,5 +14,4 @@
             <a href="/busca">Buscar Protocolos</a>
         </nav>
     </header>
-    <hr>
     <main style="padding: 20px;">
