@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= isset($tituloDaPagina) ? htmlspecialchars($tituloDaPagina) : 'Controle de Protocolos' ?></title>
     <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="icon" href="/favicon.ico">
 </head>
 <body>
     <header style="background-color: #f0f0f0; padding: 10px; text-align: center;">
