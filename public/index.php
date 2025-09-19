@@ -21,12 +21,14 @@ $erro = null;
 // LÓGICA DE ROTEAMENTO 
 // ---------------------
 $uri = $_SERVER['REQUEST_URI'];
+$uri = parse_url($uri, PHP_URL_PATH);
+$method = $_SERVER['REQUEST_METHOD'];
 
 switch ($uri) {
     // ----- ROTA BASE '/' -----
     case '/':
         // REQUEST_METHOD = POST - Executa o bloco if
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($method === 'POST') {
             $webController->salvarNovoProtocolo(); //Registro de novo protocolo
         } else{
             $webController->home(); //Carregamento padrão da home com o dashboard
@@ -40,7 +42,7 @@ switch ($uri) {
 
     // ----- ROTA DE EDIÇÃO '/editar' -----
     case '/editar':
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if($method === 'POST'){
             $webController->editarProtocolo();
         } else {
             $webController->exibirFormularioEdicao();
@@ -49,7 +51,7 @@ switch ($uri) {
 
     // ----- ROTA DE EXCLUSÃO '/excluir' (Ainda a ser criada) -----
     case '/excluir':
-        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        if($method === 'POST'){
             $webController->deletarProtocolo();
         } else {
             header('Location: /busca');
