@@ -3,6 +3,7 @@
 // CARREGAMENTO E CONFIGURAÇÃO
 require __DIR__ . '/../vendor/autoload.php';
 
+use Mateus\ProtocolTracker\Controller\WebController;
 use Mateus\ProtocolTracker\Model\Protocolo;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
 use Mateus\ProtocolTracker\Service\DashboardService;
@@ -12,6 +13,7 @@ $caminhoJson = __DIR__ . '/../data/protocolos.json'; //Caminho do meu JSON de da
 $repositorio = new ProtocoloRepository($caminhoJson); //Instanciação de ProtocoloRepository
 $dashboardService = new DashboardService($repositorio); //Instanciação de DashboardSerivce usando o $repositorio que é uma instância de ProtocoloRepository
 $protocoloService = new ProtocoloService($repositorio); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
+$webController = new WebController($repositorio, $dashboardService, $protocoloService);
 
 // Variável para guardar possíveis erros de validação do formulário
 $erro = null;
@@ -25,10 +27,10 @@ switch ($uri) {
     case '/':
         // REQUEST_METHOD = POST - Executa o bloco if
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            //chama salvarNovoProtocolo();
+            $webController->salvarNovoProtocolo();
         }
 
-        //chama home();
+        $webController->home();
         break;
     
     // ----- ROTA DE BUSCA '/busca' -----

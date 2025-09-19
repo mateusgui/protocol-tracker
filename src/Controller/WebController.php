@@ -2,10 +2,12 @@
 
 namespace Mateus\ProtocolTracker\Controller;
 
+use DateTimeImmutable;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
 use Exception;
+use Mateus\ProtocolTracker\Model\Protocolo;
 
 class WebController {
     private ProtocoloRepository $repositorio;
@@ -14,7 +16,7 @@ class WebController {
 
     public function __construct()
     {
-        $caminhoJson = __DIR__ . '/../../data/protocols.json';
+        $caminhoJson = __DIR__ . '/../../data/protocolos.json';
         
         $this->repositorio = new ProtocoloRepository($caminhoJson);
         $this->dashboardService = new DashboardService($this->repositorio);
@@ -60,6 +62,31 @@ class WebController {
         }
     }
 
+    //public function buscaPorNumero(string $numero): ?Protocolo
+    //public function buscaPorPeriodo(?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
+    public function buscaProtocolo()
+    {
+        $numero = $_GET['numero'] ?? null;
+        $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio']) : null;
+        $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim']) : null;
+
+        $erro = null;
+        $listaDeProtocolos = [];
+
+        if(!empty($numero)){
+            $protocolo = $this->repositorio->buscaPorNumero($numero);
+            $listaDeProtocolos = $protocolo ? [$protocolo] : [];
+        } else if($dataInicio || $dataFim) {
+            $listaDeProtocolos = $this->repositorio->buscaPorPeriodo($dataInicio, $dataFim);
+        } else {
+            $listaDeProtocolos = $this->repositorio->all();
+        }
+
+        $tituloDaPagina = "Controle de Protocolos";
+        
+        require __DIR__ . '/../../templates/busca.php';
+    }
+
     public function editarProtocolo()
     {
         try {
@@ -82,21 +109,53 @@ class WebController {
         }
     }
 
-    /* busca() (para exibir a página de busca e os resultados filtrados) - ⏳ A Fazer
-
-    exibirFormularioEdicao() (para exibir a página com o formulário de um protocolo específico) - ⏳ A Fazer
-
-    deletarProtocolo() (para tratar o POST do botão de exclusão) - ⏳ A Fazer
-
-    notFound() (para páginas não encontradas) - ⏳ A Fazer */
-
-    public function deletarProtocolo()
+    public function exibirFormularioEdicao()
     {
+        $id = $_GET['id'] ?? null;
 
+        if (!$id) {
+            $this->notFound(); // Mostra a página de erro 404.
+            return; // Para a execução.
+        }
+        $protocolo = $this->repositorio->buscaPorId($id);
+
+        // Verifica se achou ou não um protocolo
+        if ($protocolo === null) {
+            $this->notFound();
+            return;
+        }
+
+        // Se o código chegou até aqui, temos 100% de certeza
+        // que $protocolo é um objeto e não é null.
+        $tituloDaPagina = "Editando Protocolo";
+        
+        // Agora é seguro chamar o template.
+        require __DIR__ . '/../../templates/editar.php';
     }
 
-    public function buscaProtocolo()
+    // USE  public function deletarProtocolo(string $id): void
+    public function deletarProtocolo()
     {
+        try {
+            $id = $_POST['id'] ?? '';
+            $this->protocoloService->deletarProtocolo($id);
 
+            header('Location: /busca');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $listaDeProtocolos = $this->repositorio->all(); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
+            $tituloDaPagina = "Busca de Protocolos";
+
+            //Se der erro chama a busca.php novamente, porém agora com o erro carregado
+            require __DIR__ . '/../../templates/busca.php';
+        }
+    }
+
+    public function notFound()
+    {
+        http_response_code(404);
+        echo "404 Not Found";
     }
 }
