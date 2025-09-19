@@ -10,18 +10,12 @@ use Exception;
 use Mateus\ProtocolTracker\Model\Protocolo;
 
 class WebController {
-    private ProtocoloRepository $repositorio;
-    private DashboardService $dashboardService;
-    private ProtocoloService $protocoloService;
-
-    public function __construct()
-    {
-        $caminhoJson = __DIR__ . '/../../data/protocolos.json';
-        
-        $this->repositorio = new ProtocoloRepository($caminhoJson);
-        $this->dashboardService = new DashboardService($this->repositorio);
-        $this->protocoloService = new ProtocoloService($this->repositorio);
-    }
+    
+    public function __construct(
+        private ProtocoloRepository $repositorio,
+        private DashboardService $dashboardService,
+        private ProtocoloService $protocoloService
+    ) {}
 
     // --------------
     //Lida com a exibição da página inicial (requisições GET)
