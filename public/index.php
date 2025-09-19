@@ -13,7 +13,7 @@ $caminhoJson = __DIR__ . '/../data/protocolos.json'; //Caminho do meu JSON de da
 $repositorio = new ProtocoloRepository($caminhoJson); //Instanciação de ProtocoloRepository
 $dashboardService = new DashboardService($repositorio); //Instanciação de DashboardSerivce usando o $repositorio que é uma instância de ProtocoloRepository
 $protocoloService = new ProtocoloService($repositorio); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
-$webController = new WebController($repositorio, $dashboardService, $protocoloService);
+$webController = new WebController($repositorio, $dashboardService, $protocoloService); //Instanciação de webController usando instâncias de: repositorio, dashboardService e protocoloService
 
 // Variável para guardar possíveis erros de validação do formulário
 $erro = null;
