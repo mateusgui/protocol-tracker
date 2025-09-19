@@ -27,24 +27,37 @@ switch ($uri) {
     case '/':
         // REQUEST_METHOD = POST - Executa o bloco if
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $webController->salvarNovoProtocolo();
+            $webController->salvarNovoProtocolo(); //Registro de novo protocolo
+        } else{
+            $webController->home(); //Carregamento padrão da home com o dashboard
         }
-
-        $webController->home();
         break;
     
     // ----- ROTA DE BUSCA '/busca' -----
     case '/busca':
-        echo "Página para buscas de protocolos";
-        $tituloDaPagina = "Página de busca";
-        $listaDeProtocolos = $repositorio->all();
-
-        // -- RENDERIZAÇÃO DA VIEW --
-        require __DIR__ . '/../templates/busca.php';
+        $webController->buscaProtocolo();
         break;
 
+    // ----- ROTA DE EDIÇÃO '/editar' -----
+    case '/editar':
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $webController->editarProtocolo();
+        } else {
+            $webController->exibirFormularioEdicao();
+        }
+        break;
+
+    // ----- ROTA DE EXCLUSÃO '/excluir' (Ainda a ser criada) -----
+    case '/excluir':
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $webController->deletarProtocolo();
+        } else {
+            header('Location: /busca');
+        }
+        break;
+
+    // Rota p
     default:
-        http_response_code(404);
-        echo "Página não encontrada.";
+        $webController->notFound();
         break;
 }
