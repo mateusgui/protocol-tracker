@@ -1,14 +1,6 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title><?= htmlspecialchars($tituloDaPagina) ?></title>
-    </head>
-<body>
+<?php require __DIR__ . '/_partials/_header.php'; ?>
+<!-- Cabeçalho HTML -->
 
-    <h1><?= htmlspecialchars($tituloDaPagina) ?></h1>
-
-    <h2>Protocolos Registrados</h2>
     <table border="1">
         <thead>
             <tr>
@@ -30,10 +22,5 @@
         </tbody>
     </table>
 
-    <a href="/">
-        <button>
-            VOLTAR
-        </button>
-    </a>
-</body>
-</html>
+<!-- Rodapé HTML -->
+<?php require __DIR__ . '/_partials/_footer.php'; ?> 

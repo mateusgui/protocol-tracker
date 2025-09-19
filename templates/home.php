@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title><?= htmlspecialchars($tituloDaPagina) ?></title>
-    </head>
-<body>
+<?php require __DIR__ . '/_partials/_header.php'; ?>
+<!-- Cabeçalho HTML -->
 
-    <h1><?= htmlspecialchars($tituloDaPagina) ?></h1>
-
-    <a href="/busca">
-        <button>
-            BUSCAR
-        </button>
-    </a>
-
-    <h2>Dashboard</h2>
     <pre>
        <?php print_r($metricas); ?>
     </pre>
-</body>
-</html>
+
+<!-- Rodapé HTML -->
+<?php require __DIR__ . '/_partials/_footer.php'; ?> 
