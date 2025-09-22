@@ -8,11 +8,11 @@
     <link rel="icon" href="/favicon.ico">
 </head>
 <body>
-    <header style="background-color: #f0f0f0; padding: 10px; text-align: center;">
+    <header>
         <h1>Controle de Protocolos</h1>
         <nav>
             <a href="/">Página Inicial</a> | 
             <a href="/busca">Buscar Protocolos</a>
         </nav>
     </header>
-    <main style="padding: 20px;">
+    <main>
