@@ -3,7 +3,7 @@
 namespace Mateus\ProtocolTracker\Service;
 
 use Mateus\ProtocolTracker\Model\Protocolo;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
+use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception; // Usaremos para reportar erros de validação
@@ -12,7 +12,7 @@ final class ProtocoloService
 {
     // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe ProtocoloService
     public function __construct(
-        private ProtocoloRepository $repositorio
+        private ProtocoloRepositoryInterface $repositorio
     ) {}
 
     /**

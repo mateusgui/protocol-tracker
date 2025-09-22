@@ -2,7 +2,7 @@
 
 namespace Mateus\ProtocolTracker\Service;
 
-use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
+use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use DateTimeImmutable;
 use DateTimeZone;
 
@@ -10,7 +10,7 @@ class DashboardService{
 
     // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe DashboardService
     public function __construct(
-        private ProtocoloRepository $repositorio
+        private ProtocoloRepositoryInterface $repositorio
     ) {}
 
     // -- MÉTODO PÚBLICO --

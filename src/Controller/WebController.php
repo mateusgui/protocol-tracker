@@ -3,16 +3,15 @@
 namespace Mateus\ProtocolTracker\Controller;
 
 use DateTimeImmutable;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
+use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
 use Exception;
-use Mateus\ProtocolTracker\Model\Protocolo;
 
 class WebController {
     
     public function __construct(
-        private ProtocoloRepository $repositorio,
+        private ProtocoloRepositoryInterface $repositorio,
         private DashboardService $dashboardService,
         private ProtocoloService $protocoloService
     ) {}

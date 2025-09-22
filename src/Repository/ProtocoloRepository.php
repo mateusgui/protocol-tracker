@@ -9,7 +9,7 @@ use DateTimeImmutable; // Importa a classe para usar nos type hints
  * Classe responsável pela persistência (leitura e escrita) dos dados de protocolos.
  * É a única classe que interage diretamente com o arquivo JSON.
  */
-final class ProtocoloRepository
+final class ProtocoloRepository implements ProtocoloRepositoryInterface
 {
     public function __construct(
         private readonly string $caminhoArquivoJson
