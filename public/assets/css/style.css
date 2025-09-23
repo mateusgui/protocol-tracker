@@ -1,7 +1,294 @@
-header {
-    background-color: #a02c2c
+/* === RESET BÁSICO E ESTILOS GLOBAIS === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #f0f2f5; /* Um cinza claro mais suave */
+    color: #1c1e21; /* Cor de texto principal (escuro) */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 a {
+    color: #007bff;
     text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* === ESTRUTURA PRINCIPAL (HEADER, SIDEBAR, CONTEÚDO, FOOTER) === */
+
+header.cabecalho-principal {
+    background-color: #ffffff;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+    flex-shrink: 0; /* Impede que o header encolha */
+}
+
+.container-principal {
+    display: flex;
+    flex-grow: 1; /* Faz este container crescer para ocupar o espaço disponível */
+
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50; /* Um azul escuro corporativo */
+    color: #ecf0f1;
+    padding: 1.5rem;
+    flex-shrink: 0; /* Impede que a sidebar encolha */
+}
+
+.conteudo-principal {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow-y: auto; /* Adiciona scroll se o conteúdo for muito grande */
+    display: flex;
+    flex-direction: column; /* Empilha os itens verticalmente */
+    align-items: center;   /* Centraliza os itens horizontalmente */
+}
+
+footer.rodape-principal {
+    background-color: #ffffff;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9em;
+    color: #6c757d;
+    border-top: 1px solid #ddd;
+    flex-shrink: 0;
+}
+
+/* === ESTILOS DA SIDEBAR / NAVEGAÇÃO === */
+.sidebar nav ul {
+    list-style: none;
+}
+
+.sidebar nav ul li a {
+    display: block;
+    color: #ecf0f1;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 0.5rem;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.sidebar nav ul li a:hover {
+    background-color: #34495e;
+    text-decoration: none;
+}
+
+.sidebar nav ul li a.active {
+    background-color: #007bff;
+    font-weight: bold;
+}
+
+/* === ESTILOS DE FORMULÁRIOS E CONTEÚDO === */
+.conteudo-principal h2 {
+    font-size: 1.8rem;
+    color: #343a40;
+    margin-bottom: 0.5rem;
+}
+
+.conteudo-principal p {
+    margin-bottom: 1.5rem;
+    color: #6c757d;
+}
+
+.protocolo-form {
+    max-width: 600px;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="number"] {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.form-actions button {
+    padding: 0.8rem 1.5rem;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-actions button:hover {
+    background-color: #218838;
+}
+
+.error-message {
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+    border-radius: 6px;
+}
+
+/* === ESTILOS ADICIONAIS PARA A PÁGINA DE BUSCA === */
+
+/* Remove a centralização padrão para a página de busca, que ocupa a tela toda */
+.container-principal-busca {
+    width: 100%;
+}
+
+.busca-form-container, .listagem-container {
+    width: 100%;
+    max-width: 1200px; /* Largura máxima para o conteúdo central */
+    margin: 0 auto 2rem auto; /* Centraliza e adiciona espaço embaixo */
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.busca-form .form-row {
+    display: flex;
+    gap: 20px; /* Espaço entre os campos de filtro */
+    align-items: flex-end;
+}
+
+.busca-form .form-group {
+    flex-grow: 1; /* Faz os campos crescerem para ocupar o espaço */
+}
+
+.busca-form .form-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-top: 1.5rem;
+}
+
+/* Estilo genérico para botões com ícones */
+.btn-buscar, .btn-limpar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.btn-buscar {
+    color: #fff;
+    background-color: #007bff; /* Azul */
+}
+
+.btn-buscar:hover {
+    background-color: #0056b3;
+}
+
+.btn-limpar {
+    color: #343a40;
+    background-color: #e9ecef; /* Cinza claro */
+}
+.btn-limpar:hover {
+    background-color: #ced4da;
+    text-decoration: none;
+}
+
+/* --- Estilos da Tabela de Resultados --- */
+.protocolos-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.protocolos-table th, .protocolos-table td {
+    padding: 12px;
+    border: 1px solid #e9ecef;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.protocolos-table thead {
+    background-color: #f8f9fa;
+}
+
+.nenhum-resultado {
+    text-align: center;
+    padding: 20px;
+    color: #6c757d;
+}
+
+/* Alinhamento da coluna de Ações */
+.acoes-header {
+    text-align: center;
+}
+.acoes-cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Estilos dos botões de Ação (Editar/Excluir) */
+.btn-acao {
+    display: inline-flex;
+    padding: 6px;
+    border: none;
+    border-radius: 50%; /* Deixa o fundo redondo */
+    cursor: pointer;
+    transition: background-color 0.2s;
+    color: #fff;
+}
+
+.btn-editar {
+    background-color: #ffc107; /* Amarelo */
+}
+.btn-editar:hover {
+    background-color: #e0a800;
+}
+
+.btn-excluir {
+    background-color: #dc3545; /* Vermelho */
+}
+.btn-excluir:hover {
+    background-color: #c82333;
+}
+
+/* Estilo para alinhar os ícones do Google */
+.material-icons-outlined {
+    vertical-align: middle;
 }
