@@ -76,10 +76,11 @@ class WebController {
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
-            $tituloDaPagina = "Controle de Protocolos";
+            $listaDeProtocolos = $this->repositorio->all();
+            $tituloDaPagina = "Buscar Protocolos";
             
             //Se der erro chama a home.php, porém agora com o erro carregado
-            require __DIR__ . '/../../templates/home.php';
+            require __DIR__ . '/../../templates/busca.php';
         }
     }
 
