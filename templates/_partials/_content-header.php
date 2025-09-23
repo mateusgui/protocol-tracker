@@ -1,6 +1,6 @@
 <div class="content-header">
     <div class="header-title">
-        <h2><?= isset($tituloDaPagina) ? htmlspecialchars($tituloDaPagina) : 'Página sem Título' ?></h2>
+        <p><?= isset($tituloDaPagina) ? htmlspecialchars($tituloDaPagina) : 'Página sem Título' ?></p>
     </div>
     <div class="header-actions">
         <a href="#" class="action-icon" title="Mudar para Modo Escuro">

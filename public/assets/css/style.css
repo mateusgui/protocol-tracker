@@ -409,7 +409,7 @@ textarea {
 
 .flash-message {
     position: fixed; /* Flutua sobre a página */
-    top: 20px;
+    top: 90px;
     right: 20px;
     background-color: #28a745; /* Verde de sucesso */
     color: white;
@@ -507,10 +507,13 @@ textarea {
 
     background-color: #ffffff;
     padding: 1rem;
+
+    margin-bottom: #777777;
 }
 
-.content-header h2 {
+.content-header p {
     margin-bottom: 0; /* Remove a margem padrão do h2 */
+    margin-left: 10px;
 }
 
 .header-actions {
