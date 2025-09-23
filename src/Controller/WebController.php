@@ -66,16 +66,9 @@ class WebController {
         $erro = null;
         $listaDeProtocolos = [];
 
-        if(!empty($numero)){
-            $protocolo = $this->repositorio->buscaPorNumero($numero);
-            $listaDeProtocolos = $protocolo ? [$protocolo] : [];
-        } else if($dataInicio || $dataFim) {
-            $listaDeProtocolos = $this->repositorio->buscaPorPeriodo($dataInicio, $dataFim);
-        } else {
-            $listaDeProtocolos = $this->repositorio->all();
-        }
+        $listaDeProtocolos = $this->repositorio->search($numero, $dataInicio, $dataFim);
 
-        $tituloDaPagina = "Controle de Protocolos";
+        $tituloDaPagina = "Buscar Protocolos";
         
         require __DIR__ . '/../../templates/busca.php';
     }

@@ -61,6 +61,39 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
     }
 
     /**
+     * Realiza uma busca combinada com múltiplos filtros.
+     */
+    public function search(?string $numero = null, ?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
+    {
+        // Começa com a lista completa como base.
+        $protocolos = $this->all();
+
+        // Aplica o filtro de NÚMERO, se foi fornecido.
+        if (!empty($numero)) {
+            $protocolos = array_filter(
+                $protocolos,
+                fn(Protocolo $p) => $p->numero() === $numero
+            );
+        }
+
+        // Aplica o filtro de DATA na lista JÁ FILTRADA.
+        if ($dataInicio || $dataFim) {
+            $protocolos = array_filter(
+                $protocolos,
+                function (Protocolo $p) use ($dataInicio, $dataFim) {
+                    $dataProtocolo = $p->data();
+                    if ($dataInicio && $dataProtocolo < $dataInicio) return false;
+                    if ($dataFim && $dataProtocolo > $dataFim) return false;
+                    return true;
+                }
+            );
+        }
+
+        // Retorna o resultado final e reindexado.
+        return array_values($protocolos);
+    }
+
+    /**
      * Busca protocolos dentro de um intervalo de datas específico.
      * Este método será a base para os cálculos de "DIA CORRENTE" e "MÊS CORRENTE".
      * @return Protocolo[]
