@@ -1,0 +1,13 @@
+<div class="content-header">
+    <div class="header-title">
+        <h2><?= isset($tituloDaPagina) ? htmlspecialchars($tituloDaPagina) : 'Página sem Título' ?></h2>
+    </div>
+    <div class="header-actions">
+        <a href="#" class="action-icon" title="Mudar para Modo Escuro">
+            <span class="material-icons-outlined">dark_mode</span>
+        </a>
+        <a href="#" class="action-icon" title="Perfil do Usuário">
+            <span class="material-icons-outlined">account_circle</span>
+        </a>
+    </div>
+</div>
