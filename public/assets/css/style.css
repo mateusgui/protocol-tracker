@@ -85,7 +85,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
 }
 
 .sidebar nav ul li a.active {
-    background-color: #007bff;
+    background-color: #22313f;
     font-weight: bold;
 }
 
@@ -101,7 +101,8 @@ footer.rodape-principal { /* Adicionado para especificidade */
 .conteudo-principal h2 {
     font-size: 1.8rem;
     color: #343a40;
-    margin-bottom: 0.5rem;
+    margin-bottom: 2.0rem;
+    align-self: center;
 }
 
 .conteudo-principal p {
@@ -109,7 +110,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
     color: #6c757d;
 }
 
-.protocolo-form, .busca-form-container {
+.busca-form-container {
     max-width: 800px; /* Aumentei um pouco a largura */
     width: 100%;
     background-color: #ffffff;
@@ -117,6 +118,21 @@ footer.rodape-principal { /* Adicionado para especificidade */
     border-radius: 8px;
     border: 1px solid #ddd;
     margin: 0 auto; /* Centraliza o formulário na área de conteúdo */
+    display: flex;
+    flex-direction: column;
+}
+
+.protocolo-form {
+    max-width: 800px; /* Aumentei um pouco a largura */
+    width: 100%;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin: 0 auto; /* Centraliza o formulário na área de conteúdo */
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 /* === NOVA REGRA PARA A LINHA DO FORMULÁRIO === */
@@ -339,6 +355,7 @@ input[type=number] {
 }
 .btn-editar:hover {
     background-color: #e0a800;
+    text-decoration: none;
 }
 
 .btn-excluir {
