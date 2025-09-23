@@ -42,6 +42,11 @@ switch ($uri) {
         $webController->buscaProtocolo();
         break;
 
+    // ----- ROTA DO DASHBOARD '/busca' -----
+    case '/dashboard':
+        $webController->exibirDashboard();
+        break;
+
     // ----- ROTA DE EDIÇÃO '/editar' -----
     case '/editar':
         if($method === 'POST'){

@@ -49,7 +49,6 @@ class WebController {
         } catch (Exception $e) {
             // Se a Service lançou uma exceção (erro de validação), guardamos a mensagem
             $erro = $e->getMessage();
-            $metricas = $this->dashboardService->getTodasAsMetricas(); //Carrega metricas pois é preciso para chamar a view home.php
             $tituloDaPagina = "Controle de Protocolos";
             
             //Se der erro chama a home.php novamente, porém agora com o erro carregado
@@ -61,18 +60,27 @@ class WebController {
     //public function buscaPorPeriodo(?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
     public function buscaProtocolo()
     {
-        $numero = $_GET['numero'] ?? null;
-        $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
-        $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
+        try {
+            $numero = $_GET['numero'] ?? null;
+            $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
+            $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
 
-        $erro = null;
-        $listaDeProtocolos = [];
+            $erro = null;
+            $listaDeProtocolos = [];
 
-        $listaDeProtocolos = $this->repositorio->search($numero, $dataInicio, $dataFim);
+            $listaDeProtocolos = $this->repositorio->search($numero, $dataInicio, $dataFim);
 
-        $tituloDaPagina = "Buscar Protocolos";
-        
-        require __DIR__ . '/../../templates/busca.php';
+            $tituloDaPagina = "Buscar Protocolos";
+            
+            require __DIR__ . '/../../templates/busca.php';
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Controle de Protocolos";
+            
+            //Se der erro chama a home.php, porém agora com o erro carregado
+            require __DIR__ . '/../../templates/home.php';
+        }
     }
 
     public function editarProtocolo()
@@ -142,6 +150,22 @@ class WebController {
 
             //Se der erro chama a busca.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
+        }
+    }
+
+    public function exibirDashboard()
+    {
+        try {
+            $metricas = $this->dashboardService->getTodasAsMetricas();
+            $tituloDaPagina = "Dashboard de Produtividade";
+
+            require __DIR__ . '/../../templates/dashboard.php';
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Controle de Protocolos";
+            
+            //Se der erro chama a home.php, porém agora com o erro carregado
+            require __DIR__ . '/../../templates/home.php';
         }
     }
 
