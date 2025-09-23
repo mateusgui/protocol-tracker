@@ -23,9 +23,9 @@
             
             <div class="form-actions">
                 <button type="submit" class="btn-buscar">
-                    <span class="material-icons-outlined">search</span> BUSCAR
+                    <span class="material-icons-outlined">search</span> Buscar
                 </button>
-                <a href="/busca" class="btn-limpar">LIMPAR FILTROS</a>
+                <a href="/busca" class="btn-limpar"><span class="material-icons-outlined">delete</span> Limpar filtros</a>
             </div>
 
         </form>

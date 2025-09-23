@@ -268,10 +268,6 @@ textarea {
     gap: 20px;
 }
 
-.form-actions {
-    justify-content: center;
-}
-
 /* Estilo genérico para botões com ícones */
 .btn-buscar, .btn-limpar {
     display: inline-flex;
@@ -280,7 +276,6 @@ textarea {
     height: 40px;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
-    font-weight: bold;
     border: none;
     border-radius: 6px;
     cursor: pointer;
