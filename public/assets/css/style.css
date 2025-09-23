@@ -48,7 +48,6 @@ header.cabecalho-principal { /* Adicionado para especificidade */
 
 .conteudo-principal {
     flex-grow: 1;
-    padding: 2rem;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
@@ -494,4 +493,44 @@ textarea {
 .sidebar-logo img {
     max-width: 100%; /* Garante que a imagem nunca seja mais larga que a sidebar */
     height: auto; /* Mantém a proporção da imagem */
+}
+
+/* === ESTILOS PARA O CABEÇALHO DO CONTEÚDO PRINCIPAL === */
+
+.content-header {
+    width: 100%;
+    margin: 0 auto 2rem auto; /* Centraliza e adiciona espaço embaixo */
+    
+    display: flex;
+    justify-content: space-between; /* Joga o título para um lado e as ações para o outro */
+    align-items: center;
+
+    background-color: #ffffff;
+    padding: 1rem;
+}
+
+.content-header h2 {
+    margin-bottom: 0; /* Remove a margem padrão do h2 */
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Espaço entre os ícones */
+}
+
+.action-icon {
+    color: #6c757d; /* Cor cinza para os ícones */
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.action-icon:hover {
+    color: #007bff; /* Cor azul ao passar o mouse */
+    text-decoration: none;
+}
+
+.action-icon .material-icons-outlined {
+    font-size: 36px; /* Tamanho dos ícones */
 }
