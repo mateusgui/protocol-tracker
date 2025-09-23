@@ -240,6 +240,10 @@ textarea {
     border: 1px solid #ddd;
 }
 
+.listagem-container h3 {
+    margin-bottom: 1rem;
+}
+
 .busca-form .form-row {
     display: flex;
     gap: 20px; /* Espaço entre os campos de filtro */
@@ -260,7 +264,8 @@ textarea {
 .busca-form {
     display: flex;
     justify-content: space-between;
-    gap: 50px;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .form-actions {
@@ -308,9 +313,9 @@ textarea {
 }
 
 .protocolos-table th, .protocolos-table td {
-    padding: 12px;
+    padding: 8px;
     border: 1px solid #e9ecef;
-    text-align: left;
+    text-align: center;
     vertical-align: middle;
 }
 
