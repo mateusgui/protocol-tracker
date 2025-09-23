@@ -126,11 +126,11 @@ footer.rodape-principal { /* Adicionado para especificidade */
 }
 
 .form-group {
-    margin-bottom: 1.5rem;
     flex-grow: 1; /* Faz os grupos crescerem para preencher o espaço */
 }
 
 .form-group label {
+    width: 100%;
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
@@ -141,6 +141,18 @@ footer.rodape-principal { /* Adicionado para especificidade */
 .form-group input[type="number"],
 .form-group textarea {
     width: 100%;
+    height: 40px;
+    padding: 0.8rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit; /* Garante que a textarea use a mesma fonte */
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input[type="date"] {
+    width: 100%;
+    height: 40px;
     padding: 0.8rem;
     border: 1px solid #ced4da;
     border-radius: 6px;
@@ -176,7 +188,6 @@ input[type=number] {
 
 .form-actions button {
     padding: 0.8rem 1.5rem;
-    width: 100%;
     font-size: 1rem;
     font-weight: bold;
     color: #fff;
@@ -234,11 +245,22 @@ input[type=number] {
     margin-top: 1.5rem;
 }
 
+.busca-form {
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.form-actions {
+    justify-content: center;
+}
+
 /* Estilo genérico para botões com ícones */
 .btn-buscar, .btn-limpar {
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    height: 40px;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
     font-weight: bold;
