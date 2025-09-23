@@ -10,6 +10,17 @@
 </head>
 <body>
 
+    <?php if (isset($_SESSION['mensagem_sucesso'])): ?>
+        <div class="flash-message">
+            <?= htmlspecialchars($_SESSION['mensagem_sucesso']) ?>
+        </div>
+        <?php 
+            // Uma vez que a mensagem foi exibida, nós a removemos da sessão
+            // para que ela não apareça de novo se o usuário der F5.
+            unset($_SESSION['mensagem_sucesso']); 
+        ?>
+    <?php endif; ?>
+
     <div class="container-principal">
 
         <aside class="sidebar">

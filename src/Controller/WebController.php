@@ -40,6 +40,8 @@ class WebController {
             // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
             $this->protocoloService->registrarNovoProtocolo($numero, $paginas);
 
+            $_SESSION['mensagem_sucesso'] = "Protocolo adicionado com sucesso!";
+
             // Se o registro foi bem-sucedido, redireciona para a página inicial
             header('Location: /');
             exit();
@@ -81,6 +83,8 @@ class WebController {
             $quantidadeDePaginas = (int)($_POST['paginas'] ?? 0);
 
             $this->protocoloService->editarProtocolo($id, $numero, $quantidadeDePaginas);
+
+            $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
 
             header('Location: /busca');
             exit();
@@ -125,6 +129,8 @@ class WebController {
         try {
             $id = $_POST['id'] ?? '';
             $this->protocoloService->deletarProtocolo($id);
+
+            $_SESSION['mensagem_sucesso'] = "Protocolo excluído com sucesso!";
 
             header('Location: /busca');
             exit();

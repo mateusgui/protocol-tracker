@@ -1,13 +1,16 @@
-/* VAZIO
+const flashMessage = document.querySelector('.flash-message');
 
-Qual sua função?
-Lidar com a interatividade no navegador do usuário (client-side). A validação crítica sempre será no PHP (backend), mas o JS pode melhorar a experiência.
+    // Se o elemento existir na página...
+    if (flashMessage) {
+        // ...espera 4 segundos (4000 milissegundos)...
+        setTimeout(() => {
+            // ...adiciona a classe 'fade-out' para iniciar a animação de desaparecer.
+            flashMessage.classList.add('fade-out');
+            
+            // Espera a animação terminar (0.5s) para remover o elemento da página.
+            setTimeout(() => {
+                flashMessage.remove();
+            }, 500);
 
-Exemplos de uso neste projeto:
-
-O pop-up de confirmação "Tem certeza que deseja excluir?" antes de deletar um protocolo.
-
-(Futuramente) Poderia ser usado para mostrar/esconder filtros de busca, ou para dar um feedback instantâneo ao usuário sem recarregar a página.
-
-Como se relaciona?
-Ele é incluído no seu HTML (geralmente antes de fechar a tag </body> no seu layout) e interage com os elementos HTML da página (botões, formulários, etc.). */
+        }, 4000);
+    }

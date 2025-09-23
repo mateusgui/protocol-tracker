@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 // CARREGAMENTO E CONFIGURAÇÃO
 require __DIR__ . '/../vendor/autoload.php';
 

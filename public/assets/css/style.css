@@ -198,10 +198,6 @@ textarea {
     resize: none;
 }
 
-input[type=number] {
-    -moz-appearance: textfield;
-}
-
 .form-actions button {
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
@@ -368,4 +364,65 @@ input[type=number] {
 /* Estilo para alinhar os ícones do Google */
 .material-icons-outlined {
     vertical-align: middle;
+}
+
+/* === ESTILOS ADICIONAIS PARA OS BOTÕES DE EDIÇÃO === */
+
+.form-actions-edit {
+    display: flex;
+    gap: 15px; /* Espaço entre os botões */
+    margin-top: 1.5rem;
+}
+
+.btn-salvar, .btn-cancelar {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Faz os botões dividirem o espaço */
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.btn-salvar {
+    background-color: #007bff; /* Azul */
+    color: #fff;
+}
+
+.btn-salvar:hover {
+    background-color: #0056b3;
+}
+
+.btn-cancelar {
+    background-color: #6c757d; /* Cinza escuro */
+    color: #fff;
+}
+
+.btn-cancelar:hover {
+    background-color: #5a6268;
+    text-decoration: none;
+}
+
+.flash-message {
+    position: fixed; /* Flutua sobre a página */
+    top: 20px;
+    right: 20px;
+    background-color: #28a745; /* Verde de sucesso */
+    color: white;
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    z-index: 1000; /* Garante que fique por cima de tudo */
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out; /* Animação de fade out */
+}
+
+/* Classe que vamos adicionar com JS para fazer a mensagem sumir */
+.flash-message.fade-out {
+    opacity: 0;
 }
