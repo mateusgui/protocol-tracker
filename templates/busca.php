@@ -5,30 +5,33 @@
     <section class="busca-form-container">
         <h2>Buscar Protocolos</h2>
         <form action="/busca" method="get" class="busca-form">
+            
             <div class="form-row">
                 <div class="form-group">
-                    <label for="numero">Número do Protocolo:</label>
-                    <input type="text" id="numero" name="numero" value="<?= htmlspecialchars($_GET['numero'] ?? '') ?>">
+                    <label for="numero">Número do Protocolo</label>
+                    <input type="text" id="numero" name="numero" value="<?= htmlspecialchars($_GET['numero'] ?? '') ?>" placeholder="Ex: 123456">
                 </div>
                 <div class="form-group">
-                    <label for="data_inicio">De:</label>
+                    <label for="data_inicio">Data inicial</label>
                     <input type="date" id="data_inicio" name="data_inicio" value="<?= htmlspecialchars($_GET['data_inicio'] ?? '') ?>">
                 </div>
                 <div class="form-group">
-                    <label for="data_fim">Até:</label>
+                    <label for="data_fim">Data final</label>
                     <input type="date" id="data_fim" name="data_fim" value="<?= htmlspecialchars($_GET['data_fim'] ?? '') ?>">
                 </div>
             </div>
+            
             <div class="form-actions">
                 <button type="submit" class="btn-buscar">
-                    <span class="material-icons-outlined">search</span> Buscar
+                    <span class="material-icons-outlined">search</span> BUSCAR
                 </button>
-                <a href="/busca" class="btn-limpar">Limpar Filtros</a>
+                <a href="/busca" class="btn-limpar">LIMPAR FILTROS</a>
             </div>
+
         </form>
     </section>
 
-    <?php require __DIR__ . '/_partials/_listaProtocolos.php'; ?>
+    <?php require __DIR__ . '/_partials/_listaProtocolos.php'; ?> 
 
 </div>
 
