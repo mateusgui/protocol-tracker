@@ -16,12 +16,12 @@
     <div class="form-row">
         <div class="form-group">
             <label for="numero">Número do Protocolo (6 dígitos):</label>
-            <input type="text" id="numero" name="numero" required maxlength="6" pattern="\d{6}">
+            <input type="text" id="numero" name="numero" required maxlength="6">
         </div>
 
         <div class="form-group">
             <label for="paginas">Quantidade de Páginas:</label>
-            <input type="number" id="paginas" name="paginas" required min="1">
+            <input type="number" id="paginas" name="paginas" required>
         </div>
     </div>
 
