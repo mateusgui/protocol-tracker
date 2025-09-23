@@ -80,13 +80,13 @@ footer.rodape-principal { /* Adicionado para especificidade */
 }
 
 .sidebar nav ul li a:hover {
-    background-color: #34495e;
+    background-color: #33465c;
     text-decoration: none;
 }
 
 .sidebar nav ul li a.active {
-    background-color: #22313f;
-    font-weight: bold;
+    background-color: #253547;
+    color: #ffc107;
 }
 
 /* === ESTILOS DE FORMULÁRIOS E CONTEÚDO === */
@@ -425,4 +425,73 @@ textarea {
 /* Classe que vamos adicionar com JS para fazer a mensagem sumir */
 .flash-message.fade-out {
     opacity: 0;
+}
+
+/* === ESTILOS ADICIONAIS PARA A PÁGINA DE DASHBOARD === */
+
+/* Container geral do dashboard, para garantir a largura correta */
+.dashboard-container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Cada linha de cards */
+.dashboard-row {
+    display: flex;
+    flex-wrap: wrap; /* Permite que os cards quebrem para a próxima linha em telas menores */
+    gap: 20px; /* Espaço entre os cards */
+    margin-bottom: 20px; /* Espaço entre as linhas de cards */
+}
+
+/* Estilo individual de cada card */
+.metric-card {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 25px;
+    flex: 1; /* Faz com que os cards dividam o espaço igualmente na linha */
+    min-width: 200px; /* Largura mínima para cada card */
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.metric-card:hover {
+    transform: translateY(-5px); /* Efeito de "levantar" ao passar o mouse */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Título da métrica (ex: "Lotes do Dia") */
+.metric-card .label {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+/* O número da métrica */
+.metric-card .value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #007bff; /* Azul padrão */
+}
+
+/* Cores específicas para cada grupo, como no seu exemplo */
+.dashboard-row:nth-child(2) .metric-card .value {
+    color: #fd7e14; /* Laranja para o mês */
+}
+
+.dashboard-row:nth-child(3) .metric-card .value {
+    color: #28a745; /* Cinza escuro para os totais */
+}
+
+/* === ESTILOS ADICIONAIS PARA A LOGO NA SIDEBAR === */
+.sidebar-logo {
+    text-align: center; /* Centraliza a imagem no container */
+    margin-bottom: 1.5rem; /* Adiciona mais um espaço */
+}
+
+.sidebar-logo img {
+    max-width: 100%; /* Garante que a imagem nunca seja mais larga que a sidebar */
+    height: auto; /* Mantém a proporção da imagem */
 }
