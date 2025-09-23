@@ -31,7 +31,8 @@
     </div>
 
     <div class="form-actions">
-        <button type="submit">Adicionar Protocolo</button>
+        <a href="/" class="btn-limpar"><span class="material-icons-outlined">cancel</span> Limpar</a>
+        <button type="submit"><span class="material-icons-outlined">add</span> Adicionar Protocolo</button>
     </div>
 </form>
 
