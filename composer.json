@@ -14,5 +14,7 @@
             "email": "mateusguimaraesmoraes14@gmail.com"
         }
     ],
-    "require": {}
+    "require": {
+        "ramsey/uuid": "^4.9"
+    }
 }

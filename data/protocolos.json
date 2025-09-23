@@ -1,14 +1,14 @@
-{
-    "0": {
-        "id": "protocolo_68cd7011e51d4",
-        "numero": "121209",
-        "quantidadeDePaginas": 100,
-        "data": "2025-09-19T11:00:33-04:00"
+[
+    {
+        "id": "16e989ef-4019-434c-a804-ccc3b3f4a17b",
+        "numero": "123457",
+        "quantidadeDePaginas": 50,
+        "data": "2025-09-22T21:15:30-04:00"
     },
-    "2": {
-        "id": "protocolo_68cd6dbcd5e40",
-        "numero": "112233",
-        "quantidadeDePaginas": 35,
-        "data": "2025-09-20T10:50:36-04:00"
+    {
+        "id": "30e00732-4e28-4905-a8a9-49b51d549bf9",
+        "numero": "123456",
+        "quantidadeDePaginas": 50,
+        "data": "2025-09-22T21:15:11-04:00"
     }
-}
+]

@@ -6,6 +6,7 @@ use Mateus\ProtocolTracker\Model\Protocolo;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use DateTimeImmutable;
 use DateTimeZone;
+use Ramsey\Uuid\Uuid;
 use Exception; // Usaremos para reportar erros de validação
 
 final class ProtocoloService
@@ -37,8 +38,10 @@ final class ProtocoloService
 
         // 2. Lógica de Criação do Objeto
         //Instanciação de um novo protocolo para ser adicionado
+        $uuid = Uuid::uuid4()->toString();
+
         $protocolo = new Protocolo(
-            uniqid('protocolo_'), //Geração automática do id no formato 'protocolo_uniqid'
+            $uuid, //Geração automática do id no formato 'protocolo_uniqid'
             $numero, //Número que recebeu por parâmetro
             $quantidadeDePaginas, //Quantidade de páginas que recebeu por parâmetro
             new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande')) //Pegando a data e hora atual
