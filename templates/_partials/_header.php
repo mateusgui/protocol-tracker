@@ -15,8 +15,6 @@
             <?= htmlspecialchars($_SESSION['mensagem_sucesso']) ?>
         </div>
         <?php 
-            // Uma vez que a mensagem foi exibida, nós a removemos da sessão
-            // para que ela não apareça de novo se o usuário der F5.
             unset($_SESSION['mensagem_sucesso']); 
         ?>
     <?php endif; ?>
@@ -24,11 +22,17 @@
     <div class="container-principal">
 
         <aside class="sidebar">
+            
+            <div class="sidebar-logo">
+                <img src="/assets/imgs/ProtocolTrackerLogo.png" alt="Logo Protocol Tracker">
+            </div>
+            
             <nav>
                 <ul>
                     <?php $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
                     <li><a href="/" class="<?= ($uri === '/') ? 'active' : '' ?>">Novo Protocolo</a></li>
                     <li><a href="/busca" class="<?= ($uri === '/busca') ? 'active' : '' ?>">Buscar Protocolos</a></li>
+                    <li><a href="/dashboard" class="<?= ($uri === '/dashboard') ? 'active' : '' ?>">Visualizar Dashboard</a></li>
                 </ul>
             </nav>
         </aside>

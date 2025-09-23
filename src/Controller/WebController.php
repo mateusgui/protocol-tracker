@@ -161,6 +161,7 @@ class WebController {
             $tituloDaPagina = "Dashboard de Produtividade";
 
             require __DIR__ . '/../../templates/dashboard.php';
+            
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Controle de Protocolos";
