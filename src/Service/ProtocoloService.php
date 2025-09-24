@@ -19,6 +19,7 @@ final class ProtocoloService
     /**
      * Valida os dados e registra um novo protocolo.
      * @throws Exception Se os dados forem inválidos.
+     * @return Protocolo
      */
     public function registrarNovoProtocolo(string $numero, int $quantidadeDePaginas): Protocolo
     {
@@ -36,10 +37,8 @@ final class ProtocoloService
             throw new Exception("O número do protocolo informado já foi registrado");
         }
 
-        // 2. Lógica de Criação do Objeto
-        //Instanciação de um novo protocolo para ser adicionado
+        //Instanciação de um novo objeto Protocolo para ser adicionado
         $uuid = Uuid::uuid4()->toString();
-
         $protocolo = new Protocolo(
             $uuid, //Geração automática do id no formato 'protocolo_uniqid'
             $numero, //Número que recebeu por parâmetro
@@ -54,28 +53,32 @@ final class ProtocoloService
         return $protocolo;
     }
     
-    //USE public function update(Protocolo $protocoloParaAtualizar): bool
+    /**
+     * Valida os dados e edita um protocolo.
+     * @throws Exception Se os dados forem inválidos.
+     * @return Protocolo
+     */
     public function editarProtocolo(string $id, string $numero, int $quantidadeDePaginas): Protocolo
     {
         //Busca o objeto Protocolo original que vai ser editado
         $protocoloOriginal = $this->repositorio->buscaPorId($id);
 
-        //Vai cair aqui o id que vem da requisição não coincidir com nenhum id dos protocolos da lista completa de protocolos
         if($protocoloOriginal === null){
             throw new Exception("O número do protocolo informado não foi localizado");
         }
 
-        //validação se numero tem 6 dígitos e se foi digitado somente numerais
+        if($this->repositorio->buscaPorNumero($numero) && ($numero !== $protocoloOriginal->numero())){
+            throw new Exception("Não é possível informar o número de um protocolo que já existe");
+        }
+
         if(strlen($numero) !== 6 || !ctype_digit($numero)){
             throw new Exception("O número do protocolo precisa ter exatamente 6 dígitos e possuir somente números");
         }
 
-        //validação da quantidade de páginas
         if($quantidadeDePaginas < 1){
             throw new Exception("A quantidade de páginas precisa ser maior que zero");
         }
 
-        //Criando o objeto do tipo Protocolo para ser feito o update
         $protocoloAtualizado = new Protocolo(
             $id,
             $numero,
@@ -90,10 +93,14 @@ final class ProtocoloService
         return $protocoloAtualizado;
     }
 
-    //USE public function delete(string $id): bool
+    /**
+     * Deleta um protocolo
+     * @throws Exception Se os dados forem inválidos.
+     * @return void
+     */
     public function deletarProtocolo(string $id): void
     {
-        //Delega a função para ProtocoloRepository.php que vai retornar true se a exclusão ocorrer e false caso não encontra o ID
+        //Retornar true se a exclusão ocorrer e false caso não encontre o ID
         $sucesso = $this->repositorio->delete($id);
 
         //Se não houve exclusão lança uma exceção

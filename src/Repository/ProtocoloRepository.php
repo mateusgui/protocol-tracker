@@ -3,17 +3,14 @@
 namespace Mateus\ProtocolTracker\Repository;
 
 use Mateus\ProtocolTracker\Model\Protocolo;
-use DateTimeImmutable; // Importa a classe para usar nos type hints
+use DateTimeImmutable;
 
-/**
- * Classe responsável pela persistência (leitura e escrita) dos dados de protocolos.
- * É a única classe que interage diretamente com o arquivo JSON.
- */
 final class ProtocoloRepository implements ProtocoloRepositoryInterface
 {
     public function __construct(
         private readonly string $caminhoArquivoJson
-    ) {
+    )
+    {
         //Recebe caminho da pasta data, que contém o Arquivo JSON
         $diretorioDeDados = dirname($this->caminhoArquivoJson);
 
@@ -37,11 +34,6 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
     {
         // Lógica para ler o arquivo, decodificar o JSON e transformar em um array de objetos Protocolo.
         $conteudoJsonBruto = json_decode(file_get_contents($this->caminhoArquivoJson), true);
-        /*[
-            0 => ['numero' => '111111', 'quantidadeDePaginas' => 10, 'data' => '...'],
-            1 => ['numero' => '222222', 'quantidadeDePaginas' => 25, 'data' => '...'],
-            ...
-        ]*/
 
         // Se a decodificação falhou ou o arquivo estava vazio, retorna um array vazio.
         if (!is_array($conteudoJsonBruto)) {
@@ -51,7 +43,7 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
         // Aplica a função fromArray em cada array associativo contido no array numérico $conteudoJsonBruto e recebe de volta um array de objetos do tipo Protocolo
         $listaDeProtocolos = array_map([Protocolo::class, 'fromArray'], $conteudoJsonBruto);
         
-        // Ordenando os Protocolos por data, usando o getter data()
+        // Ordenando os Protocolos por data
         usort($listaDeProtocolos, function (Protocolo $a, Protocolo $b)
         {
             return $b->data() <=> $a->data();
@@ -61,25 +53,25 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
     }
 
     /**
-     * Realiza uma busca combinada com múltiplos filtros.
+     * Retorna protocolos com filtros múltiplos.
+     * @return Protocolo[]
      */
     public function search(?string $numero = null, ?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
     {
-        // Começa com a lista completa como base.
-        $protocolos = $this->all();
+        $listaDeProtocolos = $this->all();
 
-        // Aplica o filtro de NÚMERO, se foi fornecido.
+        // Aplica o filtro de número
         if (!empty($numero)) {
-            $protocolos = array_filter(
-                $protocolos,
+            $listaDeProtocolos = array_filter(
+                $listaDeProtocolos,
                 fn(Protocolo $p) => $p->numero() === $numero
             );
         }
 
-        // Aplica o filtro de DATA na lista JÁ FILTRADA.
+        // Aplica o filtro de data na lista que já foi filtrada
         if ($dataInicio || $dataFim) {
-            $protocolos = array_filter(
-                $protocolos,
+            $listaDeProtocolos = array_filter(
+                $listaDeProtocolos,
                 function (Protocolo $p) use ($dataInicio, $dataFim) {
                     $dataProtocolo = $p->data();
                     if ($dataInicio && $dataProtocolo < $dataInicio) return false;
@@ -90,12 +82,11 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
         }
 
         // Retorna o resultado final e reindexado.
-        return array_values($protocolos);
+        return array_values($listaDeProtocolos);
     }
 
     /**
      * Busca protocolos dentro de um intervalo de datas específico.
-     * Este método será a base para os cálculos de "DIA CORRENTE" e "MÊS CORRENTE".
      * @return Protocolo[]
      */
     public function buscaPorPeriodo(?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array

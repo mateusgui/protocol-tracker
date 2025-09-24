@@ -56,8 +56,6 @@ class WebController {
         }
     }
 
-    //public function buscaPorNumero(string $numero): ?Protocolo
-    //public function buscaPorPeriodo(?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
     public function buscaProtocolo()
     {
         try {
