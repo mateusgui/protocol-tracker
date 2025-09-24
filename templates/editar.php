@@ -32,8 +32,8 @@
             </div>
 
             <div class="form-actions-edit">
-                <button type="submit" class="btn-salvar">Salvar Alterações</button>
-                <a href="/busca" class="btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn-salvar"><span class="material-icons-outlined"> save</span> Salvar Alterações</button>
+                <a href="/busca" class="btn-cancelar"><span class="material-icons-outlined">cancel</span> Cancelar</a>
             </div>
         </form>
     </div>

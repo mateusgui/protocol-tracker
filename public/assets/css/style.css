@@ -1,4 +1,40 @@
 /* === RESET BÁSICO E ESTILOS GLOBAIS === */
+:root {
+    --cor-fundo-sidebar: #2c3e50;
+    --cor-fundo-sidebar-hover: #33465c;
+    --cor-fontes-sidebar: #ffffff;
+    --cor-fundo-header: #ffffff;
+    --cor-bordas: #ddd;
+    --cor-fundo-body: #f0f2f5;
+    --cor-fontes-body: #394034;
+    --cor-fundo-sidebar-active: #253547;
+    --cor-fontes-sidebar-active: #007bff;
+    --cor-bordas-focus: #80bdff;
+    --cor-fontes-main-button: #ffffff;
+    --cor-main-button: #28a745;
+    --cor-fontes-cards: #696969;
+    --cor-icones-header: #969696;
+    --cor-icones-header-hover: #007bff;
+}
+
+body.dark-mode {
+    --cor-fundo-sidebar: #272727;
+    --cor-fundo-sidebar-hover: #333333;
+    --cor-fontes-sidebar: #ffffff;
+    --cor-fundo-header: #363636;
+    --cor-bordas: #272727;
+    --cor-fundo-body: #555555;
+    --cor-fontes-body: #ffffff;
+    --cor-fundo-sidebar-active: #1d1d1d;
+    --cor-fontes-sidebar-active: #ffc107;
+    --cor-bordas-focus: #1d1d1d;
+    --cor-fontes-main-button: #ffffff;
+    --cor-main-button: #28a745;
+    --cor-fontes-cards: #ffffff;
+    --cor-icones-header: #969696;
+    --cor-icones-header-hover: #ffc107;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,8 +43,8 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    background-color: #f0f2f5;
-    color: #1c1e21;
+    background-color: var(--cor-fundo-body);
+    color: var(--cor-fontes-body);
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -26,9 +62,7 @@ a:hover {
 /* === ESTRUTURA PRINCIPAL (HEADER, SIDEBAR, CONTEÚDO, FOOTER) === */
 
 header.cabecalho-principal { /* Adicionado para especificidade */
-    background-color: #ffffff;
     padding: 1rem 2rem;
-    border-bottom: 1px solid #ddd;
     text-align: center;
     flex-shrink: 0;
 }
@@ -40,8 +74,7 @@ header.cabecalho-principal { /* Adicionado para especificidade */
 
 .sidebar {
     width: 250px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background-color: var(--cor-fundo-sidebar);
     padding: 1.5rem;
     flex-shrink: 0;
 }
@@ -55,16 +88,6 @@ header.cabecalho-principal { /* Adicionado para especificidade */
     padding: 0 20px;
 }
 
-footer.rodape-principal { /* Adicionado para especificidade */
-    background-color: #ffffff;
-    text-align: center;
-    padding: 1rem;
-    font-size: 0.9em;
-    color: #6c757d;
-    border-top: 1px solid #ddd;
-    flex-shrink: 0;
-}
-
 /* === ESTILOS DA SIDEBAR / NAVEGAÇÃO === */
 .sidebar nav ul {
     list-style: none;
@@ -72,7 +95,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
 
 .sidebar nav ul li a {
     display: block;
-    color: #ecf0f1;
+    color: var(--cor-fontes-sidebar);
     padding: 0.8rem 1rem;
     border-radius: 6px;
     margin-bottom: 0.5rem;
@@ -80,13 +103,13 @@ footer.rodape-principal { /* Adicionado para especificidade */
 }
 
 .sidebar nav ul li a:hover {
-    background-color: #33465c;
+    background-color: var(--cor-fundo-sidebar-hover);
     text-decoration: none;
 }
 
 .sidebar nav ul li a.active {
-    background-color: #253547;
-    color: #ffc107;
+    background-color: var(--cor-fundo-sidebar-active);
+    color: var(--cor-fontes-sidebar-active);
 }
 
 /* === ESTILOS DE FORMULÁRIOS E CONTEÚDO === */
@@ -100,7 +123,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
 
 .conteudo-principal h2 {
     font-size: 1.8rem;
-    color: #343a40;
+    color: var(--cor-fontes-body);
     margin-bottom: 2.0rem;
     align-self: center;
 }
@@ -112,10 +135,8 @@ footer.rodape-principal { /* Adicionado para especificidade */
 
 .busca-form-container {
     width: 100%;
-    background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
-    border: 1px solid #ddd;
     margin: 0 auto; /* Centraliza o formulário na área de conteúdo */
     display: flex;
     flex-direction: column;
@@ -124,10 +145,10 @@ footer.rodape-principal { /* Adicionado para especificidade */
 .protocolo-form {
     max-width: 800px; /* Aumentei um pouco a largura */
     width: 100%;
-    background-color: #ffffff;
+    background-color: var(--cor-fundo-header);
     padding: 2rem;
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-bordas);
     margin: 0 auto; /* Centraliza o formulário na área de conteúdo */
     display: flex;
     flex-direction: column;
@@ -158,7 +179,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
     width: 100%;
     height: 40px;
     padding: 0.8rem;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--cor-bordas);
     border-radius: 6px;
     font-size: 1rem;
     font-family: inherit; /* Garante que a textarea use a mesma fonte */
@@ -169,7 +190,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
     width: 100%;
     height: 40px;
     padding: 0.8rem;
-    border: 1px solid #ced4da;
+    border: 1px solid var(--cor-bordas);
     border-radius: 6px;
     font-size: 1rem;
     font-family: inherit; /* Garante que a textarea use a mesma fonte */
@@ -183,8 +204,7 @@ footer.rodape-principal { /* Adicionado para especificidade */
 .form-group input:focus,
 .form-group textarea:focus {
     outline: none;
-    border-color: #80bdff;
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    border-color: var(--cor-bordas-focus);
 }
 
 input[type=number]::-webkit-outer-spin-button,
@@ -209,8 +229,8 @@ textarea {
 
 .form-actions button {
     font-weight: bold;
-    color: #fff;
-    background-color: #28a745;
+    color: var(--cor-fontes-main-button);
+    background-color: var(--cor-main-button);
     display: inline-flex;
     align-items: center;
     gap: 8px;
@@ -225,7 +245,7 @@ textarea {
 }
 
 .form-actions button:hover {
-    background-color: #218838;
+    opacity: 90%;
 }
 
 .error-message {
@@ -242,15 +262,19 @@ textarea {
 /* Remove a centralização padrão para a página de busca, que ocupa a tela toda */
 .container-principal-busca {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .busca-form-container, .listagem-container {
-    max-width: 800px;
+    width: 100%;
+    max-width: 1400px;
+    border: 1px solid var(--cor-bordas);
     margin: 0 auto;
-    background-color: #ffffff;
+    background-color: var(--cor-fundo-header);
     padding: 2rem;
     border-radius: 8px;
-    border: 1px solid #ddd;
 }
 
 .listagem-container h3 {
@@ -296,21 +320,13 @@ textarea {
     text-decoration: none;
 }
 
-.btn-buscar {
-    color: #fff;
-    background-color: #007bff; /* Azul */
-}
-
-.btn-buscar:hover {
-    background-color: #0056b3;
-}
-
 .btn-limpar {
-    color: #343a40;
-    background-color: #e9ecef; /* Cinza claro */
+    color: var(--cor-fontes-body);
+    background-color: var(--cor-bordas); /* Cinza claro */
 }
+
 .btn-limpar:hover {
-    background-color: #ced4da;
+    opacity: 90%;
     text-decoration: none;
 }
 
@@ -318,29 +334,32 @@ textarea {
 .protocolos-table {
     width: 100%;
     border-collapse: collapse;
+    border-spacing: 0;
 }
 
 .protocolos-table th, .protocolos-table td {
-    padding: 8px;
-    border: 1px solid #e9ecef;
+    padding: 7px;
+    border: 2px solid var(--cor-bordas);
     text-align: center;
     vertical-align: middle;
 }
 
 .protocolos-table thead {
-    background-color: #f8f9fa;
+    background-color: var(--cor-bordas);
 }
+
 
 .nenhum-resultado {
     text-align: center;
     padding: 20px;
-    color: #6c757d;
+    color: var(--cor-fontes-body);
 }
 
 /* Alinhamento da coluna de Ações */
 .acoes-header {
     text-align: center;
 }
+
 .acoes-cell {
     display: flex;
     justify-content: center;
@@ -391,10 +410,9 @@ textarea {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1; /* Faz os botões dividirem o espaço */
+    flex-grow: 1;
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
-    font-weight: bold;
     border: none;
     border-radius: 6px;
     cursor: pointer;
@@ -403,21 +421,22 @@ textarea {
 }
 
 .btn-salvar {
-    background-color: #007bff; /* Azul */
-    color: #fff;
+    background-color: var(--cor-main-button);
+    color: var(--cor-fontes-main-button);
+    font-weight: bold;
 }
 
 .btn-salvar:hover {
-    background-color: #0056b3;
+    opacity: 90%;
 }
 
 .btn-cancelar {
-    background-color: #6c757d; /* Cinza escuro */
-    color: #fff;
+    background-color: var(--cor-bordas);
+    color: var(--cor-fontes-body);
 }
 
 .btn-cancelar:hover {
-    background-color: #5a6268;
+    opacity: 90%;
     text-decoration: none;
 }
 
@@ -458,26 +477,19 @@ textarea {
 
 /* Estilo individual de cada card */
 .metric-card {
-    background-color: #ffffff;
-    border: 1px solid #e9ecef;
+    background-color: var(--cor-fundo-header);
+    border: 1px solid var(--cor-bordas);
     border-radius: 8px;
     padding: 25px;
     flex: 1; /* Faz com que os cards dividam o espaço igualmente na linha */
     min-width: 200px; /* Largura mínima para cada card */
     text-align: center;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-    transition: transform 0.2s, box-shadow 0.2s;
-}
-
-.metric-card:hover {
-    transform: translateY(-5px); /* Efeito de "levantar" ao passar o mouse */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
 /* Título da métrica (ex: "Lotes do Dia") */
 .metric-card .label {
-    font-size: 0.9rem;
-    color: #6c757d;
+    font-size: 1.0rem;
+    color: var(--cor-fontes-cards);
     margin-bottom: 10px;
     font-weight: 600;
 }
@@ -491,11 +503,11 @@ textarea {
 
 /* Cores específicas para cada grupo, como no seu exemplo */
 .dashboard-row:nth-child(2) .metric-card .value {
-    color: #fd7e14; /* Laranja para o mês */
+    color: #ff9900; /* Laranja para o mês */
 }
 
 .dashboard-row:nth-child(3) .metric-card .value {
-    color: #28a745; /* Cinza escuro para os totais */
+    color: #15da43; /* Cinza escuro para os totais */
 }
 
 /* === ESTILOS ADICIONAIS PARA A LOGO NA SIDEBAR === */
@@ -519,10 +531,8 @@ textarea {
     justify-content: space-between; /* Joga o título para um lado e as ações para o outro */
     align-items: center;
 
-    background-color: #ffffff;
+    background-color: var(--cor-fundo-header);
     padding: 1rem;
-
-    margin-bottom: #777777;
 }
 
 .content-header p {
@@ -537,14 +547,14 @@ textarea {
 }
 
 .action-icon {
-    color: #6c757d; /* Cor cinza para os ícones */
+    color: var(--cor-icones-header); /* Cor cinza para os ícones */
     transition: color 0.2s;
     display: flex;
     align-items: center;
 }
 
 .action-icon:hover {
-    color: #007bff; /* Cor azul ao passar o mouse */
+    color: var(--cor-icones-header-hover); /* Cor azul ao passar o mouse */
     text-decoration: none;
 }
 
