@@ -14,18 +14,18 @@
     <div class="form-row">
         <div class="form-group">
             <label for="numero">Número do Protocolo (6 dígitos):</label>
-            <input type="text" id="numero" name="numero" required maxlength="6">
+            <input type="text" id="numero" name="numero" required maxlength="6" placeholder="Ex: 123456">
         </div>
 
         <div class="form-group">
             <label for="paginas">Quantidade de Páginas:</label>
-            <input type="number" id="paginas" name="paginas" required>
+            <input type="number" id="paginas" name="paginas" required placeholder="Ex: 2000">
         </div>
     </div>
 
     <div class="form-group">
         <label for="observacoes">Observações (Opcional):</label>
-        <textarea id="observacoes" name="observacoes" rows="3"></textarea>
+        <textarea id="observacoes" name="observacoes" rows="3" placeholder="Ex: Prontuário Nº9999 possui várias páginas com impressões falhadas"></textarea>
     </div>
 
     <div class="form-actions">

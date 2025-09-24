@@ -192,6 +192,7 @@ header.cabecalho-principal { /* Adicionado para especificidade */
     width: 100%;
     height: 40px;
     padding: 0.8rem;
+    color: var(--cor-icones-header);
     border: 1px solid var(--cor-bordas);
     border-radius: 6px;
     font-size: 1rem;
