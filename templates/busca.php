@@ -1,7 +1,5 @@
 <?php require __DIR__ . '/_partials/_header.php'; ?>
 
-<?php require __DIR__ . '/_partials/_content-header.php'; ?>
-
 <div class="container-principal-busca">
 
     <section class="busca-form-container">

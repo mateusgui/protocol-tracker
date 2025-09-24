@@ -1,7 +1,5 @@
 <?php require __DIR__ . '/_partials/_header.php'; ?>
 
-<?php require __DIR__ . '/_partials/_content-header.php'; ?>
-
 <div class="home-container"> 
         <h2><?= htmlspecialchars($tituloDaPagina) ?></h2>
         <p>Altere os dados necessários e clique em "Salvar Alterações".</p>

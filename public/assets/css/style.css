@@ -52,6 +52,7 @@ header.cabecalho-principal { /* Adicionado para especificidade */
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 20px;
 }
 
 footer.rodape-principal { /* Adicionado para especificidade */
@@ -110,7 +111,6 @@ footer.rodape-principal { /* Adicionado para especificidade */
 }
 
 .busca-form-container {
-    max-width: 800px; /* Aumentei um pouco a largura */
     width: 100%;
     background-color: #ffffff;
     padding: 2rem;
@@ -245,9 +245,8 @@ textarea {
 }
 
 .busca-form-container, .listagem-container {
-    width: 100%;
-    max-width: 1200px; /* Largura máxima para o conteúdo central */
-    margin: 0 auto 2rem auto; /* Centraliza e adiciona espaço embaixo */
+    max-width: 800px;
+    margin: 0 auto;
     background-color: #ffffff;
     padding: 2rem;
     border-radius: 8px;
@@ -551,4 +550,8 @@ textarea {
 
 .action-icon .material-icons-outlined {
     font-size: 36px; /* Tamanho dos ícones */
+}
+
+.div-conteudo-principal {
+    width: 100%;
 }

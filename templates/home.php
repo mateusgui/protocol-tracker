@@ -1,7 +1,5 @@
 <?php require __DIR__ . '/_partials/_header.php'; ?>
 
-<?php require __DIR__ . '/_partials/_content-header.php'; ?>
-
 <h2>Adicionar Novo Protocolo</h2>
 <p>Preencha os campos abaixo para registrar um novo protocolo digitalizado.</p>
 

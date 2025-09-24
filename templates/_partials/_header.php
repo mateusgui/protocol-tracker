@@ -37,4 +37,7 @@
             </nav>
         </aside>
 
-        <main class="conteudo-principal">
+        <div class="div-conteudo-principal">
+            <?php require __DIR__ . '/_content-header.php'; ?>
+
+            <main class="conteudo-principal">
