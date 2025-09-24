@@ -100,10 +100,10 @@ a {
 /* === ESTILOS PARA O CABEÇALHO === */
 .content-header {
     width: 100%;
-    margin: 0 auto 2rem auto; /* Centraliza e adiciona espaço embaixo */
+    margin: 0 auto 2rem auto;
     
     display: flex;
-    justify-content: space-between; /* Joga o título para um lado e as ações para o outro */
+    justify-content: space-between;
     align-items: center;
 
     background-color: var(--cor-fundo-header);
@@ -111,30 +111,30 @@ a {
 }
 
 .content-header p {
-    margin-bottom: 0; /* Remove a margem padrão do h2 */
+    margin-bottom: 0;
     margin-left: 10px;
 }
 
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 15px; /* Espaço entre os ícones */
+    gap: 15px;
 }
 
 .action-icon {
-    color: var(--cor-icones-header); /* Cor cinza para os ícones */
+    color: var(--cor-icones-header);
     transition: color 0.2s;
     display: flex;
     align-items: center;
 }
 
 .action-icon:hover {
-    color: var(--cor-icones-header-hover); /* Cor azul ao passar o mouse */
+    color: var(--cor-icones-header-hover);
     text-decoration: none;
 }
 
 .action-icon .material-icons-outlined {
-    font-size: 36px; /* Tamanho dos ícones */
+    font-size: 36px;
 }
 
 .div-conteudo-principal {
@@ -176,13 +176,13 @@ a {
 }
 
 .protocolo-form {
-    max-width: 800px; /* Aumentei um pouco a largura */
+    max-width: 800px;
     width: 100%;
     background-color: var(--cor-fundo-header);
     padding: 2rem;
     border-radius: 8px;
     border: 1px solid var(--cor-bordas);
-    margin: 0 auto; /* Centraliza o formulário na área de conteúdo */
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -191,11 +191,11 @@ a {
 /* === NOVA REGRA PARA A LINHA DO FORMULÁRIO === */
 .form-row {
     display: flex;
-    gap: 20px; /* Cria um espaço entre os campos lado a lado */
+    gap: 20px;
 }
 
 .form-group {
-    flex-grow: 1; /* Faz os grupos crescerem para preencher o espaço */
+    flex-grow: 1;
 }
 
 .form-group label {
@@ -205,7 +205,6 @@ a {
     margin-bottom: 0.5rem;
 }
 
-/* Regra para todos os campos de entrada */
 .form-group input[type="text"],
 .form-group input[type="number"],
 .form-group textarea {
@@ -215,7 +214,7 @@ a {
     border: 1px solid var(--cor-bordas);
     border-radius: 6px;
     font-size: 1rem;
-    font-family: inherit; /* Garante que a textarea use a mesma fonte */
+    font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -227,7 +226,7 @@ a {
     border: 1px solid var(--cor-bordas);
     border-radius: 6px;
     font-size: 1rem;
-    font-family: inherit; /* Garante que a textarea use a mesma fonte */
+    font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
@@ -294,17 +293,17 @@ textarea {
 
 /* === ESTILOS DO AVISO DE SUCESSO === */
 .flash-message {
-    position: fixed; /* Flutua sobre a página */
+    position: fixed;
     top: 90px;
     right: 20px;
-    background-color: #28a745; /* Verde de sucesso */
+    background-color: #28a745;
     color: white;
     padding: 15px 25px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    z-index: 1000; /* Garante que fique por cima de tudo */
+    z-index: 1000;
     opacity: 1;
-    transition: opacity 0.5s ease-in-out; /* Animação de fade out */
+    transition: opacity 0.5s ease-in-out;
 }
 
 .flash-message.fade-out {
@@ -336,12 +335,12 @@ textarea {
 
 .busca-form .form-row {
     display: flex;
-    gap: 20px; /* Espaço entre os campos de filtro */
+    gap: 20px;
     align-items: flex-end;
 }
 
 .busca-form .form-group {
-    flex-grow: 1; /* Faz os campos crescerem para ocupar o espaço */
+    flex-grow: 1;
 }
 
 .busca-form .form-actions {
@@ -375,7 +374,7 @@ textarea {
 
 .btn-limpar {
     color: var(--cor-fontes-body);
-    background-color: var(--cor-bordas); /* Cinza claro */
+    background-color: var(--cor-bordas);
 }
 
 .btn-limpar:hover {
@@ -429,14 +428,14 @@ textarea {
     display: inline-flex;
     padding: 6px;
     border: none;
-    border-radius: 50%; /* Deixa o fundo redondo */
+    border-radius: 50%;
     cursor: pointer;
     transition: background-color 0.2s;
     color: #fff;
 }
 
 .btn-editar {
-    background-color: #ffc107; /* Amarelo */
+    background-color: #ffc107;
 }
 .btn-editar:hover {
     background-color: #e0a800;
@@ -444,13 +443,12 @@ textarea {
 }
 
 .btn-excluir {
-    background-color: #dc3545; /* Vermelho */
+    background-color: #dc3545;
 }
 .btn-excluir:hover {
     background-color: #c82333;
 }
 
-/* Estilo para alinhar os ícones do Google */
 .material-icons-outlined {
     vertical-align: middle;
 }
@@ -458,7 +456,7 @@ textarea {
 /* === ESTILOS PARA OS BOTÕES DE EDIÇÃO === */
 .form-actions-edit {
     display: flex;
-    gap: 15px; /* Espaço entre os botões */
+    gap: 15px;
     margin-top: 1.5rem;
 }
 
