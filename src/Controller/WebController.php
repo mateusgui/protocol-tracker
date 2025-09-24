@@ -16,9 +16,6 @@ class WebController {
         private ProtocoloService $protocoloService
     ) {}
 
-    // --------------
-    //Lida com a exibição da página inicial (requisições GET)
-    // --------------
     public function home()
     {
         $metricas = $this->dashboardService->getTodasAsMetricas();
@@ -27,9 +24,6 @@ class WebController {
         require __DIR__ . '/../../templates/home.php';
     }
 
-    // --------------
-    //Lida com requisição POST para adicionar um novo protocolo
-    // --------------
     public function salvarNovoProtocolo()
     {
         try {
@@ -122,15 +116,11 @@ class WebController {
             return;
         }
 
-        // Se o código chegou até aqui, temos 100% de certeza
-        // que $protocolo é um objeto e não é null.
         $tituloDaPagina = "Editando Protocolo";
         
-        // Agora é seguro chamar o template.
         require __DIR__ . '/../../templates/editar.php';
     }
 
-    // USE  public function deletarProtocolo(string $id): void
     public function deletarProtocolo()
     {
         try {
@@ -169,9 +159,13 @@ class WebController {
         }
     }
 
-    public function notFound()
-    {
-        http_response_code(404);
-        echo "404 Not Found";
-    }
+public function notFound()
+{
+    http_response_code(404);
+
+    $tituloDaPagina = "Página Não Encontrada";
+    $mainClass = 'pagina-404'; 
+
+    require __DIR__ . '/../../templates/404.php';
+}
 }

@@ -539,3 +539,51 @@ textarea {
 .dashboard-row:nth-child(3) .metric-card .value {
     color: #15da43;
 }
+
+/* === ESTILOS PÁGINA 404 NOT FOUND === */
+.conteudo-principal.pagina-404 {
+    align-items: center;
+    justify-content: center;
+}
+
+.container-404 {
+    text-align: center;
+    max-width: 600px;
+}
+
+.imagem-404 img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+}
+
+.texto-404 h1 {
+    font-size: 2.5rem;
+    color: #343a40;
+    margin-bottom: 1rem;
+}
+
+.texto-404 p {
+    font-size: 1.1rem;
+    color: #6c757d;
+    margin-bottom: 2rem;
+}
+
+.btn-voltar-home {
+    display: inline-block;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #fff;
+    background-color: #007bff; /* Azul */
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    text-decoration: none;
+}
+
+.btn-voltar-home:hover {
+    background-color: #0056b3;
+    text-decoration: none;
+}
