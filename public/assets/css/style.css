@@ -117,7 +117,7 @@ header.cabecalho-principal { /* Adicionado para especificidade */
 .conteudo-principal h2,
 .conteudo-principal p {
     text-align: center;
-    max-width: 800px; /* Garante que não fiquem largos demais */
+    max-width: 800px;
     width: 100%;
 }
 
@@ -130,7 +130,7 @@ header.cabecalho-principal { /* Adicionado para especificidade */
 
 .conteudo-principal p {
     margin-bottom: 1.5rem;
-    color: #6c757d;
+    color: var(--cor-fontes-cards);
 }
 
 .busca-form-container {

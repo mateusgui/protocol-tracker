@@ -1,16 +1,52 @@
-const flashMessage = document.querySelector('.flash-message');
+document.addEventListener('DOMContentLoaded', () => {
 
-    // Se o elemento existir na página...
+    // --- LÓGICA PARA A FLASH MESSAGE ---
+    const flashMessage = document.querySelector('.flash-message');
+
     if (flashMessage) {
-        // ...espera 4 segundos (4000 milissegundos)...
         setTimeout(() => {
-            // ...adiciona a classe 'fade-out' para iniciar a animação de desaparecer.
             flashMessage.classList.add('fade-out');
-            
-            // Espera a animação terminar (0.5s) para remover o elemento da página.
             setTimeout(() => {
                 flashMessage.remove();
             }, 500);
-
         }, 4000);
     }
+
+
+    // --- LÓGICA PARA O DARK MODE ---
+    const themeToggle = document.getElementById('theme-toggle');
+
+    // Função para aplicar e remover o tema
+    function aplicarTema(tema) {
+        if (tema === 'dark') {
+            document.body.classList.add('dark-mode');
+        } else {
+            document.body.classList.remove('dark-mode');
+        }
+    }
+
+    // Verifica se o usuário já tem uma preferência salva no navegador
+    const temaSalvo = localStorage.getItem('theme');
+    if (temaSalvo) {
+        aplicarTema(temaSalvo);
+    }
+
+    // Garante que o botão existe antes de adicionar o evento de clique
+    if (themeToggle) {
+        themeToggle.addEventListener('click', () => {
+            // Verifica se o modo escuro já está ativo
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            
+            if (isDarkMode) {
+                // Se estiver, muda para o claro e salva a preferência
+                localStorage.setItem('theme', 'light');
+                aplicarTema('light');
+            } else {
+                // Se não, muda para o escuro e salva a preferência
+                localStorage.setItem('theme', 'dark');
+                aplicarTema('dark');
+            }
+        });
+    }
+
+});

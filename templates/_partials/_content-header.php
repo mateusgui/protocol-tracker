@@ -3,7 +3,7 @@
         <p><?= isset($tituloDaPagina) ? htmlspecialchars($tituloDaPagina) : 'Página sem Título' ?></p>
     </div>
     <div class="header-actions">
-        <a href="#" class="action-icon" title="Mudar para Modo Escuro">
+        <a href="#" id="theme-toggle" class="action-icon" title="Mudar Tema">
             <span class="material-icons-outlined">dark_mode</span>
         </a>
         <a href="#" class="action-icon" title="Perfil do Usuário">
