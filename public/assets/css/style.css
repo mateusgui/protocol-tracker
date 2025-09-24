@@ -15,6 +15,7 @@
     --cor-fontes-cards: #696969;
     --cor-icones-header: #969696;
     --cor-icones-header-hover: #007bff;
+    --cor-primaria-erro: #ff2c2c;
 }
 
 body.dark-mode {
@@ -33,6 +34,7 @@ body.dark-mode {
     --cor-fontes-cards: #ffffff;
     --cor-icones-header: #969696;
     --cor-icones-header-hover: #ffc107;
+    --cor-primaria-erro: #ff2c2c;
 }
 
 * {
@@ -249,9 +251,8 @@ textarea {
 }
 
 .error-message {
-    color: #721c24;
-    background-color: #f8d7da;
-    border: 1px solid #f5c6cb;
+    color: #ffffff;
+    background-color: var(--cor-primaria-erro);
     padding: 1rem;
     margin-bottom: 1.5rem;
     border-radius: 6px;
