@@ -86,17 +86,6 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     }
 
     /**
-     * Busca protocolos em um período
-     * @param DateTimeImmutable|null $dataInicio Data de início para o filtro
-     * @param DateTimeImmutable|null $dataFim Data final para o filtro
-     * @return Protocolo[] Um array de objetos Protocolo que correspondem aos filtros
-     */
-    public function buscaPorPeriodo(?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
-    {
-        return []; //Retorno PADRÃO
-    }
-
-    /**
      * Busca um único protocolo pelo número
      * @param string $numero Número do protocolo
      * @return Protocolo|null
