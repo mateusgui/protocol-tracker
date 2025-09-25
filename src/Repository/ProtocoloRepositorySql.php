@@ -122,6 +122,10 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
 
         $protocolo = $stmt->fetch();
 
+        if ($protocolo === false) {
+            return null;
+        }
+
         return Protocolo::fromArray($protocolo);
     }
 
