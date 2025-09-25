@@ -4,6 +4,7 @@ namespace Mateus\ProtocolTracker\Repository;
 
 use Mateus\ProtocolTracker\Model\Protocolo;
 use DateTimeImmutable;
+use DateTimeZone;
 use PDO;
 use PDOStatement;
 
@@ -77,7 +78,6 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $sqlQuery .= " ORDER BY criado_em DESC;";
 
         $stmt = $this->connection->prepare($sqlQuery);
-
         $stmt->execute($parametros);
 
         $listaDeProtocolos = $this->hidrataListaDeProtocolos($stmt);
@@ -92,7 +92,19 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function buscaPorNumero(string $numero): ?Protocolo
     {
-        return $listaDeProtocolos; //Retorno PADRÃO
+        $sqlQuery = "SELECT * FROM protocolos WHERE numero = :numero";
+
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':numero', $numero);
+        $stmt->execute();
+
+        $protocolo = $stmt->fetch();
+
+        if ($protocolo === false) {
+            return null;
+        }
+
+        return Protocolo::fromArray($protocolo);
     }
 
     /**
@@ -102,7 +114,15 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function buscaPorId(string $id): ?Protocolo
     {
-        return $listaDeProtocolos; //Retorno PADRÃO
+        $sqlQuery = "SELECT * FROM protocolos WHERE id = :id";
+
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $protocolo = $stmt->fetch();
+
+        return Protocolo::fromArray($protocolo);
     }
 
     /**
@@ -112,7 +132,18 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function add(Protocolo $novoProtocolo): void
     {
-        
+        $dadosNovoProtocolo = $novoProtocolo->toArray(); //salvou dados do objeto no array
+
+        $sqlQuery = "INSERT INTO protocolos (id, id_usuario, numero, quantidade_paginas, observacoes, criado_em) VALUES (:id, :id_usuario, :numero, :quantidade_paginas, :observacoes, :criado_em)";
+
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':id', $dadosNovoProtocolo['id']);
+        $stmt->bindValue(':id_usuario', $dadosNovoProtocolo['id_usuario']);
+        $stmt->bindValue(':numero', $dadosNovoProtocolo['numero']);
+        $stmt->bindValue(':quantidade_paginas', $dadosNovoProtocolo['quantidade_paginas']);
+        $stmt->bindValue(':observacoes', $dadosNovoProtocolo['observacoes']);
+        $stmt->bindValue(':criado_em', $dadosNovoProtocolo['criado_em']);
+        $stmt->execute();
     }
 
     /**
@@ -127,7 +158,17 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function update(Protocolo $protocoloParaAtualizar): bool
     {
-        return true; //Retorno PADRÃO
+        $dadosProtocoloParaAtualizar = $protocoloParaAtualizar->toArray();
+
+        $sqlQuery = "UPDATE protocolos SET numero = :numero, quantidade_paginas = :quantidade_paginas, observacoes = :observacoes, alterado_em = :alterado_em WHERE id = :id_para_atualizar";
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':numero', $dadosProtocoloParaAtualizar['numero']);
+        $stmt->bindValue(':quantidade_paginas', $dadosProtocoloParaAtualizar['quantidade_paginas']);
+        $stmt->bindValue(':observacoes', $dadosProtocoloParaAtualizar['observacoes']);
+        $stmt->bindValue(':alterado_em', $dadosProtocoloParaAtualizar['alterado_em']);
+        $stmt->bindValue(':id_para_atualizar', $dadosProtocoloParaAtualizar['id']);
+
+        return $stmt->execute();
     }
 
     /**
@@ -137,8 +178,12 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function delete(string $id): bool
     {
-        // ----- Aqui vai ser um soft delete agora -----
-        return true; //Retorno PADRÃO
+        $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id";
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':deletado_em', new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))->format('Y-m-d H:i:s'));
+        $stmt->bindValue(':id', $id);
+
+        return $stmt->execute();
     }
 
     private function hidrataListaDeProtocolos(PDOStatement $stmt): array

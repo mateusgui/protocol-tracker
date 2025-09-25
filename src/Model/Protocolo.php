@@ -118,7 +118,7 @@ class Protocolo {
             'id' => $this->id,
             'id_usuario' => $this->idUsuario,
             'numero' => $this->numero,
-            'quantidade_de_paginas' => $this->quantidadeDePaginas,
+            'quantidade_paginas' => $this->quantidadeDePaginas,
             'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
             'observacoes' => $this->observacoes,
             'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s')
