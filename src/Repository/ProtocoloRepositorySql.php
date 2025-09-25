@@ -157,7 +157,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $listaDeProtocolos = [];
 
         while($protocoloDados = $stmt->fetch()){
-            $listaDeProtocolos[] = Protocolo::fromArray($protocoloDados);
+            $listaDeProtocolos[] = Protocolo::fromArray($protocoloDados); //Será preciso modificar o método fromArray quando a migração de BD ocorrer, para receber os novos dados
         }
 
         return $listaDeProtocolos;
