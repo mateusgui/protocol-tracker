@@ -89,35 +89,6 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
     }
 
     /**
-     * Busca protocolos dentro de um intervalo de datas específico.
-     * @return Protocolo[]
-     */
-/*     public function buscaPorPeriodo(?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
-    {
-        //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
-        $listaDeProtocolos = $this->all();
-
-        $protocolosFiltrados = array_filter($listaDeProtocolos, function(Protocolo $protocolo) use ($dataInicio, $dataFim)
-        {
-            $dataProtocolo = $protocolo->data();
-
-            if($dataInicio !== null && $dataProtocolo < $dataInicio){
-                return false; //Não é inserido no array $protocolosFiltrados
-            }
-
-            if($dataFim !==null && $dataProtocolo > $dataFim){
-                return false; //Não é inserido no array $protocolosFiltrados
-            }
-
-            //Passou nas verificações e deve ser inserido no array $protocolosFiltrados
-            return true;
-        });
-
-        //reindexando o novo array com os protocolos filtrados para garantir que os índices sejam sequenciais
-        return array_values($protocolosFiltrados);
-    } */
-
-    /**
      * Busca um único protocolo pelo seu número.
      * @return Protocolo|null
      */
