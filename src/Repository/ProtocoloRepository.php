@@ -40,8 +40,12 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
             return [];
         }
 
-        // Aplica a função fromArray em cada array associativo contido no array numérico $conteudoJsonBruto e recebe de volta um array de objetos do tipo Protocolo
-        $listaDeProtocolos = array_map([Protocolo::class, 'fromArray'], $conteudoJsonBruto);
+        $listaDeProtocolos = []; 
+
+        foreach ($conteudoJsonBruto as $dadosDeUmProtocolo) {
+            $protocoloObjeto = Protocolo::fromArray($dadosDeUmProtocolo); //recriando objetos Protocolo 
+            $listaDeProtocolos[] = $protocoloObjeto;
+        }
         
         // Ordenando os Protocolos por data
         usort($listaDeProtocolos, function (Protocolo $a, Protocolo $b)
