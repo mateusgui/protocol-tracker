@@ -32,7 +32,7 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
      */
     public function all(): array
     {
-        // Lógica para ler o arquivo, decodificar o JSON e transformar em um array de objetos Protocolo.
+        // Armazenando os dados do JSON como array associativo
         $conteudoJsonBruto = json_decode(file_get_contents($this->caminhoArquivoJson), true);
 
         // Se a decodificação falhou ou o arquivo estava vazio, retorna um array vazio.
@@ -41,7 +41,6 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
         }
 
         $listaDeProtocolos = []; 
-
         foreach ($conteudoJsonBruto as $dadosDeUmProtocolo) {
             $protocoloObjeto = Protocolo::fromArray($dadosDeUmProtocolo); //recriando objetos Protocolo 
             $listaDeProtocolos[] = $protocoloObjeto;

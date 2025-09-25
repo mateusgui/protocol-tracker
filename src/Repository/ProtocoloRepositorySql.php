@@ -9,6 +9,9 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
 {
     public function all(): array
     {
+        //Consulta SQL
+        //Converte cada registro retornado na consulta para um objeto do tipo Protocolo
+        //Salva todos os protocolos em um array de Protocolo
         return []; //Retorno PADRÃO
     }
 
