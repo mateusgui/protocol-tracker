@@ -46,6 +46,18 @@ final class ProtocoloService
             new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande')) //Pegando a data e hora atual
         );
 
+        /*  DESCOMENTAR NA MIGRAÇÃO E APAGAR A CRIAÇÃO DE OBJETO ACIMA
+            DADOS DEVEM CHEGAR JÁ TRATADOS (O QUE NÃO FOI INFORMADO PELO USUARIO DEVE VIR COMO NULL)
+
+            $protocolo = new Protocolo(
+            $uuid,
+            $idUsuario,
+            $numero,
+            $quantidadeDePaginas,
+            new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande')),
+            $observacoes
+        ); */
+
         //chama a função add para adicionar a instancia de protocolo que foi criada acima
         $this->repositorio->add($protocolo);
 
