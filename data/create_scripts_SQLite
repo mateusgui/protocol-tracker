@@ -1,0 +1,31 @@
+CREATE TABLE usuarios (
+    id INTEGER PRIMARY KEY,
+    nome TEXT NOT NULL,
+    email TEXT NOT NULL UNIQUE,
+    cpf TEXT NOT NULL UNIQUE,
+    senha TEXT NOT NULL,
+    criado_em TEXT NOT NULL
+);
+
+CREATE TABLE protocolos (
+    id TEXT PRIMARY KEY,
+    id_usuario INTEGER NOT NULL,
+    numero TEXT NOT NULL UNIQUE,
+    quantidade_paginas INTEGER NOT NULL,
+    observacoes TEXT,
+    criado_em TEXT NOT NULL,
+    alterado_em TEXT,
+    deletado_em TEXT,
+    FOREIGN KEY (id_usuario) REFERENCES usuarios(id)
+);
+
+CREATE TABLE protocolos_auditoria (
+    id INTEGER PRIMARY KEY,
+    protocolo_id TEXT NOT NULL,
+    usuario_id INTEGER NOT NULL,
+    numero_protocolo TEXT NOT NULL,
+    acao TEXT NOT NULL,
+    data_acao TEXT NOT NULL,
+    FOREIGN KEY (protocolo_id) REFERENCES protocolos(id),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
