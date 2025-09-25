@@ -8,50 +8,97 @@ use Exception;
 class Protocolo {
 
     public function __construct(
-        private readonly string $id, //id único de cada protocolo
+        private readonly string $id,
         private string $numero,
         private int $quantidadeDePaginas,
         private readonly DateTimeImmutable $data
-    ) {
-    }
+    ) {}
+
+    /* DESCOMENTAR NA MIGRAÇÃO
+    public function __construct(
+        private readonly string $id,
+        private int $idUsuario,
+        private string $numero,
+        private int $quantidadeDePaginas,
+        private readonly DateTimeImmutable $data,
+        private ?string $observacoes = null,
+        private ?DateTimeImmutable $alteradoEm = null
+    ) {} */
 
     //GETTERS
+    /**
+     * @return string id
+     */
     public function id(): string {
         return $this->id;
     }
 
+    /**
+     * @return string numero
+     */
     public function numero(): string {
         return $this->numero;
     }
 
+    /**
+     * @return int quantidadeDePaginas
+     */
     public function paginas(): int {
         return $this->quantidadeDePaginas;
     }
 
+    /**
+     * @return string id
+     */
     public function data(): DateTimeImmutable {
         return $this->data;
     }
 
+    /* DESCOMENTAR NA MIGRAÇÃO
+    
+    public function idUsuario(): int {
+        return $this->idUsuario;
+    }
+
+    public function observacoes(): ?string {
+        return $this->observacoes;
+    }
+
+    public function alteradoEm(): ?DateTimeImmutable {
+        return $this->alteradoEm;
+    }
+    */
+
     //TRADUTORES
-    /**
-     * Função que recebe um array, trata os dados e chama o construtor padrão para retornar um objeto do tipo Protocolo.
-     */
     public static function fromArray(array $dados): self
     {
-        //Tenta criar um DateTimeImmutable usando a data informada pelo usuário
         try {
             $data = new DateTimeImmutable($dados['data']);
         } catch (Exception $e) {
-            throw new Exception("Falha ao criar data a partir do valor: " . $dados['data']);
+            throw new Exception("Falha ao criar data a partir do valor: " . ($dados['data'] ?? 'N/A'));
         }
 
-        //Chamada para o construtor da classe
+        /* DESCOMENTAR NA MIGRAÇÃO e passar para o bloco TRY
+            $alteradoEm = isset($dados['alterado_em']) ? new DateTimeImmutable($dados['alterado_em']) : null; // DESCOMENTAR NA MIGRAÇÃO
+        */
+
         return new self(
             $dados['id'],
             $dados['numero'],
             $dados['quantidadeDePaginas'],
             $data
         );
+
+        /* DESCOMENTAR NA MIGRAÇÃO
+        return new self(
+            $dados['id'],
+            $dados['id_usuario'],
+            $dados['numero'],
+            $dados['quantidade_de_paginas'],
+            $data,
+            $dados['observacoes'] ?? null,
+            $alteradoEm
+        ); */
     }
 
     /**
@@ -65,6 +112,18 @@ class Protocolo {
             'quantidadeDePaginas' => $this->quantidadeDePaginas,
             'data' => $this->data->format(\DATE_ATOM),
         ];
+
+        /* DESCOMENTAR NA MIGRAÇÃO
+        return [
+            'id' => $this->id,
+            'id_usuario' => $this->idUsuario,
+            'numero' => $this->numero,
+            'quantidade_de_paginas' => $this->quantidadeDePaginas,
+            'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
+            'observacoes' => $this->observacoes,
+            'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s')
+        ];
+        */
     }
 
 }
