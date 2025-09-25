@@ -48,7 +48,7 @@ class Protocolo {
     }
 
     /**
-     * @return string id
+     * @return DateTimeImmutable data
      */
     public function data(): DateTimeImmutable {
         return $this->data;
