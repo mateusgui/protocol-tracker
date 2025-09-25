@@ -557,13 +557,13 @@ textarea {
 
 .texto-404 h1 {
     font-size: 2.5rem;
-    color: #343a40;
+    color: var(--cor-fontes-body);
     margin-bottom: 1rem;
 }
 
 .texto-404 p {
     font-size: 1.1rem;
-    color: #6c757d;
+    color: var(--cor-fontes-cards);
     margin-bottom: 2rem;
 }
 
