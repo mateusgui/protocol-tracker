@@ -190,6 +190,11 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $stmt->execute();
     }
 
+    /**
+     * Transforma um PDOStatement em array de Protocolos
+     * @param PDOStatement $stmt Statement que vai ser convertido
+     * @return array
+     */
     private function hidrataListaDeProtocolos(PDOStatement $stmt): array
     {
         $listaDeProtocolos = [];
