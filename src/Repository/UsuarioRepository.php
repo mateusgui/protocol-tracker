@@ -99,7 +99,7 @@ final class UsuarioRepository
         $stmt->execute();
     }
 
-    /**
+    /** 
      * Desativa um Usuario no banco
      * @param int $id Id do Usuario que será desativado
      * @return void
