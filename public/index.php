@@ -47,7 +47,7 @@ try {
             $webController->buscaProtocolo();
             break;
 
-        // ----- ROTA DO DASHBOARD '/busca' -----
+        // ----- ROTA DO DASHBOARD '/dashboard' -----
         case '/dashboard':
             $webController->exibirDashboard();
             break;
@@ -70,7 +70,7 @@ try {
             }
             break;
 
-        // Rota p
+        // ----- ROTA NÃO ENCONTRADA - 404 NOT FOUND -----
         default:
             $webController->notFound();
             break;
