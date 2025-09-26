@@ -17,7 +17,6 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $this->connection = $connection;
     }
 
-
     /**
      * Busca todos os protocolo ordenados por data decrescente
      * @return Protocolo[]
