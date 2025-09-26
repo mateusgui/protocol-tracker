@@ -13,9 +13,13 @@ final class ProtocoloService
         private UsuarioRepository $repositorio
     ) {}
 
-    public function registrarNovouUsuario()
+    public function registrarNovouUsuario(string $nome, string $email, string $cpf, string $senha)
     {
-
+        //Validar o CPF
+        //Validar o email
+        //Validar se a senha cumpre as regras de segurança
+        //Validar se o email já está cadastrado - implementar busca por email
+        //Validar se o cpf já está cadastrado - implementar busca por cpf
     }
 
     // public function update(Usuario $usuario): void
