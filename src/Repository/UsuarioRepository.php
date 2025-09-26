@@ -29,13 +29,54 @@ final class UsuarioRepository
         return $listaDeUsuarios;
     }
 
-    public function findById(int $id): ?Usuario
+    public function buscaPorId(int $id): ?Usuario
     {
         $sqlQuery = "SELECT * FROM usuarios WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':id', $id);
         $stmt->execute();
         
+        $dadosUsuario = $stmt->fetch();
+        if ($dadosUsuario === false) {
+            return null;
+        }
+
+        return Usuario::fromArray($dadosUsuario);
+    }
+
+    /**
+     * Busca um Usuario pelo e-mail
+     * @param string $email
+     * @return Usuario|null
+     */
+    public function buscaPorEmail(string $email): ?Usuario
+    {
+        $sqlQuery = "SELECT * FROM usuarios WHERE email = :email;";
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':email', $email);
+        $stmt->execute();
+
+        $dadosUsuario = $stmt->fetch();
+        if ($dadosUsuario === false) {
+            return null;
+        }
+
+        return Usuario::fromArray($dadosUsuario);
+    }
+
+    /**
+     * Busca um Usuario pelo CPF
+     * @param string $cpf
+     * @return Usuario|null
+     */
+    public function buscaPorCpf(string $cpf): ?Usuario
+    {
+        $sqlQuery = "SELECT * FROM usuarios WHERE cpf = :cpf;";
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':cpf', $cpf);
+        $stmt->execute();
+
+
         $dadosUsuario = $stmt->fetch();
         if ($dadosUsuario === false) {
             return null;
@@ -67,7 +108,7 @@ final class UsuarioRepository
 
         $novoId = (int) $this->connection->lastInsertId();
 
-        return $this->findById($novoId);
+        return $this->buscaPorId($novoId);
     }
 
 /**
