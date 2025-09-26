@@ -78,7 +78,7 @@ try {
 
 } catch (Exception $e) {
     http_response_code(500);
-    echo "<h1>Erro na conexão com o banco de dados.</h1>";
+    echo "<p>Mensagem do Erro: " . $e->getMessage() . "</p>";
     echo "<p>Por favor, tente novamente mais tarde.</p>";
 }
 
