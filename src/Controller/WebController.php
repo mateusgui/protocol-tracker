@@ -22,7 +22,6 @@ class WebController {
      */
     public function home()
     {
-        $metricas = $this->dashboardService->getTodasAsMetricas();
         $tituloDaPagina = "Controle de Protocolos";
 
         require __DIR__ . '/../../templates/home.php';
@@ -41,6 +40,9 @@ class WebController {
                 
             // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
             $this->protocoloService->registrarNovoProtocolo($numero, $paginas);
+
+            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
+            public function registrarNovoProtocolo(string $idUsuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
 
             $_SESSION['mensagem_sucesso'] = "Protocolo adicionado com sucesso!";
 
@@ -101,6 +103,10 @@ class WebController {
 
             $this->protocoloService->editarProtocolo($id, $numero, $quantidadeDePaginas);
 
+            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
+            public function editarProtocolo(string $idUsuario, string $id, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo
+            */
+
             $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
 
             header('Location: /busca');
@@ -150,6 +156,10 @@ class WebController {
         try {
             $id = $_POST['id'] ?? '';
             $this->protocoloService->deletarProtocolo($id);
+
+            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
+            public function deletarProtocolo(string $idUsuario, string $id): void
+            */
 
             $_SESSION['mensagem_sucesso'] = "Protocolo excluído com sucesso!";
 
