@@ -11,10 +11,15 @@ use Exception; // Usaremos para reportar erros de validação
 
 final class ProtocoloService
 {
-    // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe ProtocoloService
     public function __construct(
         private ProtocoloRepositoryInterface $repositorio
     ) {}
+
+    /* DESCOMENTAR NA MIGRAÇÃO
+    public function __construct(
+        private ProtocoloRepositoryInterface $repositorio
+        private AuditService $auditoria
+    ) {}*/
 
     /**
      * Valida os dados e registra um novo protocolo.
@@ -24,7 +29,7 @@ final class ProtocoloService
     public function registrarNovoProtocolo(string $numero, int $quantidadeDePaginas): Protocolo
     {
         /* DESCOMENTAR NA MIGRAÇÃO
-        public function registrarNovoProtocolo(string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
+        public function registrarNovoProtocolo(string $idUsuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
 
         //validação se numero tem 6 dígitos e se foi digitado somente numerais
         if(strlen($numero) !== 6 || !ctype_digit($numero)){
@@ -70,7 +75,9 @@ final class ProtocoloService
         $this->repositorio->add($protocolo);
 
         //Registro para auditoria
-        /*(string $protocolo_id, int usuario_id, string $numero_protocolo, string $acao)*/
+        /* DESCOMENTAR NA MIGRAÇÃO
+        $this->auditoria->registraAlteracao($protocolo->id(), $idUsuario, $protocolo->numero(), 'CRIAR');
+        */
 
         //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO CRIADO
         return $protocolo;
@@ -83,6 +90,10 @@ final class ProtocoloService
      */
     public function editarProtocolo(string $id, string $numero, int $quantidadeDePaginas): Protocolo
     {
+        /* DESCOMENTAR NA MIGRAÇÃO
+        public function editarProtocolo(string $idUsuario, string $id, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo
+        */
+
         //Busca o objeto Protocolo original que vai ser editado
         $protocoloOriginal = $this->repositorio->buscaPorId($id);
 
@@ -109,8 +120,26 @@ final class ProtocoloService
             $protocoloOriginal->data()
         );
 
+        /*  DESCOMENTAR NA MIGRAÇÃO E APAGAR A CRIAÇÃO DE OBJETO ACIMA
+            DADOS DEVEM CHEGAR JÁ TRATADOS (O QUE NÃO FOI INFORMADO PELO USUARIO DEVE VIR COMO VAZIO OU NULL)
+
+            $protocolo = new Protocolo(
+            $uuid,
+            $idUsuario,
+            $numero,
+            $quantidadeDePaginas,
+            $protocoloOriginal->data(),
+            $observacoes,
+            new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))
+        ); */
+
         //chama a função update para atualizar um protocolo usando a instancia de protocolo que foi criada acima
         $this->repositorio->update($protocoloAtualizado);
+
+        //Registro para auditoria
+        /* DESCOMENTAR NA MIGRAÇÃO
+        $this->auditoria->registraAlteracao($protocolo->id(), $idUsuario, $protocolo->numero(), 'EDIÇÃO');
+        */
 
         //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO EDITADO
         return $protocoloAtualizado;
@@ -123,6 +152,10 @@ final class ProtocoloService
      */
     public function deletarProtocolo(string $id): void
     {
+        /*
+        public function deletarProtocolo(string $idUsuario, string $id): void
+        */
+
         //Retornar true se a exclusão ocorrer e false caso não encontre o ID
         $sucesso = $this->repositorio->delete($id);
 
@@ -130,5 +163,10 @@ final class ProtocoloService
         if (!$sucesso) {
             throw new Exception("O protocolo com o ID informado não foi localizado para exclusão.");
         }
+
+        //Registro para auditoria
+        /* DESCOMENTAR NA MIGRAÇÃO
+        $this->auditoria->registraAlteracao($id, $idUsuario, $this->repositorio->buscaPorId($id)->numero(), 'DELETE');
+        */
     }
 }
