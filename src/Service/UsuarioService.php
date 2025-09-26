@@ -12,4 +12,18 @@ final class ProtocoloService
     public function __construct(
         private UsuarioRepository $repositorio
     ) {}
+
+    public function registrarNovouUsuario()
+    {
+
+    }
+
+    // public function update(Usuario $usuario): void
+    // public function desativarUsuario(int $id): void
+    // public function ativarUsuario(int $id): void
+    //nome, email, cpf, senha, ativo
+    public function salvarUsuario()
+    {
+
+    }
 }
