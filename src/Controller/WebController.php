@@ -16,6 +16,10 @@ class WebController {
         private ProtocoloService $protocoloService
     ) {}
 
+    /**
+     * URL_PATH = /
+     * REQUEST_METHOD = GET
+     */
     public function home()
     {
         $metricas = $this->dashboardService->getTodasAsMetricas();
@@ -24,6 +28,10 @@ class WebController {
         require __DIR__ . '/../../templates/home.php';
     }
 
+    /**
+     * URL_PATH = /
+     * REQUEST_METHOD = POST
+     */
     public function salvarNovoProtocolo()
     {
         try {
@@ -50,6 +58,10 @@ class WebController {
         }
     }
 
+    /**
+     * URL_PATH = /busca
+     * REQUEST_METHOD = GET
+     */
     public function buscaProtocolo()
     {
         try {
@@ -76,6 +88,10 @@ class WebController {
         }
     }
 
+    /**
+     * URL_PATH = /editar
+     * REQUEST_METHOD = POST
+     */
     public function editarProtocolo()
     {
         try {
@@ -100,6 +116,10 @@ class WebController {
         }
     }
 
+    /**
+     * URL_PATH = /editar
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioEdicao()
     {
         $id = $_GET['id'] ?? null;
@@ -121,6 +141,10 @@ class WebController {
         require __DIR__ . '/../../templates/editar.php';
     }
 
+    /**
+     * URL_PATH = /excluir
+     * REQUEST_METHOD = POST
+     */
     public function deletarProtocolo()
     {
         try {
@@ -142,6 +166,10 @@ class WebController {
         }
     }
 
+    /**
+     * URL_PATH = /dashboard
+     * REQUEST_METHOD = GET
+     */
     public function exibirDashboard()
     {
         try {
