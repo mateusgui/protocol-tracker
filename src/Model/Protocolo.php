@@ -115,7 +115,7 @@ class Protocolo {
             'id' => $this->id,
             'numero' => $this->numero,
             'quantidadeDePaginas' => $this->quantidadeDePaginas,
-            'data' => $this->data->format(\DATE_ATOM),
+            'data' => $this->data->format('Y-m-d H:i:s')
         ];
 
         /* DESCOMENTAR NA MIGRAÇÃO
