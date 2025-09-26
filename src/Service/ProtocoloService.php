@@ -152,21 +152,26 @@ final class ProtocoloService
      */
     public function deletarProtocolo(string $id): void
     {
-        /*
+        /* DESCOMENTAR NA MIGRAÇÃO
         public function deletarProtocolo(string $idUsuario, string $id): void
         */
 
-        //Retornar true se a exclusão ocorrer e false caso não encontre o ID
-        $sucesso = $this->repositorio->delete($id);
+        $protocoloParaDeletar = $this->repositorio->buscaPorId($id);
 
-        //Se não houve exclusão lança uma exceção
-        if (!$sucesso) {
+        if ($protocoloParaDeletar === null) {
             throw new Exception("O protocolo com o ID informado não foi localizado para exclusão.");
         }
 
+        $numero_protocolo = $protocoloParaDeletar->numero();
+
+        $this->repositorio->delete($id);
+
+        //Se não houve exclusão lança uma exceção
+        
+
         //Registro para auditoria
         /* DESCOMENTAR NA MIGRAÇÃO
-        $this->auditoria->registraAlteracao($id, $idUsuario, $this->repositorio->buscaPorId($id)->numero(), 'DELETE');
+        $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'EXCLUSÃO');
         */
     }
 }
