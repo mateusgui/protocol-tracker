@@ -19,6 +19,20 @@ final class UsuarioRepository
 
     /**
      * Registra um novo usuario no banco
+     * @return Usuario[]
+     */
+    public function all(): array
+    {
+        $sqlQuery = "SELECT * FROM usuarios;";
+        $stmt = $this->connection->query($sqlQuery);
+
+        $listaDeUsuarios = $this->hidrataListaDeUsuarios($stmt);
+
+        return $listaDeUsuarios;
+    }
+
+    /**
+     * Registra um novo usuario no banco
      * @param Usuario $usuario Usuario que será adicionado
      * @return void
      */
@@ -96,5 +110,21 @@ final class UsuarioRepository
         $stmt->bindValue(':id', $id);
 
         $stmt->execute();
+    }
+
+    /**
+     * Transforma um PDOStatement em array de Protocolos
+     * @param PDOStatement $stmt Statement que vai ser convertido
+     * @return array
+     */
+    private function hidrataListaDeUsuarios(PDOStatement $stmt): array
+    {
+        $listaDeUsuarios = [];
+
+        while($usuarioDados = $stmt->fetch()){
+            $listaDeUsuarios[] = Usuario::fromArray($usuarioDados);
+        }
+
+        return $listaDeUsuarios;
     }
 }
