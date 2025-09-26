@@ -158,9 +158,9 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     /**
      * Atualiza um protocolo existente
      * @param Protocolo $protocoloParaAtualizar Protocolo que vai ser atualizado
-     * @return bool
+     * @return void
      */
-    public function update(Protocolo $protocoloParaAtualizar): bool
+    public function update(Protocolo $protocoloParaAtualizar): void
     {
         $dadosProtocoloParaAtualizar = $protocoloParaAtualizar->toArray();
 
@@ -172,22 +172,22 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $stmt->bindValue(':alterado_em', $dadosProtocoloParaAtualizar['alterado_em']);
         $stmt->bindValue(':id_para_atualizar', $dadosProtocoloParaAtualizar['id']);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
     /**
      * Busca todos os protocolo ordenados por data decrescente
      * @param string $id Id do protocolo que vai ser deletado
-     * @return bool
+     * @return void
      */
-    public function delete(string $id): bool
+    public function delete(string $id): void
     {
         $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':deletado_em', new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))->format('Y-m-d H:i:s'));
         $stmt->bindValue(':id', $id);
 
-        return $stmt->execute();
+        $stmt->execute();
     }
 
     private function hidrataListaDeProtocolos(PDOStatement $stmt): array
