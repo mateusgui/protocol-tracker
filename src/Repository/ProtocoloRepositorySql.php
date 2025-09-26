@@ -175,7 +175,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     }
 
     /**
-     * Busca todos os protocolo ordenados por data decrescente
+     * Realiza um soft delete em um protocolo
      * @param string $id Id do protocolo que vai ser deletado
      * @return void
      */
@@ -187,6 +187,21 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $stmt->bindValue(':id', $id);
 
         return $stmt->execute(); // MIGRAÇÃO = $stmt->execute();
+    }
+
+    /**
+     * Restaura um protocolo deletado
+     * @param string $id Id do protocolo que vai ser restaurado
+     * @return void
+     */
+    public function reativar(string $id): void
+    {
+        $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id;";
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':deletado_em', null);
+        $stmt->bindValue(':id', $id);
+
+        $stmt->execute();
     }
 
     /**
