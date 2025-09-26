@@ -23,10 +23,18 @@ final class ProtocoloService
      */
     public function registrarNovoProtocolo(string $numero, int $quantidadeDePaginas): Protocolo
     {
+        /* DESCOMENTAR NA MIGRAÇÃO
+        public function registrarNovoProtocolo(string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
+
         //validação se numero tem 6 dígitos e se foi digitado somente numerais
         if(strlen($numero) !== 6 || !ctype_digit($numero)){
             throw new Exception("O número do protocolo precisa ter exatamente 6 dígitos e possuir somente números");
         }
+
+        /* DESCOMENTAR NA MIGRAÇÃO
+        if(strlen($observacoes) < 5){
+            throw new Exception("O campo de observações precisa ter pelo menos 5 caracteres");
+        }*/
 
         //validação da quantidade de páginas
         if($quantidadeDePaginas < 1){
@@ -47,7 +55,7 @@ final class ProtocoloService
         );
 
         /*  DESCOMENTAR NA MIGRAÇÃO E APAGAR A CRIAÇÃO DE OBJETO ACIMA
-            DADOS DEVEM CHEGAR JÁ TRATADOS (O QUE NÃO FOI INFORMADO PELO USUARIO DEVE VIR COMO NULL)
+            DADOS DEVEM CHEGAR JÁ TRATADOS (O QUE NÃO FOI INFORMADO PELO USUARIO DEVE VIR COMO VAZIO OU NULL)
 
             $protocolo = new Protocolo(
             $uuid,
@@ -60,6 +68,9 @@ final class ProtocoloService
 
         //chama a função add para adicionar a instancia de protocolo que foi criada acima
         $this->repositorio->add($protocolo);
+
+        //Registro para auditoria
+        /*(string $protocolo_id, int usuario_id, string $numero_protocolo, string $acao)*/
 
         //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO CRIADO
         return $protocolo;
