@@ -15,11 +15,13 @@ final class ProtocoloService
 
     public function registrarNovouUsuario(string $nome, string $email, string $cpf, string $senha)
     {
-        //Validar o CPF
-        //Validar o email
+        //Validar o CPF - private function validaCpf(): bool
+        //Validar se o cpf já está cadastrado
+
+        //Validar o email - private function validaEmail(): bool
+        //Validar se o email já está cadastrado
+
         //Validar se a senha cumpre as regras de segurança
-        //Validar se o email já está cadastrado - implementar busca por email
-        //Validar se o cpf já está cadastrado - implementar busca por cpf
     }
 
     // public function update(Usuario $usuario): void
@@ -29,5 +31,21 @@ final class ProtocoloService
     public function salvarUsuario()
     {
 
+    }
+
+    //Lógica para validação do CPF
+    private function validaCpf(): bool
+    {
+        return true;
+    }
+
+    private function validaEmail(): bool
+    {
+        return true;
+    }
+
+    private function validaSenha(): bool
+    {
+        return true;
     }
 }
