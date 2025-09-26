@@ -69,7 +69,11 @@ class Protocolo {
     }
     */
 
-    //TRADUTORES
+    /**
+     * Converte um array associativo em Protocolo
+     * @param array $dados Array associativo
+     * @return Protocolo
+     */
     public static function fromArray(array $dados): self
     {
         try {
@@ -102,7 +106,8 @@ class Protocolo {
     }
 
     /**
-     * Função que retorna o objeto utilizado para chama-la como um array associativo.
+     * Converte um Protocolo em array associativo
+     * @return array
      */
     public function toArray(): array
     {
