@@ -92,7 +92,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function buscaPorNumero(string $numero): ?Protocolo
     {
-        $sqlQuery = "SELECT * FROM protocolos WHERE numero = :numero";
+        $sqlQuery = "SELECT * FROM protocolos WHERE numero = :numero;";
 
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':numero', $numero);
@@ -114,7 +114,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function buscaPorId(string $id): ?Protocolo
     {
-        $sqlQuery = "SELECT * FROM protocolos WHERE id = :id";
+        $sqlQuery = "SELECT * FROM protocolos WHERE id = :id;";
 
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':id', $id);
@@ -138,7 +138,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     {
         $dadosNovoProtocolo = $novoProtocolo->toArray(); //salvou dados do objeto no array
 
-        $sqlQuery = "INSERT INTO protocolos (id, id_usuario, numero, quantidade_paginas, observacoes, criado_em) VALUES (:id, :id_usuario, :numero, :quantidade_paginas, :observacoes, :criado_em)";
+        $sqlQuery = "INSERT INTO protocolos (id, id_usuario, numero, quantidade_paginas, observacoes, criado_em) VALUES (:id, :id_usuario, :numero, :quantidade_paginas, :observacoes, :criado_em);";
 
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':id', $dadosNovoProtocolo['id']);
@@ -164,7 +164,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     {
         $dadosProtocoloParaAtualizar = $protocoloParaAtualizar->toArray();
 
-        $sqlQuery = "UPDATE protocolos SET numero = :numero, quantidade_paginas = :quantidade_paginas, observacoes = :observacoes, alterado_em = :alterado_em WHERE id = :id_para_atualizar";
+        $sqlQuery = "UPDATE protocolos SET numero = :numero, quantidade_paginas = :quantidade_paginas, observacoes = :observacoes, alterado_em = :alterado_em WHERE id = :id_para_atualizar;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':numero', $dadosProtocoloParaAtualizar['numero']);
         $stmt->bindValue(':quantidade_paginas', $dadosProtocoloParaAtualizar['quantidade_paginas']);
@@ -182,7 +182,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function delete(string $id): bool
     {
-        $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id";
+        $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':deletado_em', new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))->format('Y-m-d H:i:s'));
         $stmt->bindValue(':id', $id);
