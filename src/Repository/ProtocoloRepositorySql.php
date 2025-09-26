@@ -160,7 +160,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      * @param Protocolo $protocoloParaAtualizar Protocolo que vai ser atualizado
      * @return void
      */
-    public function update(Protocolo $protocoloParaAtualizar): void
+    public function update(Protocolo $protocoloParaAtualizar): bool // MIGRAÇÃO = public function update(Protocolo $protocoloParaAtualizar): void
     {
         $dadosProtocoloParaAtualizar = $protocoloParaAtualizar->toArray();
 
@@ -172,7 +172,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $stmt->bindValue(':alterado_em', $dadosProtocoloParaAtualizar['alterado_em']);
         $stmt->bindValue(':id_para_atualizar', $dadosProtocoloParaAtualizar['id']);
 
-        $stmt->execute();
+        return $stmt->execute(); // MIGRAÇÃO = $stmt->execute();
     }
 
     /**
@@ -180,14 +180,14 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      * @param string $id Id do protocolo que vai ser deletado
      * @return void
      */
-    public function delete(string $id): void
+    public function delete(string $id): bool // MIGRAÇÃO = public function delete(string $id): void
     {
         $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':deletado_em', new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))->format('Y-m-d H:i:s'));
         $stmt->bindValue(':id', $id);
 
-        $stmt->execute();
+        return $stmt->execute(); // MIGRAÇÃO = $stmt->execute();
     }
 
     /**

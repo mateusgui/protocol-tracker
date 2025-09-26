@@ -2,8 +2,6 @@
 
 namespace Mateus\ProtocolTracker\Repository;
 
-use DateTimeImmutable;
-use DateTimeZone;
 use Mateus\ProtocolTracker\Model\Usuario;
 use PDO;
 use PDOStatement;
@@ -31,12 +29,27 @@ final class UsuarioRepository
         return $listaDeUsuarios;
     }
 
+    public function findById(int $id): ?Usuario
+    {
+        $sqlQuery = "SELECT * FROM usuarios WHERE id = :id;";
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+        
+        $dadosUsuario = $stmt->fetch();
+        if ($dadosUsuario === false) {
+            return null;
+        }
+
+        return Usuario::fromArray($dadosUsuario);
+    }
+
     /**
      * Registra um novo usuario no banco
      * @param Usuario $usuario Usuario que será adicionado
-     * @return void
+     * @return Usuario Usuario criado
      */
-    public function add(Usuario $usuario): void
+    public function add(Usuario $usuario): Usuario
     {
         $dadosNovoUsuario = $usuario->toArray();
 
@@ -51,6 +64,10 @@ final class UsuarioRepository
         $stmt->bindValue(':ativo', $dadosNovoUsuario['ativo']);
 
         $stmt->execute();
+
+        $novoId = (int) $this->connection->lastInsertId();
+
+        return $this->findById($novoId);
     }
 
 /**
