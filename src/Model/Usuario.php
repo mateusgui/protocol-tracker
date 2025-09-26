@@ -13,12 +13,13 @@ class Usuario {
         private string $email,
         private string $cpf,
         private string $senha,
-        private readonly DateTimeImmutable $criadoEm
+        private readonly DateTimeImmutable $criadoEm,
+        private bool $ativo
     ) {}
 
     //GETTERS
     /**
-     * 
+     * @return int id
      */
     public function id(): int
     {
@@ -26,7 +27,7 @@ class Usuario {
     }
 
     /**
-     * 
+     * @return string nome
      */
     public function nome(): string
     {
@@ -34,7 +35,7 @@ class Usuario {
     }
 
     /**
-     * 
+     * @return string email
      */
     public function email(): string
     {
@@ -42,7 +43,7 @@ class Usuario {
     }
 
     /**
-     * 
+     * @return string cpf
      */
     public function cpf(): string
     {
@@ -50,19 +51,28 @@ class Usuario {
     }
 
     /**
-     * 
+     * @return string Hash da senha
      */
     public function senha(): string
     {
-        return $this->senha();
+        return $this->senha;
     }
 
     /**
-     * 
+     * @return DateTimeImmutable Data de criação do Usuario
      */
     public function criadoEm(): DateTimeImmutable
     {
-        return $this->criadoEm();
+        return $this->criadoEm;
+    }
+
+    //GETTERS
+    /**
+     * @return bool Ativo ou Inativo
+     */
+    public function isAtivo(): bool
+    {
+        return $this->ativo;
     }
 
     /**
@@ -84,16 +94,9 @@ class Usuario {
             $dados['email'],
             $dados['cpf'],
             $dados['senha'],
-            $data
+            $data,
+            (bool) $dados['ativo']
         );
-        /*
-        private readonly int $id,
-        private string $nome,
-        private string $email,
-        private string $cpf,
-        private string $senha,
-        private readonly DateTimeImmutable $criadoEm
-        */
     }
 
     /**
@@ -108,8 +111,8 @@ class Usuario {
             'email' => $this->email,
             'cpf' => $this->cpf,
             'senha' => $this->senha,
-            'criado_em' => $this->criadoEm->format('Y-m-d H:i:s')
+            'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
+            'ativo' => (int) $this->ativo
         ];
     }
-
 }
