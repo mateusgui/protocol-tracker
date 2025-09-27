@@ -8,7 +8,7 @@ use Exception;
 class Usuario {
 
     public function __construct(
-        private readonly int $id,
+        private readonly ?int $id,
         private string $nome,
         private string $email,
         private string $cpf,
@@ -19,9 +19,9 @@ class Usuario {
 
     //GETTERS
     /**
-     * @return int id
+     * @return int|null id
      */
-    public function id(): int
+    public function id(): ?int
     {
         return $this->id;
     }
