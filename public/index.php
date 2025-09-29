@@ -10,8 +10,10 @@ require __DIR__ . '/../vendor/autoload.php';
 use Mateus\ProtocolTracker\Controller\UsuarioController;
 use Mateus\ProtocolTracker\Controller\WebController;
 use Mateus\ProtocolTracker\Infrastructure\Persistence\ConnectionCreator;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
+use Mateus\ProtocolTracker\Repository\AuditRepository;
+use Mateus\ProtocolTracker\Repository\ProtocoloRepositorySql;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
+use Mateus\ProtocolTracker\Service\AuditService;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
@@ -21,10 +23,12 @@ try {
     // CONEXÃO COM O BANCO
     $connection = ConnectionCreator::createConnection();
 
-    $caminhoJson = __DIR__ . '/../data/protocolos.json'; //Caminho do meu JSON de dados
-    $repositorio = new ProtocoloRepository($caminhoJson); //Instanciação de ProtocoloRepository
+    $AuditRepository = new AuditRepository($connection);
+    $AuditService = new AuditService($AuditRepository);
+
+    $repositorio = new ProtocoloRepositorySql($connection); //Instanciação de ProtocoloRepository
     $dashboardService = new DashboardService($repositorio); //Instanciação de DashboardSerivce usando o $repositorio que é uma instância de ProtocoloRepository
-    $protocoloService = new ProtocoloService($repositorio); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
+    $protocoloService = new ProtocoloService($repositorio, $AuditService); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
     $webController = new WebController($repositorio, $dashboardService, $protocoloService); //Instanciação de webController usando instâncias de: repositorio, dashboardService e protocoloService
 
     $usuarioRepositorio = new UsuarioRepository($connection);

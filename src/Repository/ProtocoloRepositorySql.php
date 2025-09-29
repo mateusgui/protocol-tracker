@@ -135,20 +135,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function add(Protocolo $novoProtocolo): void
     {
-        $dadosNovoProtocolo = $novoProtocolo->toArray(); //salvou dados do objeto no array
-
-        /* DESCOMENTAR NA MIGRAÇÃO
-        return [
-            'id' => $this->id,
-            'id_usuario' => $this->idUsuario,
-            'numero' => $this->numero,
-            'quantidade_paginas' => $this->quantidadeDePaginas,
-            'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
-            'observacoes' => $this->observacoes,
-            'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s'),
-            'deletado_em' => $this->deletadoEm?->format('Y-m-d H:i:s')
-        ];
-        */
+        $dadosNovoProtocolo = $novoProtocolo->toArray();
 
         $sqlQuery = "INSERT INTO protocolos (id, id_usuario, numero, quantidade_paginas, observacoes, criado_em) VALUES (:id, :id_usuario, :numero, :quantidade_paginas, :observacoes, :criado_em);";
 
@@ -172,7 +159,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      * @param Protocolo $protocoloParaAtualizar Protocolo que vai ser atualizado
      * @return void
      */
-    public function update(Protocolo $protocoloParaAtualizar): bool // MIGRAÇÃO = public function update(Protocolo $protocoloParaAtualizar): void
+    public function update(Protocolo $protocoloParaAtualizar): void
     {
         $dadosProtocoloParaAtualizar = $protocoloParaAtualizar->toArray();
 
@@ -184,7 +171,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $stmt->bindValue(':alterado_em', $dadosProtocoloParaAtualizar['alterado_em']);
         $stmt->bindValue(':id', $dadosProtocoloParaAtualizar['id']);
 
-        return $stmt->execute(); // MIGRAÇÃO = $stmt->execute();
+        $stmt->execute();
     }
 
     /**
@@ -192,14 +179,14 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      * @param string $id Id do protocolo que vai ser deletado
      * @return void
      */
-    public function desativar(string $id): bool // MIGRAÇÃO = public function delete(string $id): void
+    public function desativar(string $id): void
     {
         $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':deletado_em', new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))->format('Y-m-d H:i:s'));
         $stmt->bindValue(':id', $id);
 
-        return $stmt->execute(); // MIGRAÇÃO = $stmt->execute();
+        $stmt->execute();
     }
 
     /**
@@ -227,7 +214,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         $listaDeProtocolos = [];
 
         while($protocoloDados = $stmt->fetch()){
-            $listaDeProtocolos[] = Protocolo::fromArray($protocoloDados); //Será preciso modificar o método fromArray quando a migração de BD ocorrer, para receber os novos dados
+            $listaDeProtocolos[] = Protocolo::fromArray($protocoloDados);
         }
 
         return $listaDeProtocolos;

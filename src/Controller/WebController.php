@@ -35,14 +35,13 @@ class WebController {
     {
         try {
             // Pega os dados do formulário de forma segura
-            $numero = $_POST['numero'] ?? ''; // Armazena o valor de $_POST['numero']; se não existir ou for nulo, usa '' (string vazia) como padrão.
-            $paginas = (int)($_POST['paginas'] ?? 0); // Armazena o valor de $_POST['páginas']; se não existir ou for nulo, usa 0 como padrão.
+            $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
+            $numero = $_POST['numero'] ?? '';
+            $quantidade_paginas = (int)($_POST['paginas'] ?? 0);
+            $observacoes = $_POST['observacoes'] ?? '';
                 
             // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
-            $this->protocoloService->registrarNovoProtocolo($numero, $paginas);
-
-            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
-            public function registrarNovoProtocolo(string $idUsuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
+            $this->protocoloService->registrarNovoProtocolo($id_usuario, $numero, $quantidade_paginas, $observacoes);
 
             $_SESSION['mensagem_sucesso'] = "Protocolo adicionado com sucesso!";
 
@@ -97,15 +96,13 @@ class WebController {
     public function editarProtocolo()
     {
         try {
+            $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
             $id = $_POST['id'] ?? '';
             $numero = $_POST['numero'] ?? '';
-            $quantidadeDePaginas = (int)($_POST['paginas'] ?? 0);
+            $quantidade_paginas = (int)($_POST['paginas'] ?? 0);
+            $observacoes = $_POST['observacoes'] ?? '';
 
-            $this->protocoloService->editarProtocolo($id, $numero, $quantidadeDePaginas);
-
-            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
-            public function editarProtocolo(string $idUsuario, string $id, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo
-            */
+            $this->protocoloService->editarProtocolo($id_usuario, $id, $numero, $quantidade_paginas, $observacoes);
 
             $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
 
@@ -154,12 +151,10 @@ class WebController {
     public function alteraStatusProtocolo()
     {
         try {
+            $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
             $id = $_POST['id'] ?? '';
-            $this->protocoloService->desativar($id);
-
-            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
-            public function deletarProtocolo(string $idUsuario, string $id): void
-            */
+            
+            $this->protocoloService->alteraStatusProtocolo($id_usuario, $id);
 
             $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
 
