@@ -135,6 +135,10 @@ class UsuarioController {
         try {
             $tituloDaPagina = "Editar cadastro";
 
+            $id = $_SESSION['usuario_logado_id'] ?? 0;
+
+            $usuario = $this->repositorio->buscaPorId($id);
+
             require __DIR__ . '/../../templates/editarCadastro.php';
 
         } catch (Exception $e) {
