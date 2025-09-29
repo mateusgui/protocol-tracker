@@ -19,13 +19,30 @@ class UsuarioController {
     // Exibe o formulário de login (GET)
     public function exibirFormularioLogin()
     {
-        // ... lógica para carregar o template login.php ...
+        $tituloDaPagina = "Login Protocol Tracker";
+
+        require __DIR__ . '/../../templates/login.php';
     }
 
     // Processa o formulário de login (POST)
     public function processarLogin()
     {
-        // ... lógica de try/catch para chamar $this->loginService->autenticar() ...
+        try {
+            $cpf = $_POST['cpf'] ?? '';
+            $senha = $_POST['senha'] ?? '';
+
+            $this->loginService->login($cpf, $senha);
+
+            header('Location: /');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Login Protocol Tracker";
+            
+            //Se der erro chama a home.php novamente, porém agora com o erro carregado
+            require __DIR__ . '/../../templates/login.php';
+        }
     }
 
     // Processa o logout
