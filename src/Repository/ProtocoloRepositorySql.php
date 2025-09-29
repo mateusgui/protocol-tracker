@@ -137,6 +137,19 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     {
         $dadosNovoProtocolo = $novoProtocolo->toArray(); //salvou dados do objeto no array
 
+        /* DESCOMENTAR NA MIGRAÇÃO
+        return [
+            'id' => $this->id,
+            'id_usuario' => $this->idUsuario,
+            'numero' => $this->numero,
+            'quantidade_paginas' => $this->quantidadeDePaginas,
+            'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
+            'observacoes' => $this->observacoes,
+            'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s'),
+            'deletado_em' => $this->deletadoEm?->format('Y-m-d H:i:s')
+        ];
+        */
+
         $sqlQuery = "INSERT INTO protocolos (id, id_usuario, numero, quantidade_paginas, observacoes, criado_em) VALUES (:id, :id_usuario, :numero, :quantidade_paginas, :observacoes, :criado_em);";
 
         $stmt = $this->connection->prepare($sqlQuery);
@@ -163,13 +176,13 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
     {
         $dadosProtocoloParaAtualizar = $protocoloParaAtualizar->toArray();
 
-        $sqlQuery = "UPDATE protocolos SET numero = :numero, quantidade_paginas = :quantidade_paginas, observacoes = :observacoes, alterado_em = :alterado_em WHERE id = :id_para_atualizar;";
+        $sqlQuery = "UPDATE protocolos SET numero = :numero, quantidade_paginas = :quantidade_paginas, observacoes = :observacoes, alterado_em = :alterado_em WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':numero', $dadosProtocoloParaAtualizar['numero']);
         $stmt->bindValue(':quantidade_paginas', $dadosProtocoloParaAtualizar['quantidade_paginas']);
         $stmt->bindValue(':observacoes', $dadosProtocoloParaAtualizar['observacoes']);
         $stmt->bindValue(':alterado_em', $dadosProtocoloParaAtualizar['alterado_em']);
-        $stmt->bindValue(':id_para_atualizar', $dadosProtocoloParaAtualizar['id']);
+        $stmt->bindValue(':id', $dadosProtocoloParaAtualizar['id']);
 
         return $stmt->execute(); // MIGRAÇÃO = $stmt->execute();
     }
