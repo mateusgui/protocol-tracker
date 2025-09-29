@@ -29,7 +29,7 @@ final class ProtocoloService
     public function registrarNovoProtocolo(string $numero, int $quantidadeDePaginas): Protocolo
     {
         /* DESCOMENTAR NA MIGRAÇÃO
-        public function registrarNovoProtocolo(string $idUsuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
+        public function registrarNovoProtocolo(string $id_usuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
 
         //validação se numero tem 6 dígitos e se foi digitado somente numerais
         if(strlen($numero) !== 6 || !ctype_digit($numero)){
@@ -64,7 +64,7 @@ final class ProtocoloService
 
             $protocolo = new Protocolo(
             $uuid,
-            $idUsuario,
+            $id_usuario,
             $numero,
             $quantidadeDePaginas,
             new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande')),
@@ -76,7 +76,7 @@ final class ProtocoloService
 
         //Registro para auditoria
         /* DESCOMENTAR NA MIGRAÇÃO
-        $this->auditoria->registraAlteracao($protocolo->id(), $idUsuario, $protocolo->numero(), 'CRIAR');
+        $this->auditoria->registraAlteracao($protocolo->id(), $id_usuario, $protocolo->numero(), 'CRIAR');
         */
 
         //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO CRIADO
@@ -88,10 +88,10 @@ final class ProtocoloService
      * @throws Exception Se os dados forem inválidos.
      * @return Protocolo
      */
-    public function editarProtocolo(string $id, string $numero, int $quantidadeDePaginas): Protocolo
+    public function editarProtocolo(string $id, string $numero, int $quantidade_paginas): Protocolo
     {
         /* DESCOMENTAR NA MIGRAÇÃO
-        public function editarProtocolo(string $idUsuario, string $id, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo
+        public function editarProtocolo(string $id_usuario, string $id, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo
         */
 
         //Busca o objeto Protocolo original que vai ser editado
@@ -109,14 +109,14 @@ final class ProtocoloService
             throw new Exception("O número do protocolo precisa ter exatamente 6 dígitos e possuir somente números");
         }
 
-        if($quantidadeDePaginas < 1){
+        if($quantidade_paginas < 1){
             throw new Exception("A quantidade de páginas precisa ser maior que zero");
         }
 
         $protocoloAtualizado = new Protocolo(
             $id,
             $numero,
-            $quantidadeDePaginas,
+            $quantidade_paginas,
             $protocoloOriginal->data()
         );
 
@@ -125,9 +125,9 @@ final class ProtocoloService
 
             $protocolo = new Protocolo(
             $uuid,
-            $idUsuario,
+            $id_usuario,
             $numero,
-            $quantidadeDePaginas,
+            $quantidade_paginas,
             $protocoloOriginal->data(),
             $observacoes,
             new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))
@@ -138,7 +138,7 @@ final class ProtocoloService
 
         //Registro para auditoria
         /* DESCOMENTAR NA MIGRAÇÃO
-        $this->auditoria->registraAlteracao($protocolo->id(), $idUsuario, $protocolo->numero(), 'EDIÇÃO');
+        $this->auditoria->registraAlteracao($protocolo->id(), $id_usuario, $protocolo->numero(), 'EDIÇÃO');
         */
 
         //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO EDITADO
@@ -151,8 +151,10 @@ final class ProtocoloService
      * @return void
      */
 
-/*  DESCOMENTAR NA MIGRAÇÃO
-    public function alteraStatusProtocolo(string $idUsuario, string $id): void
+
+    /* DESCOMENTAR NA MIGRAÇÃO
+    
+    public function alteraStatusProtocolo(string $id_usuario, string $id): void
     {
         $protocoloParaAlterar = $this->repositorio->buscaPorId($id);
 
@@ -161,18 +163,18 @@ final class ProtocoloService
         }
 
         if(isset($protocoloParaAlterar->deletadoEm())){
-            $this->reativar($idUsuario, $id);
+            $this->reativar($id_usuario, $id);
 
-            $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'EXCLUSÃO');
+            $this->auditoria->registraAlteracao($id, $id_usuario, $protocoloParaAlterar->numero(), 'EXCLUSÃO');
         } else {
-            $this->desativar($idUsuario, $id);
+            $this->desativar($id_usuario, $id);
         }
     } */
 
     public function desativar(string $id): void
     {
         /* DESCOMENTAR NA MIGRAÇÃO
-        private function deletarProtocolo(string $idUsuario, string $id): void
+        private function desativar(string $id_usuario, string $id): void
         */
 
         $protocoloParaDeletar = $this->repositorio->buscaPorId($id);
@@ -187,16 +189,15 @@ final class ProtocoloService
 
         //Registro para auditoria
         /* DESCOMENTAR NA MIGRAÇÃO
-        $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'EXCLUSÃO');
+        $this->auditoria->registraAlteracao($id, $id_usuario, $numero_protocolo, 'EXCLUSÃO');
         */
     }
 
-    /* DESCOMENTAR NA MIGRAÇÃO
-    /* private function reativar(string $idUsuario, string $id): void
+    private function reativar(string $id_usuario, string $id): void
     {
         $protocoloParaReativar = $this->repositorio->buscaPorId($id);
 
-        if($protocolo === null){
+        if($protocoloParaReativar === null){
             throw new Exception("O protocolo não foi encontrado");
         }
 
@@ -204,8 +205,6 @@ final class ProtocoloService
 
         $this->repositorio->reativar();
 
-        $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'REATIVAÇÃO');
+        $this->auditoria->registraAlteracao($id, $id_usuario, $numero_protocolo, 'REATIVAÇÃO');
     }
-    
-    */
 }
