@@ -14,10 +14,10 @@ final class UsuarioService
         private UsuarioRepository $repositorio
     ) {}
 
-    public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha): Usuario
+    public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha, string $confirmaSenha): Usuario
     {
         $this->validaCpf($cpf);
-        $this->validaSenha($senha);
+        $this->validaSenha($senha, $confirmaSenha);
         $this->validaEmail($email);
 
         //Validar se o cpf já está cadastrado
@@ -90,7 +90,7 @@ final class UsuarioService
             }
     }
 
-    public function alterarSenhaUsuario(int $id, string $novaSenha): void
+    public function alterarSenhaUsuario(int $id, string $novaSenha, string $confirmaSenha): void
     {
         $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
 
@@ -102,7 +102,7 @@ final class UsuarioService
             throw new Exception("Não é possível redefinir a senha de usuários inativos");
         }
 
-        $this->validaSenha($novaSenha);
+        $this->validaSenha($novaSenha, $confirmaSenha);
 
         $hashDaNovaSenha = password_hash($novaSenha, PASSWORD_ARGON2ID);
 
@@ -142,16 +142,20 @@ final class UsuarioService
         }
     }
 
-    private function validaEmail($email): void
+    private function validaEmail(string $email): void
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw new Exception("O e-mail informado é inválido");
         }
     }
 
-    private function validaSenha($senhaPura): void
+    private function validaSenha(string $senha, string $confirmaSenha): void
     {
-        if (strlen($senhaPura) < 6) {
+        if($senha !== $confirmaSenha){
+            throw new Exception("A confirmação da senha deve ser igual à senha");
+        }
+
+        if (strlen($senha) < 6) {
             throw new Exception("A senha deve ter pelo menos 6 caracteres.");
         }
     }
