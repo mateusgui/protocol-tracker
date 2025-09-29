@@ -9,7 +9,7 @@
     </div>
 <?php endif; ?>
 
-<form action="/" method="post" class="protocolo-form">
+<form action="/home" method="post" class="protocolo-form">
     
     <div class="form-row">
         <div class="form-group">
@@ -29,7 +29,7 @@
     </div>
 
     <div class="form-actions">
-        <a href="/" class="btn-limpar"><span class="material-icons-outlined">cancel</span> Limpar</a>
+        <a href="/home" class="btn-limpar"><span class="material-icons-outlined">cancel</span> Limpar</a>
         <button type="submit"><span class="material-icons-outlined">add</span> Adicionar Protocolo</button>
     </div>
 </form>
