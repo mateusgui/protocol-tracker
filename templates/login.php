@@ -16,8 +16,10 @@
 
         <form action="/login" method="post" class="login-form">
             <div class="form-group">
-                <label for="cpf">CPF (apenas números)</label>
-                <input type="text" id="cpf" name="cpf" required maxlength="11" pattern="\d{11}">
+                <label for="cpf_formatado">CPF</label>
+                <input type="text" id="cpf_formatado" placeholder="000.000.000-00" maxlength="14">
+                
+                <input type="hidden" id="cpf_puro" name="cpf">
             </div>
             <div class="form-group">
                 <label for="senha">Senha</label>
