@@ -128,15 +128,25 @@ final class UsuarioRepository
     {
         $dadosUsuarioParaAtualizar = $usuario->toArray();
 
-        $sqlQuery = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, senha = :senha WHERE id = :id_para_atualizar;";
+        $sqlQuery = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf WHERE id = :id_para_atualizar;";
 
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->bindValue(':nome', $dadosUsuarioParaAtualizar['nome']);
         $stmt->bindValue(':email', $dadosUsuarioParaAtualizar['email']);
         $stmt->bindValue(':cpf', $dadosUsuarioParaAtualizar['cpf']);
-        $stmt->bindValue(':senha', $dadosUsuarioParaAtualizar['senha']);
         $stmt->bindValue(':id_para_atualizar', $dadosUsuarioParaAtualizar['id']);
 
+        $stmt->execute();
+    }
+
+    public function alterarSenha(int $id, string $hashDaNovaSenha): void
+    {
+        $sqlQuery = "UPDATE usuarios SET senha = :senha WHERE id = :id;";
+
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':senha', $hashDaNovaSenha);
+        $stmt->bindValue(':id', $id); 
+        
         $stmt->execute();
     }
 
