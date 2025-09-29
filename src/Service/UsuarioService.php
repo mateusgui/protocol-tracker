@@ -86,9 +86,9 @@ final class UsuarioService
             $nome,
             $email,
             $cpf,
-            $hashDaSenha, //MANTER O ORIGINAL
+            $dadosAtuaisUsuario->senha(),
             $dadosAtuaisUsuario->criadoEm(),
-            $ativo //MANTER O ORIGINAL
+            $dadosAtuaisUsuario->isAtivo()
         );
 
         $this->repositorio->update($usuario);
@@ -96,7 +96,21 @@ final class UsuarioService
 
     public function alterarSenhaUsuario(int $id, string $novaSenha): void
     {
-        //IMPLEMENTAR
+        $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
+
+        if ($dadosAtuaisUsuario === null) {
+            throw new Exception("O usuário informado não existe");
+        }
+
+        if(!$dadosAtuaisUsuario->isAtivo()){
+            throw new Exception("Não é possível redefinir a senha de usuários inativos");
+        }
+
+        //Alterar o método update de UsuarioRepository para não permitir alteração da senha
+
+        $hashDaNovaSenha = password_hash($novaSenha, PASSWORD_ARGON2ID);
+
+        $this->repositorio->alterarSenha($id, $hashDaNovaSenha);
     }
 
     //Lógica para validação do CPF
