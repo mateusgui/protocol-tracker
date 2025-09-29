@@ -134,10 +134,6 @@ try {
 
         case '/cadastro-usuario':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
-
             if ($method === 'POST'){
                 $usuarioController->salvarNovoUsuario();
             } else {
