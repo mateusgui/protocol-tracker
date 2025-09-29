@@ -2,12 +2,13 @@
 
 session_start();
 
+$usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
+
 // CARREGAMENTO E CONFIGURAÇÃO
 require __DIR__ . '/../vendor/autoload.php';
 
 use Mateus\ProtocolTracker\Controller\WebController;
 use Mateus\ProtocolTracker\Infrastructure\Persistence\ConnectionCreator;
-use Mateus\ProtocolTracker\Model\Protocolo;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
@@ -61,7 +62,7 @@ try {
             }
             break;
 
-        // ----- ROTA DE EXCLUSÃO '/excluir' (Ainda a ser criada) -----
+        // ----- ROTA DE EXCLUSÃO '/excluir' -----
         case '/excluir':
             if($method === 'POST'){
                 $webController->deletarProtocolo();
