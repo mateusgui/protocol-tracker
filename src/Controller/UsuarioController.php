@@ -135,7 +135,7 @@ class UsuarioController {
         try {
             $tituloDaPagina = "Editar cadastro";
 
-            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $id = $_SESSION['usuario_logado_id'] ?? null;
 
             $usuario = $this->repositorio->buscaPorId($id);
 
@@ -174,7 +174,7 @@ class UsuarioController {
 
             $dadosDoFormulario = $_POST;
     
-            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $id = $_SESSION['usuario_logado_id'] ?? null;
             $usuario = $this->repositorio->buscaPorId($id);
 
             require __DIR__ . '/../../templates/editarCadastro.php';
@@ -201,7 +201,7 @@ class UsuarioController {
             $erro = $e->getMessage();
             $tituloDaPagina = "Editar cadastro";
 
-            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $id = $_SESSION['usuario_logado_id'] ?? null;
             $usuario = $this->repositorio->buscaPorId($id);
 
             require __DIR__ . '/../../templates/editarCadastro.php';
@@ -223,7 +223,7 @@ class UsuarioController {
             $erro = $e->getMessage();
             $tituloDaPagina = "Editar cadastro";
 
-            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $id = $_SESSION['usuario_logado_id'] ?? null;
             $usuario = $this->repositorio->buscaPorId($id);
 
             require __DIR__ . '/../../templates/editarCadastro.php';
