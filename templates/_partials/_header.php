@@ -30,7 +30,7 @@
             <nav>
                 <ul>
                     <?php $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH); ?>
-                    <li><a href="/" class="<?= ($uri === '/') ? 'active' : '' ?>"><span class="material-icons-outlined">add</span> Novo Protocolo</a></li>
+                    <li><a href="/" class="<?= ($uri === '/home') ? 'active' : '' ?>"><span class="material-icons-outlined">add</span> Novo Protocolo</a></li>
                     <li><a href="/busca" class="<?= ($uri === '/busca') ? 'active' : '' ?>"><span class="material-icons-outlined">search</span> Buscar Protocolos</a></li>
                     <li><a href="/dashboard" class="<?= ($uri === '/dashboard') ? 'active' : '' ?>"><span class="material-icons-outlined">speed</span> Dashboard</a></li>
                 </ul>
