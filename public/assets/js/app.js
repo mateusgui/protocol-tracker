@@ -74,4 +74,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- LÓGICA PARA O DROPDOWN DE USUÁRIO ---
+    const userMenuToggle = document.getElementById('user-menu-toggle');
+    const userMenu = document.getElementById('user-menu');
+
+    if (userMenuToggle && userMenu) {
+        userMenuToggle.addEventListener('click', (event) => {
+            // Previne que o link '#' recarregue a página
+            event.preventDefault();
+            
+            // Adiciona ou remove a classe 'show' no elemento PAI (.dropdown)
+            userMenu.parentElement.classList.toggle('show');
+        });
+
+        // Fecha o dropdown se o usuário clicar fora dele
+        window.addEventListener('click', (event) => {
+            if (!userMenu.parentElement.contains(event.target)) {
+                userMenu.parentElement.classList.remove('show');
+            }
+        });
+    }
+
 });

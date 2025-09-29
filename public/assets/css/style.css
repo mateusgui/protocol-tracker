@@ -692,3 +692,55 @@ textarea {
     justify-content: center;
     align-items: center;
 }
+
+
+/* === ESTILOS PARA O DROPDOWN DE USUÁRIO === */
+
+/* O container do dropdown precisa de posição relativa
+   para que o menu absoluto se posicione em relação a ele. */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* O menu dropdown em si */
+.dropdown-menu {
+    display: none; /* Começa escondido */
+    position: absolute;
+    top: 100%; /* Aparece logo abaixo do ícone */
+    right: 0;
+    background-color: #fff;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    z-index: 100;
+    padding: 8px 0;
+}
+
+/* Mostra o menu quando o container tem a classe 'show' (adicionada via JS) */
+.dropdown.show .dropdown-menu {
+    display: block;
+}
+
+/* Estilo dos links dentro do dropdown */
+.dropdown-menu a {
+    color: #343a40;
+    padding: 10px 20px;
+    text-decoration: none;
+    display: block;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu a:hover {
+    background-color: #f8f9fa;
+    text-decoration: none;
+}
+
+/* Uma linha divisória para separar o link de "Sair" */
+.dropdown-divider {
+    height: 1px;
+    margin: 8px 0;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
