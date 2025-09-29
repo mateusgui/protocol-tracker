@@ -4,7 +4,7 @@ namespace Mateus\ProtocolTracker\Service;
 
 use DateTimeImmutable;
 use DateTimeZone;
-use Exception; // Usaremos para reportar erros de validação
+use Exception;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
@@ -47,39 +47,23 @@ final class UsuarioService
         return $usuario;
     }
 
-    // public function update(Usuario $usuario): void
-    // public function desativarUsuario(int $id): void
-    // public function ativarUsuario(int $id): void
-    //nome, email, cpf, senha, ativo
-    public function salvarUsuario(int $id, string $nome, string $email, string $cpf, string $senha, bool $ativo)
+    public function atualizarDadosCadastrais(int $id, string $nome, string $email, string $cpf): void
     {
         $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
         if ($dadosAtuaisUsuario === null) {
             throw new Exception("O usuário informado não existe");
         }
 
-        if($dadosAtuaisUsuario->isAtivo() !== $ativo){
-            if($dadosAtuaisUsuario->isAtivo()){
-                $this->repositorio->desativarUsuario($id);
-            } else{
-                $this->repositorio->ativarUsuario($id);
-            }
-        }
-
         $this->validaCpf($cpf);
-        $this->validaSenha($senha);
         $this->validaEmail($email);
 
         if($this->repositorio->buscaPorCpf($cpf) !== null && $dadosAtuaisUsuario->cpf() !== $cpf){
             throw new Exception("O CPF informado já está cadastrado");
         }
 
-        //Validar se o email já está cadastrado
         if($this->repositorio->buscaPorEmail($email) !== null && $dadosAtuaisUsuario->email() !== $email){
             throw new Exception("O email informado já está cadastrado");
         }
-
-        $hashDaSenha = password_hash($senha, PASSWORD_ARGON2ID);
 
         $usuario = new Usuario(
             $id,
@@ -94,6 +78,20 @@ final class UsuarioService
         $this->repositorio->update($usuario);
     }
 
+    public function alterarStatusUsuario(int $id)
+    {
+        $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
+        if ($dadosAtuaisUsuario === null) {
+            throw new Exception("O usuário informado não existe");
+        }
+
+            if($dadosAtuaisUsuario->isAtivo()){
+                $this->repositorio->desativarUsuario($id);
+            } else{
+                $this->repositorio->ativarUsuario($id);
+            }
+    }
+
     public function alterarSenhaUsuario(int $id, string $novaSenha): void
     {
         $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
@@ -106,7 +104,7 @@ final class UsuarioService
             throw new Exception("Não é possível redefinir a senha de usuários inativos");
         }
 
-        //Alterar o método update de UsuarioRepository para não permitir alteração da senha
+        $this->validaSenha($novaSenha);
 
         $hashDaNovaSenha = password_hash($novaSenha, PASSWORD_ARGON2ID);
 
