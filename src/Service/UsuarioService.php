@@ -42,9 +42,7 @@ final class UsuarioService
             true
         );
 
-        $this->repositorio->add($usuario);
-
-        return $usuario;
+        return $this->repositorio->add($usuario);
     }
 
     public function atualizarDadosCadastrais(int $id, string $nome, string $email, string $cpf): void
