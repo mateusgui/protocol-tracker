@@ -17,13 +17,13 @@ class Protocolo {
     /* DESCOMENTAR NA MIGRAÇÃO
     public function __construct(
         private readonly string $id,
-        private int $idUsuario,
+        private int $id_usuario,
         private string $numero,
-        private int $quantidadeDePaginas,
-        private readonly DateTimeImmutable $data,
+        private int $quantidade_paginas,
+        private readonly DateTimeImmutable $criado_em,
         private ?string $observacoes = null,
-        private ?DateTimeImmutable $alteradoEm = null
-        private ?DateTimeImmutable $deletadoEm = null
+        private ?DateTimeImmutable $alterado_em = null,
+        private ?DateTimeImmutable $deletado_em = null
     ) {} */
 
     //GETTERS
@@ -58,7 +58,7 @@ class Protocolo {
     /* DESCOMENTAR NA MIGRAÇÃO
     
     public function idUsuario(): int {
-        return $this->idUsuario;
+        return $this->id_usuario;
     }
 
     public function observacoes(): ?string {
@@ -66,11 +66,11 @@ class Protocolo {
     }
 
     public function alteradoEm(): ?DateTimeImmutable {
-        return $this->alteradoEm;
+        return $this->alterado_em;
     }
 
     public function deletadoEm(): ?DateTimeImmutable {
-        return $this->deletadoEm;
+        return $this->deletado_em;
     }
     */
 
@@ -84,11 +84,18 @@ class Protocolo {
         try {
             $data = new DateTimeImmutable($dados['data']);
         } catch (Exception $e) {
-            throw new Exception("Falha ao criar data a partir do valor: " . ($dados['data'] ?? 'N/A'));
+            throw new Exception("Falha ao criar data");
         }
 
         /* DESCOMENTAR NA MIGRAÇÃO e passar para o bloco TRY
-            $alteradoEm = isset($dados['alterado_em']) ? new DateTimeImmutable($dados['alterado_em']) : null; // DESCOMENTAR NA MIGRAÇÃO
+        try {
+            $criado_em = new DateTimeImmutable($dados['criado_em']);
+            $alterado_em = isset($dados['alterado_em']) ? new DateTimeImmutable($dados['alterado_em']) : null; // DESCOMENTAR NA MIGRAÇÃO
+            $deletado_em = isset($dados['deletado_em']) ? new DateTimeImmutable($dados['deletado_em']) : null; // DESCOMENTAR NA MIGRAÇÃO
+        } catch (Exception $e) {
+            throw new Exception("Falha ao criar data");
+        }
+            
         */
 
         return new self(
@@ -104,10 +111,10 @@ class Protocolo {
             $dados['id_usuario'],
             $dados['numero'],
             $dados['quantidade_paginas'],
-            $data,
+            $criado_em,
             $dados['observacoes'] ?? null,
-            $alteradoEm,
-            $deletadoEm
+            $alterado_em,
+            $deletado_em
         ); */
     }
 
@@ -127,13 +134,13 @@ class Protocolo {
         /* DESCOMENTAR NA MIGRAÇÃO
         return [
             'id' => $this->id,
-            'id_usuario' => $this->idUsuario,
+            'id_usuario' => $this->id_usuario,
             'numero' => $this->numero,
-            'quantidade_paginas' => $this->quantidadeDePaginas,
-            'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
+            'quantidade_paginas' => $this->quantidade_paginas,
+            'criado_em' => $this->criado_em->format('Y-m-d H:i:s'),
             'observacoes' => $this->observacoes ?? '',
-            'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s'),
-            'deletado_em' => $this->deletadoEm?->format('Y-m-d H:i:s')
+            'alterado_em' => $this->alterado_em?->format('Y-m-d H:i:s'),
+            'deletado_em' => $this->deletado_em?->format('Y-m-d H:i:s')
         ];
         */
     }
