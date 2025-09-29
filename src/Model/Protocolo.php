@@ -103,7 +103,7 @@ class Protocolo {
             $dados['id'],
             $dados['id_usuario'],
             $dados['numero'],
-            $dados['quantidade_de_paginas'],
+            $dados['quantidade_paginas'],
             $data,
             $dados['observacoes'] ?? null,
             $alteradoEm
