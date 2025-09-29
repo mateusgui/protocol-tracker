@@ -115,7 +115,7 @@ try {
             rotaAutenticada($usuarioEstaLogado);
 
             if($method === 'POST'){
-                $webController->deletarProtocolo();
+                $webController->alteraStatusProtocolo();
             } else {
                 header('Location: /busca');
             }

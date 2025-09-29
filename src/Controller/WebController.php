@@ -151,17 +151,17 @@ class WebController {
      * URL_PATH = /excluir
      * REQUEST_METHOD = POST
      */
-    public function deletarProtocolo()
+    public function alteraStatusProtocolo()
     {
         try {
             $id = $_POST['id'] ?? '';
-            $this->protocoloService->deletarProtocolo($id);
+            $this->protocoloService->desativar($id);
 
             /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
             public function deletarProtocolo(string $idUsuario, string $id): void
             */
 
-            $_SESSION['mensagem_sucesso'] = "Protocolo excluído com sucesso!";
+            $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
 
             header('Location: /busca');
             exit();

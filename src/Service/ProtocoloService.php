@@ -150,10 +150,29 @@ final class ProtocoloService
      * @throws Exception Se os dados forem inválidos.
      * @return void
      */
-    public function deletarProtocolo(string $id): void
+
+/*  DESCOMENTAR NA MIGRAÇÃO
+    public function alteraStatusProtocolo(string $idUsuario, string $id): void
+    {
+        $protocoloParaAlterar = $this->repositorio->buscaPorId($id);
+
+        if ($protocoloParaAlterar === null) {
+            throw new Exception("O protocolo com o ID informado não foi localizado.");
+        }
+
+        if(isset($protocoloParaAlterar->deletadoEm())){
+            $this->reativar($idUsuario, $id);
+
+            $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'EXCLUSÃO');
+        } else {
+            $this->desativar($idUsuario, $id);
+        }
+    } */
+
+    public function desativar(string $id): void
     {
         /* DESCOMENTAR NA MIGRAÇÃO
-        public function deletarProtocolo(string $idUsuario, string $id): void
+        private function deletarProtocolo(string $idUsuario, string $id): void
         */
 
         $protocoloParaDeletar = $this->repositorio->buscaPorId($id);
@@ -166,12 +185,27 @@ final class ProtocoloService
 
         $this->repositorio->delete($id);
 
-        //Se não houve exclusão lança uma exceção
-        
-
         //Registro para auditoria
         /* DESCOMENTAR NA MIGRAÇÃO
         $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'EXCLUSÃO');
         */
     }
+
+    /* DESCOMENTAR NA MIGRAÇÃO
+    /* private function reativar(string $idUsuario, string $id): void
+    {
+        $protocoloParaReativar = $this->repositorio->buscaPorId($id);
+
+        if($protocolo === null){
+            throw new Exception("O protocolo não foi encontrado");
+        }
+
+        $numero_protocolo = $protocoloParaReativar->numero();
+
+        $this->repositorio->reativar();
+
+        $this->auditoria->registraAlteracao($id, $idUsuario, $numero_protocolo, 'REATIVAÇÃO');
+    }
+    
+    */
 }

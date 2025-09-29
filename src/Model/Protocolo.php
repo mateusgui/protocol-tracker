@@ -23,6 +23,7 @@ class Protocolo {
         private readonly DateTimeImmutable $data,
         private ?string $observacoes = null,
         private ?DateTimeImmutable $alteradoEm = null
+        private ?DateTimeImmutable $deletadoEm = null
     ) {} */
 
     //GETTERS
@@ -66,6 +67,10 @@ class Protocolo {
 
     public function alteradoEm(): ?DateTimeImmutable {
         return $this->alteradoEm;
+    }
+
+    public function deletadoEm(): ?DateTimeImmutable {
+        return $this->deletadoEm;
     }
     */
 
