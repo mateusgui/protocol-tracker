@@ -2,7 +2,6 @@
 
 namespace Mateus\ProtocolTracker\Controller;
 
-use DateTimeImmutable;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\UsuarioService;
@@ -108,6 +107,118 @@ class UsuarioController {
             $dadosDoFormulario = $_POST; // Será utilizad para recuperar os dados digitados e repopular o formulário de cadastro
             
             require __DIR__ . '/../../templates/cadastroUsuario.php';
+        }
+    }
+
+    //GET Rota /editar-cadastro
+    public function exibirFormularioEdicaoCadastro()
+    {
+        try {
+            $tituloDaPagina = "Editar cadastro";
+
+            require __DIR__ . '/../../templates/editarCadastro.php';
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Controle de Protocolos";
+            
+            require __DIR__ . '/../../templates/home.php';
+        }
+    }
+
+    //POST Rota /editar-cadastro
+    public function atualizarDadosCadastrais()
+    {
+        try {
+            $id = $_SESSION['usuario_logado_id'] ?? null;
+            $nome = $_POST['nome'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $cpf = $_POST['cpf'] ?? '';
+
+            $this->usuarioService->atualizarDadosCadastrais($id, $nome, $email, $cpf);
+
+            $_SESSION['mensagem_sucesso'] = "Cadastro atualizado com sucesso!";
+
+            header('Location: /editar-cadastro');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Editar cadastro";
+
+            $dadosDoFormulario = $_POST;
+    
+            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $usuario = $this->repositorio->buscaPorId($id);
+
+            require __DIR__ . '/../../templates/editarCadastro.php';
+        }
+    }
+
+    //POST Rota /editar-status
+    public function alterarStatusUsuario()
+    {
+        try {
+            $id = $_SESSION['usuario_logado_id'] ?? null;
+
+            $this->usuarioService->alterarStatusUsuario($id);
+
+            $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
+
+            header('Location: /editar-cadastro');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Editar cadastro";
+
+            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $usuario = $this->repositorio->buscaPorId($id);
+
+            require __DIR__ . '/../../templates/editarCadastro.php';
+        }
+    }
+
+    //GET Rota /editar-senha
+    public function exibirFormularioEditarSenha()
+    {
+        try {
+            $tituloDaPagina = "Alterar senha";
+
+            require __DIR__ . '/../../templates/editarSenha.php';
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Editar cadastro";
+
+            $id = $_SESSION['usuario_logado_id'] ?? 0;
+            $usuario = $this->repositorio->buscaPorId($id);
+
+            require __DIR__ . '/../../templates/editarCadastro.php';
+        }
+    }
+
+    //public function alterarSenhaUsuario(int $id, string $novaSenha, string $confirmaSenha): void
+    //POST Rota /editar-senha
+    public function alterarSenhaUsuario()
+    {
+        try {
+            $id = $_SESSION['usuario_logado_id'] ?? null;
+            $novaSenha = $_POST['novaSenha'] ?? '';
+            $confirmaSenha = $_POST['confirmaSenha'] ?? '';
+
+            $this->usuarioService->alterarSenhaUsuario($id, $novaSenha, $confirmaSenha);
+
+            $_SESSION['mensagem_sucesso'] = "Senha alterada com sucesso";
+
+            header('Location: /editar-cadastro');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Alterar senha";
+
+            require __DIR__ . '/../../templates/editarSenha.php';
         }
     }
 }
