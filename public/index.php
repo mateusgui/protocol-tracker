@@ -7,11 +7,15 @@ $usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
 // CARREGAMENTO E CONFIGURAÇÃO
 require __DIR__ . '/../vendor/autoload.php';
 
+use Mateus\ProtocolTracker\Controller\UsuarioController;
 use Mateus\ProtocolTracker\Controller\WebController;
 use Mateus\ProtocolTracker\Infrastructure\Persistence\ConnectionCreator;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepository;
+use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 use Mateus\ProtocolTracker\Service\DashboardService;
+use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
+use Mateus\ProtocolTracker\Service\UsuarioService;
 
 try {
     // CONEXÃO COM O BANCO
@@ -23,6 +27,11 @@ try {
     $protocoloService = new ProtocoloService($repositorio); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
     $webController = new WebController($repositorio, $dashboardService, $protocoloService); //Instanciação de webController usando instâncias de: repositorio, dashboardService e protocoloService
 
+    $usuarioRepositorio = new UsuarioRepository($connection);
+    $usuarioService = new UsuarioService($usuarioRepositorio);
+    $loginService = new LoginService($usuarioRepositorio);
+    $usuarioController = new UsuarioController($usuarioRepositorio, $usuarioService, $loginService);
+
     // Variável para guardar possíveis erros de validação do formulário
     $erro = null;
 
@@ -32,25 +41,45 @@ try {
     $uri = parse_url($uri, PHP_URL_PATH);
     $method = $_SERVER['REQUEST_METHOD'];
 
+    function rotaAutenticada($usuarioEstaLogado): void
+    {
+        if (!$usuarioEstaLogado) {
+            header('Location: /login');
+            exit();
+        }
+    }
+
     switch ($uri) {
-        // ----- ROTA BASE '/' -----
+        case '/':
+            if ($usuarioEstaLogado) {
+                header('Location: /home');
+            } else {
+                header('Location: /login');
+            }
+            exit();
+
         case '/login':
-            //post = tentando logar
-            //get = exibir formulario login
+            if ($method === 'POST'){
+                $usuarioController->processarLogin();
+            } else {
+                $usuarioController->exibirFormularioLogin();
+            }
+            break;
+
+        case '/logout':
+            $usuarioController->logout();
             break;
         
-        case '/':
+        case '/home':
             // REQUEST_METHOD = POST - Executa o bloco if
             
             // ----- ROTA AUTENTICADA -----
-            /*if (!$usuarioEstaLogado) {
-                header('Location: /login');
-                exit();
-            }*/
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
 
             if ($method === 'POST') {
                 $webController->salvarNovoProtocolo(); //Registro de novo protocolo
-            } else{
+            } else {
                 $webController->home(); //Carregamento padrão da home com o dashboard
             }
             break;
@@ -59,10 +88,8 @@ try {
         case '/busca':
 
             // ----- ROTA AUTENTICADA -----
-            /*if (!$usuarioEstaLogado) {
-                header('Location: /login');
-                exit();
-            }*/
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
 
             $webController->buscaProtocolo();
             break;
@@ -71,10 +98,8 @@ try {
         case '/dashboard':
 
             // ----- ROTA AUTENTICADA -----
-            /*if (!$usuarioEstaLogado) {
-                header('Location: /login');
-                exit();
-            }*/
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
 
             $webController->exibirDashboard();
             break;
@@ -83,10 +108,8 @@ try {
         case '/editar':
 
             // ----- ROTA AUTENTICADA -----
-            /*if (!$usuarioEstaLogado) {
-                header('Location: /login');
-                exit();
-            }*/
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
 
             if($method === 'POST'){
                 $webController->editarProtocolo();
@@ -99,15 +122,61 @@ try {
         case '/excluir':
 
             // ----- ROTA AUTENTICADA -----
-            /*if (!$usuarioEstaLogado) {
-                header('Location: /login');
-                exit();
-            }*/
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
 
             if($method === 'POST'){
                 $webController->deletarProtocolo();
             } else {
                 header('Location: /busca');
+            }
+            break;
+
+        case '/cadastro-usuario':
+
+            // ----- ROTA AUTENTICADA -----
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
+
+            if ($method === 'POST'){
+                $usuarioController->salvarNovoUsuario();
+            } else {
+                $usuarioController->exibirFormularioCadastro();
+            }
+            break;
+
+        case '/editar-cadastro':
+
+            // ----- ROTA AUTENTICADA -----
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
+
+            if ($method === 'POST'){
+                $usuarioController->atualizarDadosCadastrais();
+            } else {
+                $usuarioController->exibirFormularioEdicaoCadastro();
+            }
+            break;
+
+        case '/editar-status':
+
+            // ----- ROTA AUTENTICADA -----
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
+
+            $usuarioController->alterarStatusUsuario();
+            break;
+
+        case '/editar-senha':
+
+            // ----- ROTA AUTENTICADA -----
+            // ----- REMOVER NA MIGRAÇÃO -----
+            /*rotaAutenticada($usuarioEstaLogado)*/
+
+            if ($method === 'POST'){
+                $usuarioController->alterarSenhaUsuario();
+            } else {
+                $usuarioController->exibirFormularioEditarSenha();
             }
             break;
 
