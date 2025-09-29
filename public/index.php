@@ -71,11 +71,8 @@ try {
             break;
         
         case '/home':
-            // REQUEST_METHOD = POST - Executa o bloco if
             
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             if ($method === 'POST') {
                 $webController->salvarNovoProtocolo(); //Registro de novo protocolo
@@ -87,9 +84,7 @@ try {
         // ----- ROTA DE BUSCA '/busca' -----
         case '/busca':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             $webController->buscaProtocolo();
             break;
@@ -97,9 +92,7 @@ try {
         // ----- ROTA DO DASHBOARD '/dashboard' -----
         case '/dashboard':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             $webController->exibirDashboard();
             break;
@@ -107,9 +100,7 @@ try {
         // ----- ROTA DE EDIÇÃO '/editar' -----
         case '/editar':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             if($method === 'POST'){
                 $webController->editarProtocolo();
@@ -121,9 +112,7 @@ try {
         // ----- ROTA DE EXCLUSÃO '/excluir' -----
         case '/excluir':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             if($method === 'POST'){
                 $webController->deletarProtocolo();
@@ -143,9 +132,7 @@ try {
 
         case '/editar-cadastro':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             if ($method === 'POST'){
                 $usuarioController->atualizarDadosCadastrais();
@@ -156,18 +143,14 @@ try {
 
         case '/editar-status':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             $usuarioController->alterarStatusUsuario();
             break;
 
         case '/editar-senha':
 
-            // ----- ROTA AUTENTICADA -----
-            // ----- REMOVER NA MIGRAÇÃO -----
-            /*rotaAutenticada($usuarioEstaLogado)*/
+            rotaAutenticada($usuarioEstaLogado);
 
             if ($method === 'POST'){
                 $usuarioController->alterarSenhaUsuario();
