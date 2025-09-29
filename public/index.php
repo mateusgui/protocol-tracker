@@ -34,8 +34,20 @@ try {
 
     switch ($uri) {
         // ----- ROTA BASE '/' -----
+        case '/login':
+            //post = tentando logar
+            //get = exibir formulario login
+            break;
+        
         case '/':
             // REQUEST_METHOD = POST - Executa o bloco if
+            
+            // ----- ROTA AUTENTICADA -----
+            /*if (!$usuarioEstaLogado) {
+                header('Location: /login');
+                exit();
+            }*/
+
             if ($method === 'POST') {
                 $webController->salvarNovoProtocolo(); //Registro de novo protocolo
             } else{
@@ -45,16 +57,37 @@ try {
         
         // ----- ROTA DE BUSCA '/busca' -----
         case '/busca':
+
+            // ----- ROTA AUTENTICADA -----
+            /*if (!$usuarioEstaLogado) {
+                header('Location: /login');
+                exit();
+            }*/
+
             $webController->buscaProtocolo();
             break;
 
         // ----- ROTA DO DASHBOARD '/dashboard' -----
         case '/dashboard':
+
+            // ----- ROTA AUTENTICADA -----
+            /*if (!$usuarioEstaLogado) {
+                header('Location: /login');
+                exit();
+            }*/
+
             $webController->exibirDashboard();
             break;
 
         // ----- ROTA DE EDIÇÃO '/editar' -----
         case '/editar':
+
+            // ----- ROTA AUTENTICADA -----
+            /*if (!$usuarioEstaLogado) {
+                header('Location: /login');
+                exit();
+            }*/
+
             if($method === 'POST'){
                 $webController->editarProtocolo();
             } else {
@@ -64,6 +97,13 @@ try {
 
         // ----- ROTA DE EXCLUSÃO '/excluir' -----
         case '/excluir':
+
+            // ----- ROTA AUTENTICADA -----
+            /*if (!$usuarioEstaLogado) {
+                header('Location: /login');
+                exit();
+            }*/
+
             if($method === 'POST'){
                 $webController->deletarProtocolo();
             } else {
