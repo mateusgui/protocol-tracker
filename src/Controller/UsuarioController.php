@@ -15,7 +15,10 @@ class UsuarioController {
         private LoginService $loginService,
     ) {}
 
-    // Exibe o formulário de login (GET)
+    /**
+     * URL_PATH = /login
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioLogin()
     {
         $tituloDaPagina = "Login Protocol Tracker";
@@ -23,7 +26,10 @@ class UsuarioController {
         require __DIR__ . '/../../templates/login.php';
     }
 
-    // Processa o formulário de login (POST)
+    /**
+     * URL_PATH = /login
+     * REQUEST_METHOD = POST
+     */
     public function processarLogin()
     {
         try {
@@ -43,7 +49,10 @@ class UsuarioController {
         }
     }
 
-    // Processa o logout
+    /**
+     * URL_PATH = /logout
+     * REQUEST_METHOD = GET/POST
+     */
     public function logout()
     {
         // Remove variáveis de sessão
@@ -65,7 +74,10 @@ class UsuarioController {
         exit();
     }
 
-    // Exibe o formulário de cadastro de usuário (GET)
+    /**
+     * URL_PATH = /cadastro-usuario
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioCadastro()
     {
         try {
@@ -82,6 +94,10 @@ class UsuarioController {
     }
 
     // Processa o formulário de cadastro (POST)
+    /**
+     * URL_PATH = /cadastro-usuario
+     * REQUEST_METHOD = POST
+     */
     public function salvarNovoUsuario()
     {
         //public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha, string $confirmaSenha): Usuario
@@ -110,7 +126,10 @@ class UsuarioController {
         }
     }
 
-    //GET Rota /editar-cadastro
+    /**
+     * URL_PATH = /editar-cadastro
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioEdicaoCadastro()
     {
         try {
@@ -126,7 +145,10 @@ class UsuarioController {
         }
     }
 
-    //POST Rota /editar-cadastro
+    /**
+     * URL_PATH = /editar-cadastro
+     * REQUEST_METHOD = POST
+     */
     public function atualizarDadosCadastrais()
     {
         try {
@@ -155,7 +177,10 @@ class UsuarioController {
         }
     }
 
-    //POST Rota /editar-status
+    /**
+     * URL_PATH = /editar-status
+     * REQUEST_METHOD = GET/POST
+     */
     public function alterarStatusUsuario()
     {
         try {
@@ -179,7 +204,10 @@ class UsuarioController {
         }
     }
 
-    //GET Rota /editar-senha
+    /**
+     * URL_PATH = /editar-senha
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioEditarSenha()
     {
         try {
@@ -198,8 +226,10 @@ class UsuarioController {
         }
     }
 
-    //public function alterarSenhaUsuario(int $id, string $novaSenha, string $confirmaSenha): void
-    //POST Rota /editar-senha
+    /**
+     * URL_PATH = /editar-senha
+     * REQUEST_METHOD = POST
+     */
     public function alterarSenhaUsuario()
     {
         try {
