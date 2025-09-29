@@ -14,7 +14,6 @@
             <div id="user-menu" class="dropdown-menu">
                 <a href="/editar-cadastro">Editar Cadastro</a>
                 <a href="/editar-senha">Alterar Senha</a>
-                <div class="dropdown-divider"></div>
                 <a href="/logout">Sair</a>
             </div>
         </div>

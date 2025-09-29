@@ -709,11 +709,11 @@ textarea {
     position: absolute;
     top: 100%; /* Aparece logo abaixo do ícone */
     right: 0;
-    background-color: #fff;
+    background-color: var(--cor-fundo-header);
     min-width: 180px;
     box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     border-radius: 8px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--cor-bordas);
     z-index: 100;
     padding: 8px 0;
 }
@@ -725,7 +725,7 @@ textarea {
 
 /* Estilo dos links dentro do dropdown */
 .dropdown-menu a {
-    color: #343a40;
+    color: var(--cor-fontes-body);
     padding: 10px 20px;
     text-decoration: none;
     display: block;
@@ -733,14 +733,6 @@ textarea {
 }
 
 .dropdown-menu a:hover {
-    background-color: #f8f9fa;
+    opacity: 90%;
     text-decoration: none;
-}
-
-/* Uma linha divisória para separar o link de "Sair" */
-.dropdown-divider {
-    height: 1px;
-    margin: 8px 0;
-    overflow: hidden;
-    background-color: #e9ecef;
 }
