@@ -40,7 +40,6 @@ class UsuarioController {
             $erro = $e->getMessage();
             $tituloDaPagina = "Login Protocol Tracker";
             
-            //Se der erro chama a home.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/login.php';
         }
     }
@@ -48,18 +47,67 @@ class UsuarioController {
     // Processa o logout
     public function logout()
     {
-        // ... lógica para destruir a sessão e redirecionar ...
+        // Remove variáveis de sessão
+        session_unset();
+
+        // Destrói a sessão
+        session_destroy();
+        
+        // Limpa os cookies de sessão do navegador.
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+
+        header('Location: /login');
+        exit();
     }
 
     // Exibe o formulário de cadastro de usuário (GET)
     public function exibirFormularioCadastro()
     {
-        // ...
+        try {
+            $tituloDaPagina = "Cadastrar novo usuário";
+
+            require __DIR__ . '/../../templates/cadastroUsuario.php';
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Login Protocol Tracker";
+            
+            require __DIR__ . '/../../templates/login.php';
+        }
     }
 
     // Processa o formulário de cadastro (POST)
     public function salvarNovoUsuario()
     {
-        // ...
+        //public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha, string $confirmaSenha): Usuario
+        try {
+            // Pega os dados do formulário de forma segura
+            $nome = $_POST['nome'] ?? '';
+            $email = $_POST['email'] ?? '';
+            $cpf = $_POST['cpf'] ?? '';
+            $senha = $_POST['senha'] ?? '';
+            $confirmaSenha = $_POST['confirmaSenha'] ?? '';
+
+            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
+            public function registrarNovoProtocolo(string $idUsuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
+
+            $_SESSION['mensagem_sucesso'] = "Usuario criado com sucesso!";
+
+            // Se o registro foi bem-sucedido, redireciona para a página inicial
+            header('Location: /login');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $tituloDaPagina = "Cadastrar novo usuário";
+            
+            require __DIR__ . '/../../templates/cadastroUsuario.php';
+        }
     }
 }
