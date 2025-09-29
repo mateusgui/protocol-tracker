@@ -94,18 +94,18 @@ class UsuarioController {
             $senha = $_POST['senha'] ?? '';
             $confirmaSenha = $_POST['confirmaSenha'] ?? '';
 
-            /* ^^^^^ AJUSTAR PARA MIGRAÇÃO ^^^^^
-            public function registrarNovoProtocolo(string $idUsuario, string $numero, int $quantidadeDePaginas, string $observacoes): Protocolo*/
+            $this->usuarioService->registrarNovoUsuario($nome, $email, $cpf, $senha, $confirmaSenha);
 
             $_SESSION['mensagem_sucesso'] = "Usuario criado com sucesso!";
 
-            // Se o registro foi bem-sucedido, redireciona para a página inicial
             header('Location: /login');
             exit();
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Cadastrar novo usuário";
+
+            $dadosDoFormulario = $_POST; // Será utilizad para recuperar os dados digitados e repopular o formulário de cadastro
             
             require __DIR__ . '/../../templates/cadastroUsuario.php';
         }
