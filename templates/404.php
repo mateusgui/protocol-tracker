@@ -1,4 +1,4 @@
-<?php require __DIR__ . '/_partials/_header.php'; ?>
+<?php require __DIR__ . '/_partials/_header_publico.php'; ?>
 
 <div class="container-404">
     <div class="imagem-404">
@@ -12,4 +12,4 @@
     </div>
 </div>
 
-<?php require __DIR__ . '/_partials/_footer.php'; ?>
+<?php require __DIR__ . '/_partials/_footer_publico.php'; ?>
