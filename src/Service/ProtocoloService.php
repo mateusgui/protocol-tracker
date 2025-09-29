@@ -183,7 +183,7 @@ final class ProtocoloService
 
         $numero_protocolo = $protocoloParaDeletar->numero();
 
-        $this->repositorio->delete($id);
+        $this->repositorio->desativar($id);
 
         //Registro para auditoria
         /* DESCOMENTAR NA MIGRAÇÃO

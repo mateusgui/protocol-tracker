@@ -13,5 +13,5 @@ interface ProtocoloRepositoryInterface
     public function buscaPorId(string $id): ?Protocolo;
     public function add(Protocolo $novoProtocolo): void;
     public function update(Protocolo $protocoloParaAtualizar): bool; // MIGRAÇÃO = public function update(Protocolo $protocoloParaAtualizar): void;
-    public function delete(string $id): bool; // MIGRAÇÃO = public function delete(string $id): void;
+    public function desativar(string $id): bool; // MIGRAÇÃO = public function desativar(string $id): void;
 }

@@ -179,7 +179,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      * @param string $id Id do protocolo que vai ser deletado
      * @return void
      */
-    public function delete(string $id): bool // MIGRAÇÃO = public function delete(string $id): void
+    public function desativar(string $id): bool // MIGRAÇÃO = public function delete(string $id): void
     {
         $sqlQuery = "UPDATE protocolos SET deletado_em = :deletado_em WHERE id = :id;";
         $stmt = $this->connection->prepare($sqlQuery);

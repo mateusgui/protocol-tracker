@@ -177,7 +177,7 @@ final class ProtocoloRepository implements ProtocoloRepositoryInterface
      * Deleta um protocolo pelo seu número. Para a funcionalidade de exclusão.
      * @return bool Retorna true se a exclusão foi bem-sucedida, false se o protocolo não foi encontrado.
      */
-    public function delete(string $id): bool
+    public function desativar(string $id): bool
     {
         //Chama a função all() desta classe para pegar a lista completa de Protocolos ordenada
         $listaDeProtocolos = $this->all();
