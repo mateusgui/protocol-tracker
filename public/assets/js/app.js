@@ -31,21 +31,46 @@ document.addEventListener('DOMContentLoaded', () => {
         aplicarTema(temaSalvo);
     }
 
-    // Garante que o botão existe antes de adicionar o evento de clique
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
             // Verifica se o modo escuro já está ativo
             const isDarkMode = document.body.classList.contains('dark-mode');
             
             if (isDarkMode) {
-                // Se estiver, muda para o claro e salva a preferência
                 localStorage.setItem('theme', 'light');
                 aplicarTema('light');
             } else {
-                // Se não, muda para o escuro e salva a preferência
                 localStorage.setItem('theme', 'dark');
                 aplicarTema('dark');
             }
+        });
+    }
+
+    // --- LÓGICA PARA A MÁSCARA DE CPF ---
+    const campoCpfVisivel = document.getElementById('cpf_formatado');
+    const campoCpfPuro = document.getElementById('cpf_puro');
+
+    if (campoCpfVisivel && campoCpfPuro) {
+        
+        campoCpfVisivel.addEventListener('input', () => {
+            let valorLimpo = campoCpfVisivel.value.replace(/\D/g, '');
+
+            valorLimpo = valorLimpo.substring(0, 11);
+
+            campoCpfPuro.value = valorLimpo;
+
+            let valorFormatado = valorLimpo;
+            if (valorLimpo.length > 3) {
+                valorFormatado = valorLimpo.replace(/(\d{3})(\d)/, '$1.$2');
+            }
+            if (valorLimpo.length > 6) {
+                valorFormatado = valorFormatado.replace(/(\d{3})\.(\d{3})(\d)/, '$1.$2.$3');
+            }
+            if (valorLimpo.length > 9) {
+                valorFormatado = valorFormatado.replace(/(\d{3})\.(\d{3})\.(\d{3})(\d)/, '$1.$2.$3-$4');
+            }
+            
+            campoCpfVisivel.value = valorFormatado;
         });
     }
 
