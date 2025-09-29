@@ -7,13 +7,15 @@ use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
 use Exception;
+use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
 class WebController {
     
     public function __construct(
         private ProtocoloRepositoryInterface $repositorio,
         private DashboardService $dashboardService,
-        private ProtocoloService $protocoloService
+        private ProtocoloService $protocoloService,
+        private UsuarioRepository $usuarioRepository
     ) {}
 
     /**
@@ -23,6 +25,9 @@ class WebController {
     public function home()
     {
         $tituloDaPagina = "Controle de Protocolos";
+
+        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+        $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
 
         require __DIR__ . '/../../templates/home.php';
     }
@@ -46,13 +51,16 @@ class WebController {
             $_SESSION['mensagem_sucesso'] = "Protocolo adicionado com sucesso!";
 
             // Se o registro foi bem-sucedido, redireciona para a página inicial
-            header('Location: /');
+            header('Location: /home');
             exit();
 
         } catch (Exception $e) {
             // Se a Service lançou uma exceção (erro de validação), guardamos a mensagem
             $erro = $e->getMessage();
             $tituloDaPagina = "Controle de Protocolos";
+
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
             
             //Se der erro chama a home.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/home.php';
@@ -76,6 +84,9 @@ class WebController {
             $listaDeProtocolos = $this->repositorio->search($numero, $dataInicio, $dataFim);
 
             $tituloDaPagina = "Buscar Protocolos";
+
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
             
             require __DIR__ . '/../../templates/busca.php';
 
@@ -83,6 +94,9 @@ class WebController {
             $erro = $e->getMessage();
             $listaDeProtocolos = $this->repositorio->all();
             $tituloDaPagina = "Buscar Protocolos";
+
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
             
             //Se der erro chama a home.php, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
@@ -106,6 +120,9 @@ class WebController {
 
             $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
 
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
             header('Location: /busca');
             exit();
 
@@ -113,6 +130,9 @@ class WebController {
             $erro = $e->getMessage();
             $listaDeProtocolos = $this->repositorio->all(); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
             $tituloDaPagina = "Busca de Protocolos";
+
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
 
             //Se der erro chama a busca.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
@@ -140,6 +160,9 @@ class WebController {
         }
 
         $tituloDaPagina = "Editando Protocolo";
+
+        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+        $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
         
         require __DIR__ . '/../../templates/editar.php';
     }

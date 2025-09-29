@@ -736,3 +736,12 @@ textarea {
     opacity: 90%;
     text-decoration: none;
 }
+
+/* === ESTILOS PARA A MENSAGEM DE BOAS-VINDAS NO HEADER === */
+
+.header-actions .welcome-message {
+    color: var(--cor-fontes-body); /* Cor de texto secundário */
+    font-size: 0.95rem;
+    margin-right: 10px; /* Adiciona um espaço antes do ícone de tema */
+    white-space: nowrap; /* Impede que o nome quebre a linha em telas menores */
+}
