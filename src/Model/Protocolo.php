@@ -106,7 +106,8 @@ class Protocolo {
             $dados['quantidade_paginas'],
             $data,
             $dados['observacoes'] ?? null,
-            $alteradoEm
+            $alteradoEm,
+            $deletadoEm
         ); */
     }
 
@@ -131,7 +132,8 @@ class Protocolo {
             'quantidade_paginas' => $this->quantidadeDePaginas,
             'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
             'observacoes' => $this->observacoes,
-            'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s')
+            'alterado_em' => $this->alteradoEm?->format('Y-m-d H:i:s'),
+            'deletado_em' => $this->deletadoEm?->format('Y-m-d H:i:s')
         ];
         */
     }
