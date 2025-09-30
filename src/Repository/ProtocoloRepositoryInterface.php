@@ -9,7 +9,7 @@ interface ProtocoloRepositoryInterface
 {
     public function all(): array;
     public function allByUser(int $id_usuario): array;
-    public function search(?string $numero, ?DateTimeImmutable $dataInicio, ?DateTimeImmutable $dataFim): array;
+    public function search(?int $id_usuario = null, ?string $numero = null, ?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array;
     public function buscaPorNumero(string $numero): ?Protocolo;
     public function buscaPorId(string $id): ?Protocolo;
     public function add(Protocolo $novoProtocolo): void;

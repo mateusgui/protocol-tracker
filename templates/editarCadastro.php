@@ -2,11 +2,8 @@
 
 <div class="login-container">
     <div class="login-box">
-        <div class="login-logo">
-            <img src="/assets/imgs/ProtocolTrackerLogo.png" alt="Logo Protocol Tracker">
-        </div>
         <h2>Editar Meu Cadastro</h2>
-        <p>Altere seus dados e clique em "Salvar".</p>
+        <p>Altere seus dados e clique em "Salvar Alterações".</p>
 
         <?php if (isset($erro) && $erro): ?>
             <div class="error-message">

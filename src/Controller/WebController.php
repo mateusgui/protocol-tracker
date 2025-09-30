@@ -81,22 +81,23 @@ class WebController {
             $erro = null;
             $listaDeProtocolos = [];
 
-            $listaDeProtocolos = $this->repositorio->search($numero, $dataInicio, $dataFim);
-
-            $tituloDaPagina = "Buscar Protocolos";
-
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
             $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
+            $listaDeProtocolos = $this->repositorio->search($idUsuario, $numero, $dataInicio, $dataFim);
+
+            $tituloDaPagina = "Buscar Protocolos";
             
             require __DIR__ . '/../../templates/busca.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
-            $listaDeProtocolos = $this->repositorio->all();
-            $tituloDaPagina = "Buscar Protocolos";
 
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
             $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
+            $listaDeProtocolos = $this->repositorio->allByUser($idUsuario);
+            $tituloDaPagina = "Buscar Protocolos";
             
             //Se der erro chama a home.php, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
@@ -125,11 +126,12 @@ class WebController {
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
-            $listaDeProtocolos = $this->repositorio->all(); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
-            $tituloDaPagina = "Busca de Protocolos";
 
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
             $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
+            $listaDeProtocolos = $this->repositorio->allByUser($idUsuario); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
+            $tituloDaPagina = "Busca de Protocolos";
 
             //Se der erro chama a busca.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
@@ -183,11 +185,12 @@ class WebController {
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
-            $listaDeProtocolos = $this->repositorio->all(); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
-            $tituloDaPagina = "Busca de Protocolos";
 
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
             $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
+            $listaDeProtocolos = $this->repositorio->allByUser($idUsuario); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
+            $tituloDaPagina = "Busca de Protocolos";
 
             //Se der erro chama a busca.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';

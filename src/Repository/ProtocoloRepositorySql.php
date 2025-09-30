@@ -52,49 +52,41 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      * @param DateTimeImmutable|null $dataFim Data final para o filtro
      * @return Protocolo[] Um array de objetos Protocolo que correspondem aos filtros
      */
-    public function search(?string $numero, ?DateTimeImmutable $dataInicio, ?DateTimeImmutable $dataFim): array
+    public function search(?int $id_usuario = null, ?string $numero = null, ?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
     {
-        $sqlQuery = "SELECT * FROM protocolos";
+        // 1. Array para guardar TODAS as nossas condições SQL.
+        $sqlConditions = [];
         $parametros = [];
 
-        if(!empty($numero) || $dataInicio !== null || $dataFim !== null){
-            $sqlQuery .= " WHERE";
+        // 2. A primeira condição é OBRIGATÓRIA: só buscar protocolos ativos.
+        $sqlConditions[] = 'deletado_em IS NULL';
 
-            $contaParametros = 0;
-
-            if(!empty($numero)){
-                $sqlQuery .= " numero = :numero";
-                $parametros[':numero'] = $numero;
-                $contaParametros++;
-            }
-
-            if($dataInicio !== null){
-                if($contaParametros > 0){
-                    $sqlQuery .= " AND";
-                }
-                $sqlQuery .= " criado_em >= :dataInicio";
-                $parametros[':dataInicio'] = $dataInicio->format('Y-m-d H:i:s');
-                $contaParametros++;
-            }
-
-            if($dataFim !== null){
-                if($contaParametros > 0){
-                    $sqlQuery .= " AND";
-                }
-                $sqlQuery .= " criado_em <= :dataFim";
-                $parametros[':dataFim'] = $dataFim->format('Y-m-d H:i:s');
-                $contaParametros++;
-            }
+        // 3. Adiciona as condições OPCIONAIS com base nos filtros.
+        if ($id_usuario !== null) {
+            $sqlConditions[] = 'id_usuario = :id_usuario';
+            $parametros[':id_usuario'] = $id_usuario;
+        }
+        if (!empty($numero)) {
+            $sqlConditions[] = 'numero = :numero';
+            $parametros[':numero'] = $numero;
+        }
+        if ($dataInicio !== null) {
+            $sqlConditions[] = 'criado_em >= :dataInicio';
+            $parametros[':dataInicio'] = $dataInicio->format('Y-m-d H:i:s');
+        }
+        if ($dataFim !== null) {
+            $sqlConditions[] = 'criado_em <= :dataFim';
+            $parametros[':dataFim'] = $dataFim->format('Y-m-d H:i:s');
         }
 
-        $sqlQuery .= " ORDER BY criado_em DESC;";
+        // 4. Monta a query final.
+        $sqlQuery = 'SELECT * FROM protocolos WHERE ' . implode(' AND ', $sqlConditions) . ' ORDER BY criado_em DESC;';
 
+        // 5. Prepara, executa e retorna a lista.
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->execute($parametros);
 
-        $listaDeProtocolos = $this->hidrataListaDeProtocolos($stmt);
-
-        return $listaDeProtocolos;
+        return $this->hidrataListaDeProtocolos($stmt);
     }
 
     /**
