@@ -11,12 +11,10 @@ use PDOStatement;
 final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
 {
     private PDO $connection;
-    private UsuarioRepository $usuarioRepository;
 
-    public function __construct(PDO $connection, UsuarioRepository $usuarioRepository)
+    public function __construct(PDO $connection)
     {
         $this->connection = $connection;
-        $this->usuarioRepository = $usuarioRepository;
     }
 
     /**
@@ -56,14 +54,10 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
      */
     public function search(?int $id_usuario = null, ?string $numero = null, ?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
     {
-        // 1. Array para guardar TODAS as nossas condições SQL.
         $sqlConditions = [];
         $parametros = [];
-
-        // 2. A primeira condição é OBRIGATÓRIA: só buscar protocolos ativos.
         $sqlConditions[] = 'deletado_em IS NULL';
 
-        // 3. Adiciona as condições OPCIONAIS com base nos filtros.
         if ($id_usuario !== null) {
             $sqlConditions[] = 'id_usuario = :id_usuario';
             $parametros[':id_usuario'] = $id_usuario;
