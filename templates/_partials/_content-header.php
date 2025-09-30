@@ -19,10 +19,10 @@
                 <span class="material-icons-outlined">account_circle</span>
             </a>
             <div id="user-menu" class="dropdown-menu">
-                <a href="/editar-cadastro">Editar Cadastro</a>
-                <a href="/editar-senha">Alterar Senha</a>
+                <a href="/editar-cadastro"><span class="material-icons-outlined">edit</span> Editar Cadastro</a>
+                <a href="/editar-senha"><span class="material-icons-outlined">key</span> Alterar Senha</a>
                 <div class="dropdown-divider"></div>
-                <a href="/logout">Sair</a>
+                <a href="/logout"><span class="material-icons-outlined">logout</span> Sair</a>
             </div>
         </div>
         
