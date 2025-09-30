@@ -26,7 +26,7 @@ require __DIR__ . '/_partials/_header.php';
             
             <div class="form-actions-edit">
                 <button type="submit" class="btn-salvar">Salvar Nova Senha</button>
-                <a href="/editar-cadastro" class="btn-cancelar">Cancelar</a>
+                <a href="/home" class="btn-cancelar">Cancelar</a>
             </div>
         </form>
     </div>
