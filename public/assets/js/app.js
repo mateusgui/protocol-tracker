@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // O seletor '#tabela-protocolos' busca o elemento com o id que demos à tabela
     $('#tabela-protocolos').DataTable({
         // Abaixo estão algumas opções de configuração úteis
-        
+        searching: false,
         // Traduz a interface para o português
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json',

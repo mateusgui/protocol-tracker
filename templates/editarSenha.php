@@ -5,9 +5,6 @@ require __DIR__ . '/_partials/_header.php';
 
 <div class="login-container">
     <div class="login-box">
-        <div class="login-logo">
-            <img src="/assets/imgs/ProtocolTrackerLogo.png" alt="Logo Protocol Tracker">
-        </div>
         <h2>Alterar Senha</h2>
         <p>Digite e confirme sua nova senha.</p>
 
