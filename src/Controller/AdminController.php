@@ -15,7 +15,7 @@ class AdminController {
     ) {}
 
     /**
-     * URL_PATH = /login
+     * URL_PATH = /admin/protocolos
      * REQUEST_METHOD = GET
      */
     public function exibirPainelAdmin()
