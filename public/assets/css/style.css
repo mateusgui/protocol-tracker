@@ -530,15 +530,18 @@ textarea {
 .metric-card .value {
     font-size: 2.5rem;
     font-weight: 700;
+}
+
+.metric-card .dia {
     color: #007bff;
 }
 
-.dashboard-row:nth-child(2) .metric-card .value {
-    color: #ff9900;
+.metric-card .mes {
+    color: #ffc400;
 }
 
-.dashboard-row:nth-child(3) .metric-card .value {
-    color: #15da43;
+.metric-card .total {
+    color: #00d659;
 }
 
 /* === ESTILOS PÁGINA 404 NOT FOUND === */
@@ -675,7 +678,7 @@ textarea {
     align-items: center;
     gap: 10px;
     font-size: 0.9em;
-    color: var(--cor-fontes-sidebar);
+    color: var(--cor-fontes-body);
     padding: 0.5rem 0.5rem;
     border-radius: 6px;
     transition: background-color 0.2s ease-in-out;

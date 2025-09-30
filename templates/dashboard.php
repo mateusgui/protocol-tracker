@@ -27,17 +27,17 @@
         
         <div class="metric-card">
             <div class="label">Páginas no Dia (<?= $diaSelecionado->format('d/m/Y') ?>)</div>
-            <div class="value"><?= htmlspecialchars($totalPorDiaUsuario) ?></div>
+            <div class="value dia"><?= htmlspecialchars($totalPorDiaUsuario) ?></div>
         </div>
 
         <div class="metric-card">
             <div class="label">Páginas no Mês (<?= $mesSelecionado->format('m/Y') ?>)</div>
-            <div class="value"><?= htmlspecialchars($totalPorMesUsuario) ?></div>
+            <div class="value mes"><?= htmlspecialchars($totalPorMesUsuario) ?></div>
         </div>
 
         <div class="metric-card total">
             <div class="label">Total de Páginas (Geral)</div>
-            <div class="value"><?= htmlspecialchars($totalUsuario) ?></div>
+            <div class="value total"><?= htmlspecialchars($totalUsuario) ?></div>
         </div>
 
     </div>
