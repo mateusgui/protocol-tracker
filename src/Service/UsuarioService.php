@@ -38,6 +38,7 @@ final class UsuarioService
             $email,
             $cpf,
             $hashDaSenha,
+            'operador',
             new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande')),
             true
         );
@@ -69,6 +70,7 @@ final class UsuarioService
             $email,
             $cpf,
             $dadosAtuaisUsuario->senha(),
+            'operador',
             $dadosAtuaisUsuario->criadoEm(),
             $dadosAtuaisUsuario->isAtivo()
         );
