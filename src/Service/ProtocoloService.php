@@ -56,8 +56,6 @@ final class ProtocoloService
         //chama a função add para adicionar a instancia de protocolo que foi criada acima
         $this->repositorio->add($protocolo);
 
-        $this->auditoria->registraAlteracao($protocolo->id(), $id_usuario, $protocolo->numero(), 'CRIAR');
-
         //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO CRIADO
         return $protocolo;
     }
