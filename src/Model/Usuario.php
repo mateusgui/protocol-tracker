@@ -13,6 +13,7 @@ class Usuario {
         private string $email,
         private string $cpf,
         private string $senha,
+        private string $permissao,
         private readonly DateTimeImmutable $criadoEm,
         private bool $ativo
     ) {}
@@ -59,6 +60,14 @@ class Usuario {
     }
 
     /**
+     * @return string Permissao do usuario
+     */
+    public function permissao(): string
+    {
+        return $this->permissao;
+    }
+
+    /**
      * @return DateTimeImmutable Data de criação do Usuario
      */
     public function criadoEm(): DateTimeImmutable
@@ -94,6 +103,7 @@ class Usuario {
             $dados['email'],
             $dados['cpf'],
             $dados['senha'],
+            $dados['permissao'],
             $data,
             (bool) $dados['ativo']
         );
@@ -111,6 +121,7 @@ class Usuario {
             'email' => $this->email,
             'cpf' => $this->cpf,
             'senha' => $this->senha,
+            'permissao' => $this->permissao,
             'criado_em' => $this->criadoEm->format('Y-m-d H:i:s'),
             'ativo' => (int) $this->ativo
         ];
