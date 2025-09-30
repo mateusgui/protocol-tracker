@@ -5,7 +5,7 @@
             <strong>Erro:</strong> <?= htmlspecialchars($erro) ?>
         </div>
     <?php endif; ?>
-    <table class="protocolos-table">
+    <table id="tabela-protocolos" class="protocolos-table">
         <thead>
             <tr>
                 <th>Número</th>

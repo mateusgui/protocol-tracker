@@ -95,4 +95,25 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // --- LÓGICA PARA INICIALIZAR O DATATABLES ---
+    // O seletor '#tabela-protocolos' busca o elemento com o id que demos à tabela
+    $('#tabela-protocolos').DataTable({
+        // Abaixo estão algumas opções de configuração úteis
+        
+        // Traduz a interface para o português
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json',
+        },
+        
+        // Define a ordenação inicial (pela coluna de data, que é a 2ª, índice 2)
+        // 'desc' = descendente (do mais novo para o mais antigo)
+        order: [[2, 'desc']], 
+        
+        // Define quantos itens por página são mostrados
+        pageLength: 5, 
+        
+        // Define as opções de quantos itens mostrar por página
+        lengthMenu: [5, 10, 25, 50, 100],
+    });
+
 });
