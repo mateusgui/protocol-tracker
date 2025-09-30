@@ -84,8 +84,13 @@ class WebController {
 
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
             $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+            $permissaoUsuario = $usuarioLogado?->permissao();
 
-            $listaDeProtocolos = $this->repositorio->search($idUsuario, $numero, $dataInicio, $dataFim);
+            if ($permissaoUsuario === 'administrador') {
+                $idUsuarioParaBusca = null;
+            }
+
+            $listaDeProtocolos = $this->repositorio->search($idUsuarioParaBusca, $numero, $dataInicio, $dataFim);
 
             $tituloDaPagina = "Buscar Protocolos";
             
