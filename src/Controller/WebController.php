@@ -8,70 +8,67 @@ use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
 use Exception;
+use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
-class WebController {
-    
+class WebController
+{
+    private ?Usuario $usuarioLogado = null;
+    private bool $isAdmin = false;
+
     public function __construct(
         private ProtocoloRepositoryInterface $repositorio,
         private DashboardService $dashboardService,
         private ProtocoloService $protocoloService,
         private UsuarioRepository $usuarioRepository
-    ) {}
+    ) {
+        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+        if ($idUsuario) {
+            $this->usuarioLogado = $this->usuarioRepository->buscaPorId($idUsuario);
+        }
+        
+        if ($this->usuarioLogado && $this->usuarioLogado->permissao() === 'administrador') {
+            $this->isAdmin = true;
+        }
+    }
 
-    /**
-     * URL_PATH = /
-     * REQUEST_METHOD = GET
-     */
     public function home()
     {
-        $tituloDaPagina = "Controle de Protocolos";
-
-        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-        $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+        $tituloDaPagina = "Adicionar Novo Protocolo";
+        $usuarioLogado = $this->usuarioLogado;
+        $isAdmin = $this->isAdmin;
 
         require __DIR__ . '/../../templates/home.php';
     }
 
-    /**
-     * URL_PATH = /
-     * REQUEST_METHOD = POST
-     */
     public function salvarNovoProtocolo()
     {
         try {
-            // Pega os dados do formulário de forma segura
             $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
+            if ($id_usuario === null) {
+                throw new Exception("Usuário não autenticado para realizar esta ação.");
+            }
+            
             $numero = $_POST['numero'] ?? '';
             $quantidade_paginas = (int)($_POST['paginas'] ?? 0);
             $observacoes = $_POST['observacoes'] ?? '';
-                
-            // Com os valores que vieram da requisição POST, chama o método registrarNovoProtocolo para tentar registrar esse protocolo
+            
             $this->protocoloService->registrarNovoProtocolo($id_usuario, $numero, $quantidade_paginas, $observacoes);
-
             $_SESSION['mensagem_sucesso'] = "Protocolo adicionado com sucesso!";
 
-            // Se o registro foi bem-sucedido, redireciona para a página inicial
             header('Location: /home');
             exit();
 
         } catch (Exception $e) {
-            // Se a Service lançou uma exceção (erro de validação), guardamos a mensagem
             $erro = $e->getMessage();
-            $tituloDaPagina = "Controle de Protocolos";
-
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+            $tituloDaPagina = "Adicionar Novo Protocolo";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
             
-            //Se der erro chama a home.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/home.php';
         }
     }
 
-    /**
-     * URL_PATH = /busca
-     * REQUEST_METHOD = GET
-     */
     public function buscaProtocolo()
     {
         try {
@@ -79,41 +76,31 @@ class WebController {
             $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
             $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
 
-            $erro = null;
-            $listaDeProtocolos = [];
-
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
-            $permissaoUsuario = $usuarioLogado?->permissao();
-
-            if ($permissaoUsuario === 'administrador') {
+            $idUsuarioParaBusca = $this->usuarioLogado?->id();
+            if ($this->isAdmin) {
                 $idUsuarioParaBusca = null;
             }
 
             $listaDeProtocolos = $this->repositorio->search($idUsuarioParaBusca, $numero, $dataInicio, $dataFim);
 
             $tituloDaPagina = "Buscar Protocolos";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+            $erro = null;
             
             require __DIR__ . '/../../templates/busca.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
-
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
-
-            $listaDeProtocolos = $this->repositorio->allByUser($idUsuario);
+            $listaDeProtocolos = []; // Em caso de erro na busca, retorna uma lista vazia
             $tituloDaPagina = "Buscar Protocolos";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
             
-            //Se der erro chama a home.php, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
         }
     }
 
-    /**
-     * URL_PATH = /editar
-     * REQUEST_METHOD = POST
-     */
     public function editarProtocolo()
     {
         try {
@@ -124,58 +111,38 @@ class WebController {
             $observacoes = $_POST['observacoes'] ?? '';
 
             $this->protocoloService->editarProtocolo($id_usuario, $id, $numero, $quantidade_paginas, $observacoes);
-
             $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
 
             header('Location: /busca');
             exit();
 
         } catch (Exception $e) {
-            $erro = $e->getMessage();
-
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
-
-            $listaDeProtocolos = $this->repositorio->allByUser($idUsuario); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
-            $tituloDaPagina = "Busca de Protocolos";
-
-            //Se der erro chama a busca.php novamente, porém agora com o erro carregado
-            require __DIR__ . '/../../templates/busca.php';
+            $this->exibirFormularioEdicao($e->getMessage());
         }
     }
 
-    /**
-     * URL_PATH = /editar
-     * REQUEST_METHOD = GET
-     */
-    public function exibirFormularioEdicao()
+    public function exibirFormularioEdicao(?string $erro = null)
     {
-        $id = $_GET['id'] ?? null;
+        $id = $_GET['id'] ?? $_POST['id'] ?? null; // Pega o ID do GET ou do POST (em caso de erro)
 
         if (!$id) {
-            $this->notFound(); // Mostra a página de erro 404.
-            return; // Para a execução.
+            $this->notFound();
+            return;
         }
         $protocolo = $this->repositorio->buscaPorId($id);
 
-        // Verifica se achou ou não um protocolo
         if ($protocolo === null) {
             $this->notFound();
             return;
         }
 
         $tituloDaPagina = "Editando Protocolo";
-
-        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-        $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+        $usuarioLogado = $this->usuarioLogado;
+        $isAdmin = $this->isAdmin;
         
         require __DIR__ . '/../../templates/editar.php';
     }
 
-    /**
-     * URL_PATH = /excluir
-     * REQUEST_METHOD = POST
-     */
     public function alteraStatusProtocolo()
     {
         try {
@@ -183,68 +150,66 @@ class WebController {
             $id = $_POST['id'] ?? '';
             
             $this->protocoloService->alteraStatusProtocolo($id_usuario, $id);
-
             $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
 
             header('Location: /busca');
             exit();
 
         } catch (Exception $e) {
+            // Em caso de erro, recarrega a página de busca com a mensagem de erro
             $erro = $e->getMessage();
-
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
-
-            $listaDeProtocolos = $this->repositorio->allByUser($idUsuario); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
+            $listaDeProtocolos = $this->repositorio->all();
             $tituloDaPagina = "Busca de Protocolos";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
-            //Se der erro chama a busca.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
         }
     }
 
-    /**
-     * URL_PATH = /dashboard
-     * REQUEST_METHOD = GET
-     */
     public function exibirDashboard()
     {
         try {
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+            $diaSelecionado = !empty($_GET['dia']) ? new DateTimeImmutable($_GET['dia']) : new DateTimeImmutable('now');
+            $mesSelecionado = !empty($_GET['mes']) ? new DateTimeImmutable($_GET['mes']) : new DateTimeImmutable('now');
 
-            $diaSelecionado = !empty($_GET['dia']) ? new DateTimeImmutable($_GET['dia'], new DateTimeZone('America/Campo_Grande')) : new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'));
-            $mesSelecionado = !empty($_GET['mes']) ? new DateTimeImmutable($_GET['mes'], new DateTimeZone('America/Campo_Grande')) : new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'));
-
-            //metricarPorUsuarioDia - metricarPorUsuarioMes - metricarPorUsuarioTotal
             $totalPorDiaUsuario = $this->dashboardService->metricarPorUsuarioDia($idUsuario, $diaSelecionado);
             $totalPorMesUsuario = $this->dashboardService->metricarPorUsuarioMes($idUsuario, $mesSelecionado);
             $totalUsuario = $this->dashboardService->metricarPorUsuarioTotal($idUsuario);
-
-            $metricas = $this->dashboardService->getTodasAsMetricas();
+            
+            $metricas = $this->dashboardService->getTodasAsMetricas(); // Você pode querer um dashboard só de admin
             $tituloDaPagina = "Dashboard de Produtividade";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             require __DIR__ . '/../../templates/dashboard.php';
             
         } catch (Exception $e) {
-            $erro = $e->getMessage();
-            $tituloDaPagina = "Controle de Protocolos";
-
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
-            
-            //Se der erro chama a home.php, porém agora com o erro carregado
-            require __DIR__ . '/../../templates/home.php';
+            $this->home($e->getMessage());
         }
     }
 
-public function notFound()
-{
-    http_response_code(404);
+    public function notFound()
+    {
+        http_response_code(404);
+        $tituloDaPagina = "Página Não Encontrada";
+        $usuarioLogado = $this->usuarioLogado;
+        $isAdmin = $this->isAdmin;
 
-    $tituloDaPagina = "Página Não Encontrada";
-    $mainClass = 'pagina-404'; 
+        require __DIR__ . '/../../templates/404.php';
+    }
 
-    require __DIR__ . '/../../templates/404.php';
-}
+    /**
+     * Método auxiliar privado para renderizar views, passando dados comuns.
+     */
+    private function view(string $templateNome, array $dados = []): void
+    {
+        // Adiciona dados globais a todas as views
+        $dados['usuarioLogado'] = $this->usuarioLogado;
+        $dados['isAdmin'] = $this->isAdmin;
+        
+        extract($dados);
+        require __DIR__ . "/../../templates/{$templateNome}";
+    }
 }
