@@ -37,6 +37,41 @@ class DashboardService{
         ];
     }
 
+    public function metricarPorUsuarioDia(int $id_usuario, DateTimeImmutable $dia): int
+    {
+        $todosOsProtocolos = [];
+        if ($id_usuario !== null) {
+            $todosOsProtocolos = $this->repositorio->allByUser($id_usuario);
+        } else {
+            $todosOsProtocolos = $this->repositorio->all();
+        }
+
+        return $this->quantidadeDePaginasDia($todosOsProtocolos, $dia);
+    }
+
+    public function metricarPorUsuarioMes(int $id_usuario, DateTimeImmutable $mes): int
+    {
+        $todosOsProtocolos = [];
+        if ($id_usuario !== null) {
+            $todosOsProtocolos = $this->repositorio->allByUser($id_usuario);
+        } else {
+            $todosOsProtocolos = $this->repositorio->all();
+        }
+
+        return $this->quantidadeDePaginasMes($todosOsProtocolos, $mes);
+    }
+
+    public function metricarPorUsuarioTotal(int $id_usuario): int
+    {
+        $todosOsProtocolos = [];
+        if ($id_usuario !== null) {
+            $todosOsProtocolos = $this->repositorio->allByUser($id_usuario);
+        } else {
+            $todosOsProtocolos = $this->repositorio->all();
+        }
+
+        return $this->quantidadeDePaginasTotal($todosOsProtocolos);
+    }
 
     // -- MÉTODOS PRIVADOS --
     //São chamados para auxiliar o método getTodasAsMetricas() a calcular todos os dados que serão apresentados no dashboard
