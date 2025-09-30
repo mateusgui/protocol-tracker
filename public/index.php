@@ -22,16 +22,13 @@ try {
     // CONEXÃO COM O BANCO
     $connection = ConnectionCreator::createConnection();
 
-    $AuditRepository = new AuditRepository($connection);
+    $auditRepository = new AuditRepository($connection);
     $usuarioRepositorio = new UsuarioRepository($connection);
     $repositorio = new ProtocoloRepositorySql($connection, $usuarioRepositorio);
 
-    $AuditService = new AuditService($AuditRepository);
-    $dashboardService = new DashboardService($repositorio); //Instanciação de DashboardSerivce usando o $repositorio que é uma instância de ProtocoloRepository
-    $protocoloService = new ProtocoloService($repositorio, $AuditService); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
-     //Instanciação de webController usando instâncias de: repositorio, dashboardService e protocoloService
-    
-    
+    $auditService = new AuditService($auditRepository);
+    $dashboardService = new DashboardService($repositorio);
+    $protocoloService = new ProtocoloService($repositorio, $auditService);
     $usuarioService = new UsuarioService($usuarioRepositorio);
     $loginService = new LoginService($usuarioRepositorio);
 
