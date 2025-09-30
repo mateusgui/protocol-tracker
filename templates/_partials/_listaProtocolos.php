@@ -1,10 +1,12 @@
 <section class="listagem-container">
     <h3>Protocolos Registrados</h3>
+    
     <?php if (isset($erro) && $erro): ?>
         <div class="error-message">
             <strong>Erro:</strong> <?= htmlspecialchars($erro) ?>
         </div>
     <?php endif; ?>
+
     <table id="tabela-protocolos" class="protocolos-table">
         <thead>
             <tr>
@@ -15,12 +17,11 @@
             </tr>
         </thead>
         <tbody>
-            <?php if (empty($listaDeProtocolos)): ?>
-                <tr>
-                    <td colspan="4" class="nenhum-resultado">Nenhum protocolo encontrado.</td>
-                </tr>
-            <?php endif; ?>
-
+            <?php 
+            // O bloco "if (empty(...))" foi REMOVIDO daqui.
+            // O foreach simplesmente não executará se a lista estiver vazia,
+            // resultando em um <tbody> vazio, que é o correto.
+            ?>
             <?php foreach ($listaDeProtocolos as $protocolo): ?>
                 <tr>
                     <td><?= htmlspecialchars($protocolo->numero()) ?></td>
