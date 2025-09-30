@@ -156,7 +156,7 @@ class WebController
             exit();
 
         } catch (Exception $e) {
-            // Em caso de erro, recarrega a página de busca com a mensagem de erro
+
             $erro = $e->getMessage();
             $listaDeProtocolos = $this->repositorio->all();
             $tituloDaPagina = "Busca de Protocolos";
@@ -178,7 +178,6 @@ class WebController
             $totalPorMesUsuario = $this->dashboardService->metricarPorUsuarioMes($idUsuario, $mesSelecionado);
             $totalUsuario = $this->dashboardService->metricarPorUsuarioTotal($idUsuario);
             
-            $metricas = $this->dashboardService->getTodasAsMetricas(); // Você pode querer um dashboard só de admin
             $tituloDaPagina = "Dashboard de Produtividade";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
@@ -198,18 +197,5 @@ class WebController
         $isAdmin = $this->isAdmin;
 
         require __DIR__ . '/../../templates/404.php';
-    }
-
-    /**
-     * Método auxiliar privado para renderizar views, passando dados comuns.
-     */
-    private function view(string $templateNome, array $dados = []): void
-    {
-        // Adiciona dados globais a todas as views
-        $dados['usuarioLogado'] = $this->usuarioLogado;
-        $dados['isAdmin'] = $this->isAdmin;
-        
-        extract($dados);
-        require __DIR__ . "/../../templates/{$templateNome}";
     }
 }
