@@ -604,7 +604,7 @@ textarea {
 }
 
 .login-box {
-    background-color: var(--cor-fundo-sidebar);
+    background-color: var(--cor-fundo-header);
     padding: 1.5rem 2.5rem;
     border-radius: 8px;
 }
@@ -622,13 +622,13 @@ textarea {
     text-align: center;
     margin-bottom: 0.5rem;
     font-size: 1.8rem;
-    color: var(--cor-fontes-sidebar);
+    color: var(--cor-fontes-body);
 }
 
 .login-box p {
     text-align: center;
     margin-bottom: 2rem;
-    color: var(--cor-fontes-sidebar);
+    color: var(--cor-fontes-body);
 }
 
 .login-form .form-actions button {
@@ -645,7 +645,7 @@ textarea {
     display: block;
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: var(--cor-fontes-sidebar);
+    color: var(--cor-fontes-body);
 }
 
 .login-form .form-group input[type="text"],
