@@ -165,7 +165,7 @@ class UsuarioController {
 
             $_SESSION['mensagem_sucesso'] = "Cadastro atualizado com sucesso!";
 
-            header('Location: /editar-cadastro');
+            header('Location: /home');
             exit();
 
         } catch (Exception $e) {
@@ -245,7 +245,7 @@ class UsuarioController {
 
             $_SESSION['mensagem_sucesso'] = "Senha alterada com sucesso";
 
-            header('Location: /editar-cadastro');
+            header('Location: /home');
             exit();
 
         } catch (Exception $e) {
