@@ -13,7 +13,7 @@ use DateTimeZone;
 // --- CONFIGURAÇÃO ---
 // Altere estes valores de acordo com a sua necessidade
 $caminhoArquivoJson = __DIR__ . '/data/protocolos.json'; // Caminho do JSON a ser importado
-$idUsuarioPadrao = 2; // ID do usuário no banco SQL ao qual os protocolos serão associados
+$idUsuarioPadrao = 3; // ID do usuário no banco SQL ao qual os protocolos serão associados
 // --------------------
 
 
