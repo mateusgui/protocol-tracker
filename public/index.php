@@ -2,8 +2,6 @@
 
 session_start();
 
-$usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
-
 // CARREGAMENTO E CONFIGURAÇÃO
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -38,7 +36,19 @@ try {
 
     $webController = new WebController($repositorio, $dashboardService, $protocoloService, $usuarioRepositorio);
 
-    // Variável para guardar possíveis erros de validação do formulário
+    $usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
+    $idUsuarioLogado = $_SESSION['usuario_logado_id'] ?? null;
+    
+    $usuarioLogado = null;
+    $permissao = null;
+
+    if ($idUsuarioLogado) {
+        $usuarioLogado = $usuarioRepositorio->buscaPorId($idUsuarioLogado);
+        if ($usuarioLogado) {
+            $permissao = $usuarioLogado->permissao();
+        }
+    }
+
     $erro = null;
 
     // LÓGICA DE ROTEAMENTO 
@@ -51,6 +61,14 @@ try {
     {
         if (!$usuarioEstaLogado) {
             header('Location: /login');
+            exit();
+        }
+    }
+
+    function rotaAdmin($permissao): void
+    {
+        if ($permissao !== 'administrador') {
+            header('Location: /home');
             exit();
         }
     }
@@ -163,6 +181,12 @@ try {
             } else {
                 $usuarioController->exibirFormularioEditarSenha();
             }
+            break;
+
+        case '/admin/protocolos':
+
+            rotaAdmin($permissao);
+
             break;
 
         // ----- ROTA NÃO ENCONTRADA - 404 NOT FOUND -----
