@@ -23,14 +23,15 @@ try {
     $connection = ConnectionCreator::createConnection();
 
     $AuditRepository = new AuditRepository($connection);
-    $AuditService = new AuditService($AuditRepository);
+    $usuarioRepositorio = new UsuarioRepository($connection);
+    $repositorio = new ProtocoloRepositorySql($connection, $usuarioRepositorio);
 
-    $repositorio = new ProtocoloRepositorySql($connection); //Instanciação de ProtocoloRepository
+    $AuditService = new AuditService($AuditRepository);
     $dashboardService = new DashboardService($repositorio); //Instanciação de DashboardSerivce usando o $repositorio que é uma instância de ProtocoloRepository
     $protocoloService = new ProtocoloService($repositorio, $AuditService); //Instanciação de ProtocoloService usando o $repositorio que é uma instância de ProtocoloRepository
      //Instanciação de webController usando instâncias de: repositorio, dashboardService e protocoloService
     
-    $usuarioRepositorio = new UsuarioRepository($connection);
+    
     $usuarioService = new UsuarioService($usuarioRepositorio);
     $loginService = new LoginService($usuarioRepositorio);
 

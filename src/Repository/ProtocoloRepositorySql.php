@@ -11,10 +11,12 @@ use PDOStatement;
 final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
 {
     private PDO $connection;
+    private UsuarioRepository $usuarioRepository;
 
-    public function __construct(PDO $connection)
+    public function __construct(PDO $connection, UsuarioRepository $usuarioRepository)
     {
         $this->connection = $connection;
+        $this->usuarioRepository = $usuarioRepository;
     }
 
     /**
