@@ -32,6 +32,19 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         return $listaDeProtocolos;
     }
 
+    public function allByUser($id_usuario): array
+    {
+        $sqlQuery = "SELECT * FROM protocolos WHERE id_usuario = :id_usuario AND deletado_em IS NULL ORDER BY criado_em DESC;";
+        
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->bindValue(':id_usuario', $id_usuario);
+        $stmt->execute();
+
+        $listaDeProtocolos = $this->hidrataListaDeProtocolos($stmt);
+
+        return $listaDeProtocolos;
+    }
+
     /**
      * Busca protocolos com múltipos filtros opcionais
      * @param string|null $numero Número do protocolo

@@ -120,9 +120,6 @@ class WebController {
 
             $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
 
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
-
             header('Location: /busca');
             exit();
 
@@ -189,6 +186,9 @@ class WebController {
             $listaDeProtocolos = $this->repositorio->all(); //Carrega lista de protocolos pois é preciso para chamar a view busca.php
             $tituloDaPagina = "Busca de Protocolos";
 
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
             //Se der erro chama a busca.php novamente, porém agora com o erro carregado
             require __DIR__ . '/../../templates/busca.php';
         }
@@ -204,11 +204,17 @@ class WebController {
             $metricas = $this->dashboardService->getTodasAsMetricas();
             $tituloDaPagina = "Dashboard de Produtividade";
 
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
             require __DIR__ . '/../../templates/dashboard.php';
             
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Controle de Protocolos";
+
+            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
             
             //Se der erro chama a home.php, porém agora com o erro carregado
             require __DIR__ . '/../../templates/home.php';
