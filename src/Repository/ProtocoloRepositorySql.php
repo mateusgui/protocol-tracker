@@ -32,7 +32,7 @@ final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
         return $listaDeProtocolos;
     }
 
-    public function allByUser($id_usuario): array
+    public function allByUser(int $id_usuario): array
     {
         $sqlQuery = "SELECT * FROM protocolos WHERE id_usuario = :id_usuario AND deletado_em IS NULL ORDER BY criado_em DESC;";
         

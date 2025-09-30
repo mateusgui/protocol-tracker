@@ -8,7 +8,7 @@ use Mateus\ProtocolTracker\Model\Protocolo;
 interface ProtocoloRepositoryInterface
 {
     public function all(): array;
-    public function allByUser($id_usuario): array;
+    public function allByUser(int $id_usuario): array;
     public function search(?string $numero, ?DateTimeImmutable $dataInicio, ?DateTimeImmutable $dataFim): array;
     public function buscaPorNumero(string $numero): ?Protocolo;
     public function buscaPorId(string $id): ?Protocolo;
