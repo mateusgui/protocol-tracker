@@ -33,7 +33,7 @@
 
                     <?php if (isset($isAdmin) && $isAdmin === true): ?>
                         <li>
-                            <a href="/admin/protocolos" class="<?= (str_starts_with($uri, '/admin/usuarios')) ? 'active' : '' ?>">
+                            <a href="/admin/protocolos" class="<?= (str_starts_with($uri, '/admin/protocolos')) ? 'active' : '' ?>">
                                 <span class="material-icons-outlined">group</span> Gerenciar Usuários
                             </a>
                         </li>

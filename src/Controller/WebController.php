@@ -32,11 +32,11 @@ class WebController
         }
     }
 
-    public function home()
+    public function home(?string $erro = null)
     {
         $tituloDaPagina = "Adicionar Novo Protocolo";
-        $usuarioLogado = $this->usuarioLogado;
-        $isAdmin = $this->isAdmin;
+        $usuarioLogado = $this->usuarioLogado; // _content-header.php usa essa informação
+        $isAdmin = $this->isAdmin; // _header.php usa essa informação
 
         require __DIR__ . '/../../templates/home.php';
     }
@@ -44,16 +44,14 @@ class WebController
     public function salvarNovoProtocolo()
     {
         try {
-            $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
-            if ($id_usuario === null) {
-                throw new Exception("Usuário não autenticado para realizar esta ação.");
-            }
+            $id_usuario = $this->usuarioLogado?->id();
             
             $numero = $_POST['numero'] ?? '';
             $quantidade_paginas = (int)($_POST['paginas'] ?? 0);
             $observacoes = $_POST['observacoes'] ?? '';
             
             $this->protocoloService->registrarNovoProtocolo($id_usuario, $numero, $quantidade_paginas, $observacoes);
+
             $_SESSION['mensagem_sucesso'] = "Protocolo adicionado com sucesso!";
 
             header('Location: /home');
@@ -76,23 +74,21 @@ class WebController
             $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
             $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
 
-            $idUsuarioParaBusca = $this->usuarioLogado?->id();
+            $id_usuario = $this->usuarioLogado?->id();
             if ($this->isAdmin) {
-                $idUsuarioParaBusca = null;
+                $id_usuario = null;
             }
 
-            $listaDeProtocolos = $this->repositorio->search($idUsuarioParaBusca, $numero, $dataInicio, $dataFim);
+            $listaDeProtocolos = $this->repositorio->search($id_usuario, $numero, $dataInicio, $dataFim);
 
             $tituloDaPagina = "Buscar Protocolos";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
-            $erro = null;
             
             require __DIR__ . '/../../templates/busca.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
-            $listaDeProtocolos = []; // Em caso de erro na busca, retorna uma lista vazia
             $tituloDaPagina = "Buscar Protocolos";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
@@ -104,7 +100,7 @@ class WebController
     public function editarProtocolo()
     {
         try {
-            $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
+            $id_usuario = $this->usuarioLogado?->id();
             $id = $_POST['id'] ?? '';
             $numero = $_POST['numero'] ?? '';
             $quantidade_paginas = (int)($_POST['paginas'] ?? 0);
@@ -123,7 +119,7 @@ class WebController
 
     public function exibirFormularioEdicao(?string $erro = null)
     {
-        $id = $_GET['id'] ?? $_POST['id'] ?? null; // Pega o ID do GET ou do POST (em caso de erro)
+        $id = $_GET['id'] ?? null;
 
         if (!$id) {
             $this->notFound();
@@ -146,10 +142,11 @@ class WebController
     public function alteraStatusProtocolo()
     {
         try {
-            $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
+            $id_usuario = $this->usuarioLogado?->id();
             $id = $_POST['id'] ?? '';
             
             $this->protocoloService->alteraStatusProtocolo($id_usuario, $id);
+
             $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
 
             header('Location: /busca');
@@ -158,7 +155,7 @@ class WebController
         } catch (Exception $e) {
 
             $erro = $e->getMessage();
-            $listaDeProtocolos = $this->repositorio->all();
+            $listaDeProtocolos = $this->repositorio->allByUser($id_usuario);
             $tituloDaPagina = "Busca de Protocolos";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
@@ -170,7 +167,7 @@ class WebController
     public function exibirDashboard()
     {
         try {
-            $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+            $idUsuario = $this->usuarioLogado?->id();
             $diaSelecionado = !empty($_GET['dia']) ? new DateTimeImmutable($_GET['dia']) : new DateTimeImmutable('now');
             $mesSelecionado = !empty($_GET['mes']) ? new DateTimeImmutable($_GET['mes']) : new DateTimeImmutable('now');
 
