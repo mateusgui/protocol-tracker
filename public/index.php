@@ -24,7 +24,7 @@ try {
 
     $auditRepository = new AuditRepository($connection);
     $usuarioRepositorio = new UsuarioRepository($connection);
-    $repositorio = new ProtocoloRepositorySql($connection, $usuarioRepositorio);
+    $repositorio = new ProtocoloRepositorySql($connection);
 
     $auditService = new AuditService($auditRepository);
     $dashboardService = new DashboardService($repositorio);
