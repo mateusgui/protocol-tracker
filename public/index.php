@@ -5,6 +5,7 @@ session_start();
 // CARREGAMENTO E CONFIGURAÇÃO
 require __DIR__ . '/../vendor/autoload.php';
 
+use Mateus\ProtocolTracker\Controller\AdminController;
 use Mateus\ProtocolTracker\Controller\UsuarioController;
 use Mateus\ProtocolTracker\Controller\WebController;
 use Mateus\ProtocolTracker\Infrastructure\Persistence\ConnectionCreator;
@@ -32,9 +33,10 @@ try {
     $usuarioRepositorio = new UsuarioRepository($connection);
     $usuarioService = new UsuarioService($usuarioRepositorio);
     $loginService = new LoginService($usuarioRepositorio);
-    $usuarioController = new UsuarioController($usuarioRepositorio, $usuarioService, $loginService);
 
+    $usuarioController = new UsuarioController($usuarioRepositorio, $usuarioService, $loginService);
     $webController = new WebController($repositorio, $dashboardService, $protocoloService, $usuarioRepositorio);
+    $adminController = new AdminController($usuarioRepositorio, $usuarioService);
 
     $usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
     $idUsuarioLogado = $_SESSION['usuario_logado_id'] ?? null;
@@ -186,6 +188,8 @@ try {
         case '/admin/protocolos':
 
             rotaAdmin($permissao);
+
+
 
             break;
 
