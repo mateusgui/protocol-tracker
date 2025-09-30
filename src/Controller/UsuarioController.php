@@ -6,14 +6,28 @@ use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\UsuarioService;
 use Exception;
+use Mateus\ProtocolTracker\Model\Usuario;
 
-class UsuarioController {
+class UsuarioController
+{
+
+    private ?Usuario $usuarioLogado = null;
+    private bool $isAdmin = false;
 
     public function __construct(
         private UsuarioRepository $repositorio,
         private UsuarioService $usuarioService,
         private LoginService $loginService,
-    ) {}
+    ) {
+        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
+        if ($idUsuario) {
+            $this->usuarioLogado = $this->repositorio->buscaPorId($idUsuario);
+        }
+        
+        if ($this->usuarioLogado && $this->usuarioLogado->permissao() === 'administrador') {
+            $this->isAdmin = true;
+        }
+    }
 
     /**
      * URL_PATH = /login
@@ -22,6 +36,8 @@ class UsuarioController {
     public function exibirFormularioLogin()
     {
         $tituloDaPagina = "Login Protocol Tracker";
+        $usuarioLogado = $this->usuarioLogado;
+        $isAdmin = $this->isAdmin;
 
         require __DIR__ . '/../../templates/login.php';
     }
@@ -44,6 +60,8 @@ class UsuarioController {
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Login Protocol Tracker";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
             
             require __DIR__ . '/../../templates/login.php';
         }
@@ -82,12 +100,16 @@ class UsuarioController {
     {
         try {
             $tituloDaPagina = "Cadastrar novo usuário";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             require __DIR__ . '/../../templates/cadastroUsuario.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Login Protocol Tracker";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
             
             require __DIR__ . '/../../templates/login.php';
         }
@@ -119,8 +141,10 @@ class UsuarioController {
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Cadastrar novo usuário";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
-            $dadosDoFormulario = $_POST; // Será utilizad para recuperar os dados digitados e repopular o formulário de cadastro
+            $dadosDoFormulario = $_POST;
             
             require __DIR__ . '/../../templates/cadastroUsuario.php';
         }
@@ -134,6 +158,8 @@ class UsuarioController {
     {
         try {
             $tituloDaPagina = "Editar cadastro";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             $id = $_SESSION['usuario_logado_id'] ?? null;
 
@@ -171,6 +197,8 @@ class UsuarioController {
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Editar cadastro";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             $dadosDoFormulario = $_POST;
     
@@ -200,6 +228,8 @@ class UsuarioController {
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Editar cadastro";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             $id = $_SESSION['usuario_logado_id'] ?? null;
             $usuario = $this->repositorio->buscaPorId($id);
@@ -216,12 +246,16 @@ class UsuarioController {
     {
         try {
             $tituloDaPagina = "Alterar senha";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             require __DIR__ . '/../../templates/editarSenha.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Editar cadastro";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             $id = $_SESSION['usuario_logado_id'] ?? null;
             $usuario = $this->repositorio->buscaPorId($id);
@@ -251,6 +285,8 @@ class UsuarioController {
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Alterar senha";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
 
             require __DIR__ . '/../../templates/editarSenha.php';
         }
