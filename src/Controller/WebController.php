@@ -3,6 +3,7 @@
 namespace Mateus\ProtocolTracker\Controller;
 
 use DateTimeImmutable;
+use DateTimeZone;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
@@ -204,11 +205,19 @@ class WebController {
     public function exibirDashboard()
     {
         try {
-            $metricas = $this->dashboardService->getTodasAsMetricas();
-            $tituloDaPagina = "Dashboard de Produtividade";
-
             $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
             $usuarioLogado = $idUsuario ? $this->usuarioRepository->buscaPorId($idUsuario) : null;
+
+            $diaSelecionado = !empty($_GET['dia']) ? new DateTimeImmutable($_GET['dia'], new DateTimeZone('America/Campo_Grande')) : new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'));
+            $mesSelecionado = !empty($_GET['mes']) ? new DateTimeImmutable($_GET['mes'], new DateTimeZone('America/Campo_Grande')) : new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'));
+
+            //metricarPorUsuarioDia - metricarPorUsuarioMes - metricarPorUsuarioTotal
+            $totalPorDiaUsuario = $this->dashboardService->metricarPorUsuarioDia($idUsuario, $diaSelecionado);
+            $totalPorMesUsuario = $this->dashboardService->metricarPorUsuarioMes($idUsuario, $mesSelecionado);
+            $totalUsuario = $this->dashboardService->metricarPorUsuarioTotal($idUsuario);
+
+            $metricas = $this->dashboardService->getTodasAsMetricas();
+            $tituloDaPagina = "Dashboard de Produtividade";
 
             require __DIR__ . '/../../templates/dashboard.php';
             

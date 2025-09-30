@@ -220,7 +220,8 @@ a {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.form-group input[type="date"] {
+.form-group input[type="date"],
+.form-group input[type="month"] {
     width: 100%;
     height: 40px;
     padding: 0.8rem;
@@ -744,4 +745,27 @@ textarea {
     font-size: 0.95rem;
     margin-right: 10px; /* Adiciona um espaço antes do ícone de tema */
     white-space: nowrap; /* Impede que o nome quebre a linha em telas menores */
+}
+
+/* === AJUSTES FINOS PARA OS FILTROS DO DASHBOARD === */
+/* Transforma o container do formulário em um flex container */
+.dashboard-filters .form-row {
+    display: flex;
+    align-items: flex-end; /* Alinha os itens pela base (útil se os labels tiverem tamanhos diferentes) */
+    gap: 20px; /* Espaço entre os campos */
+    margin-bottom: 20px;
+}
+
+/* Garante que a div dos botões não cresça e se alinhe com os outros campos */
+.dashboard-filters .form-actions {
+    margin-top: 0; /* Remove a margem superior que não é mais necessária */
+}
+
+/* Estilo para uniformizar a aparência dos inputs de data e mês */
+.dashboard-filters input[type="date"],
+.dashboard-filters input[type="month"] {
+    -webkit-appearance: none; /* Remove a aparência padrão do Webkit (Chrome/Safari) */
+    -moz-appearance: none; /* Remove a aparência padrão do Firefox */
+    appearance: none;
+    background-color: #fff; /* Fundo branco explícito */
 }
