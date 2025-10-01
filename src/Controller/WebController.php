@@ -3,15 +3,12 @@
 namespace Mateus\ProtocolTracker\Controller;
 
 use DateTimeImmutable;
-use DateTimeZone;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
 use Exception;
 use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
 use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
-use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
 class WebController
 {
