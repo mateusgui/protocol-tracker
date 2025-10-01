@@ -18,7 +18,6 @@ class Protocolo {
         private ?DateTimeImmutable $deletado_em = null
     ) {}
 
-    //GETTERS
     /**
      * @return string id
      */
@@ -34,7 +33,7 @@ class Protocolo {
     }
 
     /**
-     * @return int quantidadeDePaginas
+     * @return int quantidade_paginas
      */
     public function paginas(): int {
         return $this->quantidade_paginas;
@@ -47,18 +46,30 @@ class Protocolo {
         return $this->criado_em;
     }
     
+    /**
+     * @return int id_usuario
+     */
     public function idUsuario(): int {
         return $this->id_usuario;
     }
 
+    /**
+     * @return string|null observacoes
+     */
     public function observacoes(): ?string {
         return $this->observacoes;
     }
 
+    /**
+     * @return DateTimeImmutable alterado_em
+     */
     public function alteradoEm(): ?DateTimeImmutable {
         return $this->alterado_em;
     }
 
+    /**
+     * @return DateTimeImmutable deletado_em
+     */
     public function deletadoEm(): ?DateTimeImmutable {
         return $this->deletado_em;
     }
@@ -107,5 +118,4 @@ class Protocolo {
             'deletado_em' => $this->deletado_em?->format('Y-m-d H:i:s')
         ];
     }
-
 }
