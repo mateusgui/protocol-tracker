@@ -22,9 +22,9 @@ class WebController
         private ProtocoloService $protocoloService,
         private UsuarioRepository $usuarioRepository
     ) {
-        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-        if ($idUsuario) {
-            $this->usuarioLogado = $this->usuarioRepository->buscaPorId($idUsuario);
+        $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
+        if ($id_usuario) {
+            $this->usuarioLogado = $this->usuarioRepository->buscaPorId($id_usuario);
         }
         
         if ($this->usuarioLogado && $this->usuarioLogado->permissao() === 'administrador') {
