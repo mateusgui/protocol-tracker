@@ -14,6 +14,7 @@ class LoginService
 
     /**
      * Realiza validações para que um usuário possa fazer login
+     * @throws Exception Se os dados forem inválidos.
      * @param string $cpf CPF informado pelo Usuario
      * @param string $senha senha informada pelo Usuario
      * @return void Array associativo
