@@ -12,11 +12,23 @@ final class AuditService
         private AuditRepositoryInterface $repositorio
     ) {}
 
+    /**
+     * Busca todos os registros da tabela de auditoria
+     * @return array Array associativo
+     */
     public function listaAuditoria(): array
     {
         return $this->repositorio->listaAuditoria();
     }
 
+    /**
+     * Cria um novo registro na tabela de auditoria
+     * @param string $protocolo_id
+     * @param int $usuario_id
+     * @param string $numero_protocolo
+     * @param string $acao
+     * @return void
+     */
     public function registraAlteracao(string $protocolo_id, int $usuario_id, string $numero_protocolo, string $acao): void
     {
         $data_acao = new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'));
