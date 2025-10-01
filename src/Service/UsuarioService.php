@@ -7,7 +7,6 @@ use DateTimeZone;
 use Exception;
 use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
-use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
 final class UsuarioService
 {
@@ -15,6 +14,16 @@ final class UsuarioService
         private UsuarioRepositoryInterface $repositorio
     ) {}
 
+    /**
+     * Cria um Usuario
+     * @throws Exception Se os dados forem inválidos.
+     * @param string $nome
+     * @param string $email
+     * @param string $cpf
+     * @param string $senha
+     * @param string $confirmaSenha
+     * @return Usuario Usuario criado
+     */
     public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha, string $confirmaSenha): Usuario
     {
         $this->validaCpf($cpf);
@@ -47,6 +56,15 @@ final class UsuarioService
         return $this->repositorio->add($usuario);
     }
 
+    /**
+     * Atualiza os dados de um Usuário que já existe
+     * @throws Exception Se os dados forem inválidos.
+     * @param int $id
+     * @param string $nome
+     * @param string $email
+     * @param string $cpf
+     * @return void
+     */
     public function atualizarDadosCadastrais(int $id, string $nome, string $email, string $cpf): void
     {
         $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
@@ -79,7 +97,13 @@ final class UsuarioService
         $this->repositorio->update($usuario);
     }
 
-    public function alterarStatusUsuario(int $id)
+    /**
+     * Decide se precisa ativar ou desativar o Usuario
+     * @throws Exception Se os dados forem inválidos.
+     * @param int $id
+     * @return void
+     */
+    public function alterarStatusUsuario(int $id): void
     {
         $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
         if ($dadosAtuaisUsuario === null) {
@@ -93,6 +117,14 @@ final class UsuarioService
             }
     }
 
+    /**
+     * Altera a senha de um Usuario
+     * @throws Exception Se os dados forem inválidos.
+     * @param int $id
+     * @param string $novaSenha
+     * @param string $confirmaSenha
+     * @return void
+     */
     public function alterarSenhaUsuario(int $id, string $novaSenha, string $confirmaSenha): void
     {
         $dadosAtuaisUsuario = $this->repositorio->buscaPorId($id);
@@ -112,7 +144,12 @@ final class UsuarioService
         $this->repositorio->alterarSenha($id, $hashDaNovaSenha);
     }
 
-    //Lógica para validação do CPF
+    /**
+     * Valida o CPF que o Usuario digitar
+     * @throws Exception Se os dados forem inválidos.
+     * @param string $cpf
+     * @return void
+     */
     private function validaCpf(string $cpf): void
     {
         // Verifica se o CPF tem 11 dígitos numéricos
@@ -145,6 +182,12 @@ final class UsuarioService
         }
     }
 
+    /**
+     * Valida o Email que o Usuario digitar
+     * @throws Exception Se os dados forem inválidos.
+     * @param string $email
+     * @return void
+     */
     private function validaEmail(string $email): void
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -152,6 +195,13 @@ final class UsuarioService
         }
     }
 
+    /**
+     * Valida a senha e confirmação de senha que o Usuario digitar
+     * @throws Exception Se os dados forem inválidos.
+     * @param string $senha
+     * @param string $confirmaSenha
+     * @return void
+     */
     private function validaSenha(string $senha, string $confirmaSenha): void
     {
         if($senha !== $confirmaSenha){
