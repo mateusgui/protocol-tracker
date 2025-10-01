@@ -36,32 +36,28 @@ class AdminController {
      * REQUEST_METHOD = GET
      */
     public function exibirPainelAdmin()
-{
-    try {
-        // Pega os mesmos filtros da página de busca
-        $numero = $_GET['numero'] ?? null;
-        $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
-        $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
-        
-        // A diferença crucial: o primeiro parâmetro (id_usuario) é sempre NULL
-        // para garantir que a busca seja em TODOS os usuários.
-        $listaDeProtocolos = $this->protocoloRepositorio->search(null, $numero, $dataInicio, $dataFim);
+    {
+        try {
+            // Pega os mesmos filtros da página de busca
+            $numero = $_GET['numero'] ?? null;
+            $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
+            $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
+            
+            $listaDeProtocolos = $this->protocoloRepositorio->search(null, $numero, $dataInicio, $dataFim);
 
-        // Prepara as variáveis para a view
-        $tituloDaPagina = "Painel do Administrador - Protocolos";
-        $usuarioLogado = $this->usuarioLogado;
-        $isAdmin = $this->isAdmin;
-        $erro = null;
-        
-        // Chama o novo template de admin
-        require __DIR__ . '/../../templates/admin/protocolos.php';
+            $tituloDaPagina = "Painel do Administrador - Protocolos";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+            $erro = null;
+            
+            require __DIR__ . '/../../templates/admin/protocolos.php';
 
-    } catch (Exception $e) {
-        // Tratamento de erro
-        $erro = $e->getMessage();
-        $usuarioLogado = $this->usuarioLogado;
-        $isAdmin = $this->isAdmin;
-        require __DIR__ . '/../../templates/admin/protocolos.php';
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+
+            require __DIR__ . '/../../templates/home.php';
+        }
     }
-}
 }
