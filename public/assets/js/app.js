@@ -16,7 +16,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- LÓGICA PARA O DARK MODE ---
     const themeToggle = document.getElementById('theme-toggle');
 
-    // Função para aplicar e remover o tema
     function aplicarTema(tema) {
         if (tema === 'dark') {
             document.body.classList.add('dark-mode');
@@ -25,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Verifica se o usuário já tem uma preferência salva no navegador
     const temaSalvo = localStorage.getItem('theme');
     if (temaSalvo) {
         aplicarTema(temaSalvo);
@@ -33,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (themeToggle) {
         themeToggle.addEventListener('click', () => {
-            // Verifica se o modo escuro já está ativo
             const isDarkMode = document.body.classList.contains('dark-mode');
             
             if (isDarkMode) {
@@ -45,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 
     // --- LÓGICA PARA A MÁSCARA DE CPF ---
     const campoCpfVisivel = document.getElementById('cpf_formatado');
@@ -74,20 +72,17 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // --- LÓGICA PARA O DROPDOWN DE USUÁRIO ---
     const userMenuToggle = document.getElementById('user-menu-toggle');
     const userMenu = document.getElementById('user-menu');
 
     if (userMenuToggle && userMenu) {
         userMenuToggle.addEventListener('click', (event) => {
-            // Previne que o link '#' recarregue a página
             event.preventDefault();
-            
-            // Adiciona ou remove a classe 'show' no elemento PAI (.dropdown)
             userMenu.parentElement.classList.toggle('show');
         });
 
-        // Fecha o dropdown se o usuário clicar fora dele
         window.addEventListener('click', (event) => {
             if (!userMenu.parentElement.contains(event.target)) {
                 userMenu.parentElement.classList.remove('show');
@@ -95,24 +90,15 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+
     // --- LÓGICA PARA INICIALIZAR O DATATABLES ---
-    // O seletor '#tabela-protocolos' busca o elemento com o id que demos à tabela
     $('#tabela-protocolos').DataTable({
-        // Abaixo estão algumas opções de configuração úteis
         searching: false,
-        // Traduz a interface para o português
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json',
         },
-        
-        // Define a ordenação inicial (pela coluna de data, que é a 2ª, índice 2)
-        // 'desc' = descendente (do mais novo para o mais antigo)
         order: [[2, 'desc']], 
-        
-        // Define quantos itens por página são mostrados
         pageLength: 5, 
-        
-        // Define as opções de quantos itens mostrar por página
         lengthMenu: [5, 10, 25, 50, 100],
     });
 
