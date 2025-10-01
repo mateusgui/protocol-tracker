@@ -33,6 +33,10 @@ final class ProtocoloRepositorySql implements ProtocoloRepositorySqlInterface
         return $listaDeProtocolos;
     }
 
+    /**
+     * Busca todos os protocolo dee um usuário específico ordenados por data decrescente
+     * @return Protocolo[]
+     */
     public function allByUser(int $id_usuario): array
     {
         $sqlQuery = "SELECT * FROM protocolos WHERE id_usuario = :id_usuario AND deletado_em IS NULL ORDER BY criado_em DESC;";
@@ -76,10 +80,8 @@ final class ProtocoloRepositorySql implements ProtocoloRepositorySqlInterface
             $parametros[':dataFim'] = $dataFim->format('Y-m-d H:i:s');
         }
 
-        // 4. Monta a query final.
         $sqlQuery = 'SELECT * FROM protocolos WHERE ' . implode(' AND ', $sqlConditions) . ' ORDER BY criado_em DESC;';
 
-        // 5. Prepara, executa e retorna a lista.
         $stmt = $this->connection->prepare($sqlQuery);
         $stmt->execute($parametros);
 
