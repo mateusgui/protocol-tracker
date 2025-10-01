@@ -42,7 +42,7 @@
                         <form action="/admin/usuarios/editar-cadastro" method="get" style="display:inline;">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->id()) ?>">
                             <button type="submit" class="btn-acao btn-editar" title="Editar Usuário">
-                                <span class="material-icons-outlined">manage_accounts</span>
+                                <span class="material-icons-outlined">edit</span>
                             </button>
                         </form>
                         <form action="/editar-status" method="post" onsubmit="return confirm('Tem certeza que deseja alterar o status deste usuário?');">
