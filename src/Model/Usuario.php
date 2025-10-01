@@ -18,7 +18,6 @@ class Usuario {
         private bool $ativo
     ) {}
 
-    //GETTERS
     /**
      * @return int|null id
      */
@@ -75,7 +74,6 @@ class Usuario {
         return $this->criadoEm;
     }
 
-    //GETTERS
     /**
      * @return bool Ativo ou Inativo
      */
