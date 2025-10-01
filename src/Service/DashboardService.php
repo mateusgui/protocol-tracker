@@ -2,21 +2,20 @@
 
 namespace Mateus\ProtocolTracker\Service;
 
-use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use DateTimeImmutable;
 use DateTimeZone;
 use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
 
 class DashboardService{
 
-    // Construtor padrão da classe, recebe um objeto do tipo ProtocoloRepository para inicializar a classe DashboardService
     public function __construct(
         private ProtocoloRepositorySqlInterface $repositorio
     ) {}
 
-    // -- MÉTODO PÚBLICO --
-
-    //Responsável por chamar os métodos private para entregar o relatório completo com todas as métricas
+    /**
+     * Pega as métricas e produtividade geral dos Usuarios
+     * @return array array com as métricas
+     */
     public function getTodasAsMetricas(): array
     {
         $todosOsProtocolos = $this->repositorio->all();
@@ -38,6 +37,12 @@ class DashboardService{
         ];
     }
 
+    /**
+     * Busca a quantidade de páginas digitalizadas no $dia por Usuario
+     * @param int|null $id_usuario
+     * @param DateTimeImmutable $dia
+     * @return int 
+     */
     public function metricarPorUsuarioDia(?int $id_usuario, DateTimeImmutable $dia): int
     {
         $todosOsProtocolos = [];
@@ -50,6 +55,12 @@ class DashboardService{
         return $this->quantidadeDePaginasDia($todosOsProtocolos, $dia);
     }
 
+    /**
+     * Busca a quantidade de páginas digitalizadas no $mes por Usuario
+     * @param int|null $id_usuario
+     * @param DateTimeImmutable $mes
+     * @return int 
+     */
     public function metricarPorUsuarioMes(?int $id_usuario, DateTimeImmutable $mes): int
     {
         $todosOsProtocolos = [];
@@ -62,6 +73,11 @@ class DashboardService{
         return $this->quantidadeDePaginasMes($todosOsProtocolos, $mes);
     }
 
+    /**
+     * Busca a quantidade total de páginas digitalizadas por Usuario
+     * @param int|null $id_usuario
+     * @return int 
+     */
     public function metricarPorUsuarioTotal(?int $id_usuario): int
     {
         $todosOsProtocolos = [];
@@ -74,10 +90,12 @@ class DashboardService{
         return $this->quantidadeDePaginasTotal($todosOsProtocolos);
     }
 
-    // -- MÉTODOS PRIVADOS --
-    //São chamados para auxiliar o método getTodasAsMetricas() a calcular todos os dados que serão apresentados no dashboard
-
-    //RF09: O dashboard deve exibir a "Quantidade de páginas do dia" (soma das quantidades de páginas de todos os protocolos registrados no dia corrente).
+    /**
+     * Busca a quantidade de páginas digitalizadas no dia atual
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
     private function quantidadeDePaginasDia(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
         $quantidadeDePaginasDia = 0;
@@ -95,7 +113,11 @@ class DashboardService{
         return $quantidadeDePaginasDia;
     }
 
-    //RF10: O dashboard deve exibir a "Média de páginas por dia" (Quantidade de páginas total / Quantidade total de dias [Soma da quantidade de dias diferentes existentes nos registros, será desconsiderado finais de semana]).
+    /**
+     * Busca a média total de páginas/dia
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @return int 
+     */
     private function mediaDePaginasDia(array $todosOsProtocolos): int
     {
         $totalPaginas = $this->quantidadeDePaginasTotal($todosOsProtocolos);
@@ -110,7 +132,12 @@ class DashboardService{
         return (int) round($mediaDePaginasDia);
     }
 
-    //RF11: O dashboard deve exibir a "Quantidade de lotes do dia" (Contagem de protocolos registrados no dia corrente).
+    /**
+     * Busca a quantidade de Protocolos digitalizados no dia atual
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
     private function quantidadeDeProtocolosDia(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
         $quantidadeDeProtocolosDia = 0;
@@ -128,7 +155,11 @@ class DashboardService{
         return $quantidadeDeProtocolosDia;
     }
 
-    //RF12: O dashboard deve exibir a "Média de lotes por dia" (Quantidade de lotes total / Quantidade total de dias [Soma da quantidade de dias diferentes existentes nos registros, será desconsiderado finais de semana]).
+    /**
+     * Busca a média total de protocolos/dia
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @return int 
+     */
     private function mediaDeProtocolosDia(array $todosOsProtocolos): int
     {
         $totalProtocolos = $this->quantidadeDeProtocolosTotal($todosOsProtocolos);
@@ -143,7 +174,12 @@ class DashboardService{
         return (int) round($mediaDeProtocolosDia);
     }
 
-    //RF13: O dashboard deve exibir a "Quantidade de páginas do mês" (soma das quantidades de páginas de todos os protocolos registrados no mês corrente).
+    /**
+     * Busca a quantidade de páginas digitalizadas no mês atual
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
     private function quantidadeDePaginasMes(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
         $quantidadeDePaginasMes = 0;
@@ -161,7 +197,12 @@ class DashboardService{
         return $quantidadeDePaginasMes;
     }
 
-    //RF14: O dashboard deve exibir a "Média de páginas por mês " (Quantidade de páginas total / Quantidade total de meses [Nessa soma, considerar somente meses que já passaram por completo]).
+    /**
+     * Busca a média total de páginas/mês
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
     private function mediaDePaginasMes(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
         $totalPaginas = $this->quantidadeDePaginasTotal($todosOsProtocolos);
@@ -176,7 +217,12 @@ class DashboardService{
         return (int) round($mediaDePaginasMes);
     }
 
-    //RF15: O dashboard deve exibir a "Quantidade de lotes do mês " (Contagem de protocolos registrados no mês corrente).
+    /**
+     * Busca a quantidade de protocolos digitalizados no mês atual
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
     private function quantidadeDeProtocolosMes(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
         $quantidadeDeProtocolosMes = 0;
@@ -194,7 +240,12 @@ class DashboardService{
         return $quantidadeDeProtocolosMes;
     }
 
-    //RF16: O dashboard deve exibir a "Média de lotes por mês " (Quantidade de lotes total / Quantidade total de meses [Nessa soma, considerar somente meses que já passaram por completo]).
+    /**
+     * Busca a média total de protocolos/mês
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
     private function mediaDeProtocolosMes(array $todosOsProtocolos, DateTimeImmutable $agora): int
     {
         $totalProtocolos = $this->quantidadeDeProtocolosTotal($todosOsProtocolos);
@@ -209,7 +260,11 @@ class DashboardService{
         return (int) round($mediaDeProtocolosMes);
     }
 
-    //RF17: O dashboard deve exibir a "Quantidade de páginas total" (soma das páginas de todos os protocolos registrados).
+    /**
+     * Busca a quantidade total de páginas digitalizadas
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @return int 
+     */
     private function quantidadeDePaginasTotal(array $todosOsProtocolos): int
     {
         $somaQuantidadeDePaginas = 0;
@@ -221,13 +276,21 @@ class DashboardService{
         return $somaQuantidadeDePaginas;
     }
 
-    //RF18: O dashboard deve exibir a "Quantidade de lotes total" (soma da quantidade de protocolos registrados).
+    /**
+     * Busca a quantidade total de protocolos digitalizados
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @return int 
+     */
     private function quantidadeDeProtocolosTotal(array $todosOsProtocolos): int
     {
         return count($todosOsProtocolos);
     }
 
-    // -- MÉTODOS AUXILIARES --
+    /**
+     * Busca a quantidade total de dias
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @return int 
+     */
     private function quantidadeTotalDeDias(array $todosOsProtocolos): int
     {
         $diasDiferentes = [];
@@ -244,7 +307,13 @@ class DashboardService{
         return count($diasDiferentes);
     }
 
-    private function quantidadeTotalDeMeses(array $todosOsProtocolos, DateTimeImmutable $agora): int
+    /**
+     * Busca a quantidade total de meses
+     * @param array $todosOsProtocolos Lista de todos os protocolos
+     * @param DateTimeImmutable $agora
+     * @return int 
+     */
+    private function quantidadeTotalDeMeses(array $todosOsProtocolos): int
     {
         $mesesDiferentes = [];
 
