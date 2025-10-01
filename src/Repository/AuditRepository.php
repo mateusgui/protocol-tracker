@@ -15,6 +15,10 @@ final class AuditRepository implements AuditRepositoryInterface
         $this->connection = $connection;
     }
 
+    /**
+     * Busca todos os registros da tabela de auditoria
+     * @return array Array associativo
+     */
     public function listaAuditoria(): array
     {
         $sqlQuery = "SELECT audit.numero_protocolo, audit.acao, audit.data_acao, user.nome, user.permissao
@@ -28,6 +32,10 @@ final class AuditRepository implements AuditRepositoryInterface
         return $stmt->fetchAll();
     }
 
+    /**
+     * Cria um novo registro na tabela de auditoria
+     * @return void
+     */
     public function registraAlteracao(string $protocolo_id, int $usuario_id, string $numero_protocolo, string $acao, DateTimeImmutable $data_acao): void
     {
         $sqlQuery = "INSERT INTO protocolos_auditoria (protocolo_id, usuario_id, numero_protocolo, acao, data_acao) VALUES (:protocolo_id, :usuario_id, :numero_protocolo, :acao, :data_acao);";
