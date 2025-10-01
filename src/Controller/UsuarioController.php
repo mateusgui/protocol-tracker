@@ -19,9 +19,9 @@ class UsuarioController
         private UsuarioService $usuarioService,
         private LoginService $loginService,
     ) {
-        $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
-        if ($idUsuario) {
-            $this->usuarioLogado = $this->repositorio->buscaPorId($idUsuario);
+        $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
+        if ($id_usuario) {
+            $this->usuarioLogado = $this->repositorio->buscaPorId($id_usuario);
         }
         
         if ($this->usuarioLogado && $this->usuarioLogado->permissao() === 'administrador') {
@@ -54,14 +54,12 @@ class UsuarioController
 
             $this->loginService->login($cpf, $senha);
 
-            header('Location: /');
+            header('Location: /home');
             exit();
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Login Protocol Tracker";
-            $usuarioLogado = $this->usuarioLogado;
-            $isAdmin = $this->isAdmin;
             
             require __DIR__ . '/../../templates/login.php';
         }
@@ -73,11 +71,8 @@ class UsuarioController
      */
     public function logout()
     {
-        // Remove variáveis de sessão
-        session_unset();
-
-        // Destrói a sessão
-        session_destroy();
+        session_unset(); // Remove variáveis de sessão
+        session_destroy(); // Destrói a sessão
         
         // Limpa os cookies de sessão do navegador.
         if (ini_get("session.use_cookies")) {
@@ -100,29 +95,23 @@ class UsuarioController
     {
         try {
             $tituloDaPagina = "Cadastrar novo usuário";
-            $usuarioLogado = $this->usuarioLogado;
-            $isAdmin = $this->isAdmin;
 
             require __DIR__ . '/../../templates/cadastroUsuario.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Login Protocol Tracker";
-            $usuarioLogado = $this->usuarioLogado;
-            $isAdmin = $this->isAdmin;
             
             require __DIR__ . '/../../templates/login.php';
         }
     }
 
-    // Processa o formulário de cadastro (POST)
     /**
      * URL_PATH = /cadastro-usuario
      * REQUEST_METHOD = POST
      */
     public function salvarNovoUsuario()
     {
-        //public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha, string $confirmaSenha): Usuario
         try {
             // Pega os dados do formulário de forma segura
             $nome = $_POST['nome'] ?? '';
@@ -141,9 +130,6 @@ class UsuarioController
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Cadastrar novo usuário";
-            $usuarioLogado = $this->usuarioLogado;
-            $isAdmin = $this->isAdmin;
-
             $dadosDoFormulario = $_POST;
             
             require __DIR__ . '/../../templates/cadastroUsuario.php';
@@ -161,15 +147,17 @@ class UsuarioController
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
 
-            $id = $_SESSION['usuario_logado_id'] ?? null;
+            $id_usuario = $this->usuarioLogado?->id(); 
 
-            $usuario = $this->repositorio->buscaPorId($id);
+            $usuario = $this->repositorio->buscaPorId($id_usuario);
 
             require __DIR__ . '/../../templates/editarCadastro.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
             $tituloDaPagina = "Controle de Protocolos";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
             
             require __DIR__ . '/../../templates/home.php';
         }
@@ -182,12 +170,12 @@ class UsuarioController
     public function atualizarDadosCadastrais()
     {
         try {
-            $id = $_SESSION['usuario_logado_id'] ?? null;
+            $id_usuario = $this->usuarioLogado?->id(); 
             $nome = $_POST['nome'] ?? '';
             $email = $_POST['email'] ?? '';
             $cpf = $_POST['cpf'] ?? '';
 
-            $this->usuarioService->atualizarDadosCadastrais($id, $nome, $email, $cpf);
+            $this->usuarioService->atualizarDadosCadastrais($id_usuario, $nome, $email, $cpf);
 
             $_SESSION['mensagem_sucesso'] = "Cadastro atualizado com sucesso!";
 
@@ -199,11 +187,7 @@ class UsuarioController
             $tituloDaPagina = "Editar cadastro";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
-
             $dadosDoFormulario = $_POST;
-    
-            $id = $_SESSION['usuario_logado_id'] ?? null;
-            $usuario = $this->repositorio->buscaPorId($id);
 
             require __DIR__ . '/../../templates/editarCadastro.php';
         }
@@ -216,9 +200,9 @@ class UsuarioController
     public function alterarStatusUsuario()
     {
         try {
-            $id = $_SESSION['usuario_logado_id'] ?? null;
+            $id_usuario = $this->usuarioLogado?->id();
 
-            $this->usuarioService->alterarStatusUsuario($id);
+            $this->usuarioService->alterarStatusUsuario($id_usuario);
 
             $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
 
@@ -230,9 +214,6 @@ class UsuarioController
             $tituloDaPagina = "Editar cadastro";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
-
-            $id = $_SESSION['usuario_logado_id'] ?? null;
-            $usuario = $this->repositorio->buscaPorId($id);
 
             require __DIR__ . '/../../templates/editarCadastro.php';
         }
@@ -257,9 +238,6 @@ class UsuarioController
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
 
-            $id = $_SESSION['usuario_logado_id'] ?? null;
-            $usuario = $this->repositorio->buscaPorId($id);
-
             require __DIR__ . '/../../templates/editarCadastro.php';
         }
     }
@@ -271,11 +249,11 @@ class UsuarioController
     public function alterarSenhaUsuario()
     {
         try {
-            $id = $_SESSION['usuario_logado_id'] ?? null;
+            $id_usuario = $this->usuarioLogado?->id();
             $novaSenha = $_POST['novaSenha'] ?? '';
             $confirmaSenha = $_POST['confirmaSenha'] ?? '';
 
-            $this->usuarioService->alterarSenhaUsuario($id, $novaSenha, $confirmaSenha);
+            $this->usuarioService->alterarSenhaUsuario($id_usuario, $novaSenha, $confirmaSenha);
 
             $_SESSION['mensagem_sucesso'] = "Senha alterada com sucesso";
 
