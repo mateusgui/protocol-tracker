@@ -34,6 +34,10 @@ class WebController
         }
     }
 
+    /**
+     * URL_PATH = /home
+     * REQUEST_METHOD = GET
+     */
     public function home(?string $erro = null)
     {
         $tituloDaPagina = "Adicionar Novo Protocolo";
@@ -43,6 +47,10 @@ class WebController
         require __DIR__ . '/../../templates/home.php';
     }
 
+    /**
+     * URL_PATH = /home
+     * REQUEST_METHOD = POST
+     */
     public function salvarNovoProtocolo()
     {
         try {
@@ -69,6 +77,10 @@ class WebController
         }
     }
 
+    /**
+     * URL_PATH = /busca
+     * REQUEST_METHOD = GET
+     */
     public function buscaProtocolo()
     {
         try {
@@ -99,6 +111,10 @@ class WebController
         }
     }
 
+    /**
+     * URL_PATH = /editar
+     * REQUEST_METHOD = POST
+     */
     public function editarProtocolo()
     {
         try {
@@ -119,6 +135,10 @@ class WebController
         }
     }
 
+    /**
+     * URL_PATH = /editar
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioEdicao(?string $erro = null)
     {
         $id = $_GET['id'] ?? null;
@@ -141,6 +161,10 @@ class WebController
         require __DIR__ . '/../../templates/editar.php';
     }
 
+    /**
+     * URL_PATH = /excluir
+     * REQUEST_METHOD = POST
+     */
     public function alteraStatusProtocolo()
     {
         try {
@@ -166,6 +190,10 @@ class WebController
         }
     }
 
+    /**
+     * URL_PATH = /dashboard
+     * REQUEST_METHOD = GET
+     */
     public function exibirDashboard()
     {
         try {
