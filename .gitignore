@@ -1,3 +1,4 @@
 /vendor/
 /data/protocolos.json
 data/create_scripts_SQLite.sql
+*.sqlite
