@@ -12,6 +12,11 @@ final class AuditService
         private AuditRepository $repositorio
     ) {}
 
+    public function listaAuditoria(): array
+    {
+        return $this->repositorio->listaAuditoria();
+    }
+
     public function registraAlteracao(string $protocolo_id, int $usuario_id, string $numero_protocolo, string $acao): void
     {
         $data_acao = new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'));

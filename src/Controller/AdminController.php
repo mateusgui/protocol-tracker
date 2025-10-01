@@ -9,6 +9,7 @@ use Mateus\ProtocolTracker\Service\UsuarioService;
 use Exception;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepositorySql;
+use Mateus\ProtocolTracker\Service\AuditService;
 
 class AdminController {
 
@@ -19,7 +20,8 @@ class AdminController {
     public function __construct(
         private UsuarioRepository $usuarioRepositorio,
         private UsuarioService $usuarioService,
-        private ProtocoloRepositorySql $protocoloRepositorio
+        private ProtocoloRepositorySql $protocoloRepositorio,
+        private AuditService $auditService
     ) {
         $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
         if ($idUsuario) {
@@ -122,10 +124,31 @@ class AdminController {
             exit();
 
         } catch (Exception $e) {
+            //Está com BUG aqui
             $erro = $e->getMessage();
             $listaDeUsuarios = $this->usuarioRepositorio->all();
 
             $tituloDaPagina = "Painel do Administrador - Usuários";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+
+            require __DIR__ . '/../../templates/admin/usuarios.php';
+        }
+    }
+
+    public function listaAuditoria()
+    {
+        try {
+            $tituloDaPagina = "Painel do Administrador - Usuários";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+
+            $listaAuditoria = $this->auditService->listaAuditoria();
+
+            require __DIR__ . '/../../templates/admin/auditoria.php';
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
 

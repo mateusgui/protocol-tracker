@@ -16,6 +16,15 @@ final class AuditRepository
         $this->connection = $connection;
     }
 
+    public function listaAuditoria(): array
+    {
+        $sqlQuery = "SELECT * FROM protocolos_auditoria ORDER BY numero_protocolo, data_acao;";
+
+        $stmt = $this->connection->query($sqlQuery);
+
+        return $stmt->fetchAll();//RETORNA O RESULTADO DA CONSULTA COMO ARRAY ASSOCIATIVO
+    }
+
     public function registraAlteracao(string $protocolo_id, int $usuario_id, string $numero_protocolo, string $acao, DateTimeImmutable $data_acao): void
     {
         $sqlQuery = "INSERT INTO protocolos_auditoria (protocolo_id, usuario_id, numero_protocolo, acao, data_acao) VALUES (:protocolo_id, :usuario_id, :numero_protocolo, :acao, :data_acao);";

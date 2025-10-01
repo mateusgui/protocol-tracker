@@ -34,7 +34,7 @@ try {
 
     $usuarioController = new UsuarioController($usuarioRepositorio, $usuarioService, $loginService);
     $webController = new WebController($repositorio, $dashboardService, $protocoloService, $usuarioRepositorio);
-    $adminController = new AdminController($usuarioRepositorio, $usuarioService, $repositorio);
+    $adminController = new AdminController($usuarioRepositorio, $usuarioService, $repositorio, $auditService);
 
     $usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
     $idUsuarioLogado = $_SESSION['usuario_logado_id'] ?? null;
