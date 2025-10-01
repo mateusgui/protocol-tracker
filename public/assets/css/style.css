@@ -608,7 +608,7 @@ textarea {
 
 .login-box {
     background-color: var(--cor-fundo-header);
-    padding: 1.0rem 2.0rem;
+    padding: 1.5rem;
     border-radius: 8px;
     width: 100%;
 }
@@ -631,7 +631,7 @@ textarea {
 
 .login-box p {
     text-align: center;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: var(--cor-fontes-body);
 }
 
@@ -805,4 +805,24 @@ textarea {
 }
 .btn-desativar:hover {
     background-color: #5a6268;
+}
+
+/* === ESTILOS PARA A SEÇÃO DE ADMIN NA SIDEBAR === */
+/* Estilo para a linha divisória */
+.menu-admin-separator hr {
+    border: none;
+    border-top: 1px solid var(--cor-fontes-sidebar); /* Uma cor um pouco mais clara que o fundo */
+    margin: 10px 0;
+}
+
+/* Estilo para o título "ADMINISTRAÇÃO" */
+.menu-admin-title span {
+    display: block;
+    padding: 15px 15px 15px 15px; /* Mais espaço em cima, menos embaixo */
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    color: var(--cor-fontes-sidebar-active); /* Um cinza para diferenciar do branco dos links */
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }

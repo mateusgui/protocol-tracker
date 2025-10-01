@@ -32,6 +32,12 @@
                     <li><a href="/dashboard" class="<?= ($uri === '/dashboard') ? 'active' : '' ?>"><span class="material-icons-outlined">speed</span> Dashboard</a></li>
 
                     <?php if (isset($isAdmin) && $isAdmin === true): ?>
+                        <li class="menu-admin-separator"><hr></li>
+    
+                        <li class="menu-admin-title">
+                            <span>ADMINISTRAÇÃO</span>
+                        </li>
+                        
                         <li>
                             <a href="/admin/protocolos" class="<?= (str_starts_with($uri, '/admin/protocolos')) ? 'active' : '' ?>">
                                 <span class="material-icons-outlined">description</span> Protocolos

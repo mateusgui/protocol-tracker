@@ -2,9 +2,6 @@
 
 <div class="login-container">
     <div class="login-box">
-        <div class="login-logo">
-            <img src="/assets/imgs/ProtocolTrackerLogo.png" alt="Logo Protocol Tracker">
-        </div>
         <h2>Acessar o Sistema</h2>
         <p>Por favor, insira seu CPF e senha para continuar.</p>
 
