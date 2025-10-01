@@ -26,7 +26,7 @@
 
     <div class="listagem-container">
         <h3>Todos os Protocolos Registrados</h3>
-        <?php require __DIR__ . '/../_partials/_listaProtocolos.php'; ?> 
+        <?php require __DIR__ . '/_listaProtocolos.php'; ?> 
     </div>
 </div>
 
