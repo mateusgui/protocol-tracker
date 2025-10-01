@@ -1,7 +1,6 @@
 <?php require __DIR__ . '/_partials/_header.php'; ?>
 
 <div class="container-principal-busca">
-
     <section class="busca-form-container">
         <h2>Buscar Protocolos</h2>
         <form action="/busca" method="get" class="busca-form">
