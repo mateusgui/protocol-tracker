@@ -3,10 +3,8 @@
 namespace Mateus\ProtocolTracker\Repository;
 
 use DateTimeImmutable;
-use DateTimeZone;
 use Mateus\ProtocolTracker\Interface\AuditRepositoryInterface;
 use PDO;
-use PDOStatement;
 
 final class AuditRepository implements AuditRepositoryInterface
 {
@@ -27,7 +25,7 @@ final class AuditRepository implements AuditRepositoryInterface
 
         $stmt = $this->connection->query($sqlQuery);
 
-        return $stmt->fetchAll();//RETORNA O RESULTADO DA CONSULTA COMO ARRAY ASSOCIATIVO
+        return $stmt->fetchAll();
     }
 
     public function registraAlteracao(string $protocolo_id, int $usuario_id, string $numero_protocolo, string $acao, DateTimeImmutable $data_acao): void
