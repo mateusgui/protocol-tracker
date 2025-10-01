@@ -10,6 +10,7 @@ use Exception;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepositorySql;
 use Mateus\ProtocolTracker\Service\AuditService;
+use Mateus\ProtocolTracker\Service\DashboardService;
 
 class AdminController {
 
@@ -21,6 +22,7 @@ class AdminController {
         private UsuarioRepository $usuarioRepositorio,
         private UsuarioService $usuarioService,
         private ProtocoloRepositorySql $protocoloRepositorio,
+        private DashboardService $dashboardService,
         private AuditService $auditService
     ) {
         $idUsuario = $_SESSION['usuario_logado_id'] ?? null;
@@ -146,6 +148,34 @@ class AdminController {
             $listaAuditoria = $this->auditService->listaAuditoria();
 
             require __DIR__ . '/../../templates/admin/auditoria.php';
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+
+            require __DIR__ . '/../../templates/home.php';
+        }
+    }
+
+    public function dashboard()
+    {
+        try {
+            $idUsuario = $this->usuarioLogado?->id();
+            $diaSelecionado = !empty($_GET['dia']) ? new DateTimeImmutable($_GET['dia']) : new DateTimeImmutable('now');
+            $mesSelecionado = !empty($_GET['mes']) ? new DateTimeImmutable($_GET['mes']) : new DateTimeImmutable('now');
+
+            $totalPorDiaUsuario = $this->dashboardService->metricarPorUsuarioDia(null, $diaSelecionado);
+            $totalPorMesUsuario = $this->dashboardService->metricarPorUsuarioMes(null, $mesSelecionado);
+            $totalUsuario = $this->dashboardService->metricarPorUsuarioTotal(null);
+
+            $tituloDaPagina = "Dashboard de Produtividade Geral";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+
+            $metricas = $this->dashboardService->getTodasAsMetricas();
+
+            require __DIR__ . '/../../templates/admin/dashboard.php';
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
