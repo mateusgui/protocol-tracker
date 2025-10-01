@@ -3,13 +3,11 @@
 namespace Mateus\ProtocolTracker\Controller;
 
 use DateTimeImmutable;
-use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 use Mateus\ProtocolTracker\Service\UsuarioService;
 use Exception;
 use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
 use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepositorySql;
 use Mateus\ProtocolTracker\Service\AuditService;
 use Mateus\ProtocolTracker\Service\DashboardService;
 
