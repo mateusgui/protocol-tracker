@@ -15,6 +15,10 @@ class LoginService
     {
         $usuario = $this->repositorio->buscaPorCpf($cpf);
 
+        if(!$usuario->isAtivo()){
+            throw new Exception("Usuário inativo");
+        }
+
         $senhaCorreta = password_verify($senha, $usuario?->senha() ?? '');
 
         if ($usuario === null || !$senhaCorreta) {
