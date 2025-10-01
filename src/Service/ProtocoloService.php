@@ -8,11 +8,12 @@ use DateTimeImmutable;
 use DateTimeZone;
 use Ramsey\Uuid\Uuid;
 use Exception; // Usaremos para reportar erros de validação
+use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
 
 final class ProtocoloService
 {
     public function __construct(
-        private ProtocoloRepositoryInterface $repositorio,
+        private ProtocoloRepositorySqlInterface $repositorio,
         private AuditService $auditoria
     ) {}
 

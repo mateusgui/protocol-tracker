@@ -6,6 +6,7 @@ use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\UsuarioService;
 use Exception;
+use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
 
 class UsuarioController
@@ -15,7 +16,7 @@ class UsuarioController
     private bool $isAdmin = false;
 
     public function __construct(
-        private UsuarioRepository $repositorio,
+        private UsuarioRepositoryInterface $repositorio,
         private UsuarioService $usuarioService,
         private LoginService $loginService,
     ) {

@@ -8,6 +8,8 @@ use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use Mateus\ProtocolTracker\Service\DashboardService;
 use Mateus\ProtocolTracker\Service\ProtocoloService;
 use Exception;
+use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
+use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
@@ -17,10 +19,10 @@ class WebController
     private bool $isAdmin = false;
 
     public function __construct(
-        private ProtocoloRepositoryInterface $repositorio,
+        private ProtocoloRepositorySqlInterface $repositorio,
         private DashboardService $dashboardService,
         private ProtocoloService $protocoloService,
-        private UsuarioRepository $usuarioRepository
+        private UsuarioRepositoryInterface $usuarioRepository
     ) {
         $id_usuario = $_SESSION['usuario_logado_id'] ?? null;
         if ($id_usuario) {

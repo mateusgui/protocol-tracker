@@ -4,9 +4,10 @@ namespace Mateus\ProtocolTracker\Controller;
 
 use DateTimeImmutable;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
-use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\UsuarioService;
 use Exception;
+use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
+use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\ProtocoloRepositorySql;
 use Mateus\ProtocolTracker\Service\AuditService;
@@ -19,9 +20,9 @@ class AdminController {
 
 
     public function __construct(
-        private UsuarioRepository $usuarioRepositorio,
+        private UsuarioRepositoryInterface $usuarioRepositorio,
         private UsuarioService $usuarioService,
-        private ProtocoloRepositorySql $protocoloRepositorio,
+        private ProtocoloRepositorySqlInterface $protocoloRepositorio,
         private DashboardService $dashboardService,
         private AuditService $auditService
     ) {

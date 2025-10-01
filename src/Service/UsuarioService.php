@@ -5,13 +5,14 @@ namespace Mateus\ProtocolTracker\Service;
 use DateTimeImmutable;
 use DateTimeZone;
 use Exception;
+use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
 final class UsuarioService
 {
     public function __construct(
-        private UsuarioRepository $repositorio
+        private UsuarioRepositoryInterface $repositorio
     ) {}
 
     public function registrarNovoUsuario(string $nome, string $email, string $cpf, string $senha, string $confirmaSenha): Usuario

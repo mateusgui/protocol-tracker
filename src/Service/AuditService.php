@@ -4,12 +4,13 @@ namespace Mateus\ProtocolTracker\Service;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Mateus\ProtocolTracker\Interface\AuditRepositoryInterface;
 use Mateus\ProtocolTracker\Repository\AuditRepository;
 
 final class AuditService
 {
     public function __construct(
-        private AuditRepository $repositorio
+        private AuditRepositoryInterface $repositorio
     ) {}
 
     public function listaAuditoria(): array

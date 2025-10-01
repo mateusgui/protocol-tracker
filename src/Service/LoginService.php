@@ -3,12 +3,13 @@
 namespace Mateus\ProtocolTracker\Service;
 
 use Exception;
+use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 
 class LoginService
 {
         public function __construct(
-        private UsuarioRepository $repositorio
+        private UsuarioRepositoryInterface $repositorio
     ) {}
 
     public function login(string $cpf, string $senha): void
