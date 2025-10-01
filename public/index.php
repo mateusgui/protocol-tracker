@@ -57,6 +57,7 @@ try {
     $uri = parse_url($uri, PHP_URL_PATH);
     $method = $_SERVER['REQUEST_METHOD'];
 
+    // ----- Validação de autenticação -----
     function rotaAutenticada($usuarioEstaLogado): void
     {
         if (!$usuarioEstaLogado) {
@@ -65,6 +66,7 @@ try {
         }
     }
 
+    // ----- Validação de autenticação ADMIN -----
     function rotaAdmin($permissao): void
     {
         if ($permissao !== 'administrador') {
@@ -74,6 +76,9 @@ try {
     }
 
     switch ($uri) {
+        // ----- ROTA BASE -----
+        //Redireciona para /login se não estiver logado
+        //Redireciona para /home se estiver logado
         case '/':
             if ($usuarioEstaLogado) {
                 header('Location: /home');
@@ -82,6 +87,7 @@ try {
             }
             exit();
 
+        // ----- LOGIN NO SISTEMA -----
         case '/login':
             if ($method === 'POST'){
                 $usuarioController->processarLogin();
@@ -90,22 +96,24 @@ try {
             }
             break;
 
+        // ----- LOGOUT DO SISTEMA -----
         case '/logout':
             $usuarioController->logout();
             break;
         
+        // ----- CADASTRO DE NOVO PROTOCOLO -----
         case '/home':
             
             rotaAutenticada($usuarioEstaLogado);
 
             if ($method === 'POST') {
-                $webController->salvarNovoProtocolo(); //Registro de novo protocolo
+                $webController->salvarNovoProtocolo();
             } else {
-                $webController->home(); //Carregamento padrão da home com o dashboard
+                $webController->home();
             }
             break;
         
-        // ----- ROTA DE BUSCA '/busca' -----
+        // ----- BUSCA DE PROTOCOLOS DO USUARIO -----
         case '/busca':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -113,7 +121,7 @@ try {
             $webController->buscaProtocolo();
             break;
 
-        // ----- ROTA DO DASHBOARD '/dashboard' -----
+        // ----- EXIBIR DASHBOARD DO USUARIO -----
         case '/dashboard':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -121,7 +129,7 @@ try {
             $webController->exibirDashboard();
             break;
 
-        // ----- ROTA DE EDIÇÃO '/editar' -----
+        // ----- EDIÇÃO DE PROTOCOLO -----
         case '/editar':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -133,7 +141,7 @@ try {
             }
             break;
 
-        // ----- ROTA DE EXCLUSÃO '/excluir' -----
+        // ----- ALTERAR O STATUS DE UM PROTOCOLO -----
         case '/excluir':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -145,6 +153,7 @@ try {
             }
             break;
 
+        // ----- CADASTRO DE NOVO USUÁRIO -----
         case '/cadastro-usuario':
 
             if ($method === 'POST'){
@@ -154,6 +163,7 @@ try {
             }
             break;
 
+        // ----- EDITAR CADASTRO DE UM USUARIO -----
         case '/editar-cadastro':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -165,13 +175,16 @@ try {
             }
             break;
 
+        // ----- ALTERAR STATUS DE UM USUARIO (ADM) -----
         case '/editar-status':
 
             rotaAutenticada($usuarioEstaLogado);
+            rotaAdmin($permissao);
 
             $usuarioController->alterarStatusUsuario();
             break;
 
+        // ----- ALTERAR SENHA DE UM USUARIO -----
         case '/editar-senha':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -183,6 +196,7 @@ try {
             }
             break;
 
+        // ----- VISUALIZAR TODOS OS PROTOCOLOS (ADM) -----
         case '/admin/protocolos':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -192,6 +206,7 @@ try {
 
             break;
 
+        // ----- VISUALIZAR TODOS OS USUARIOS (ADM) -----
         case '/admin/usuarios':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -201,6 +216,7 @@ try {
 
             break;
 
+        // ----- EDITAR OS DADOS DE UM USUARIO (ADM) -----
         case '/admin/usuarios/editar-cadastro':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -213,6 +229,7 @@ try {
             }
             break;
 
+        // ----- VISUALIZAR O HISTÓRICO DE AUDITORIA (ADM) -----
         case '/admin/auditoria':
 
             rotaAutenticada($usuarioEstaLogado);
@@ -221,6 +238,7 @@ try {
             $adminController->listaAuditoria();
             break;
 
+        // ----- EXIBIR AS MÉTRICAR GERAIS DE PRODUTIVIDADE (ADM) -----
         case '/admin/dashboard':
 
             rotaAutenticada($usuarioEstaLogado);
