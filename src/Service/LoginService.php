@@ -12,6 +12,12 @@ class LoginService
         private UsuarioRepositoryInterface $repositorio
     ) {}
 
+    /**
+     * Realiza validações para que um usuário possa fazer login
+     * @param string $cpf CPF informado pelo Usuario
+     * @param string $senha senha informada pelo Usuario
+     * @return void Array associativo
+     */
     public function login(string $cpf, string $senha): void
     {
         $usuario = $this->repositorio->buscaPorCpf($cpf);
