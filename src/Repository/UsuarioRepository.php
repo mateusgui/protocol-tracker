@@ -6,7 +6,7 @@ use Mateus\ProtocolTracker\Model\Usuario;
 use PDO;
 use PDOStatement;
 
-final class UsuarioRepository
+final class UsuarioRepository implements UsuarioRepositoryInterface
 {
     private PDO $connection;
 

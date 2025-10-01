@@ -7,7 +7,7 @@ use DateTimeZone;
 use PDO;
 use PDOStatement;
 
-final class AuditRepository
+final class AuditRepository implements AuditRepositoryInterface
 {
     private PDO $connection;
 

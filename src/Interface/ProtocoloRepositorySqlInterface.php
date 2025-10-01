@@ -5,7 +5,7 @@ namespace Mateus\ProtocolTracker\Repository;
 use DateTimeImmutable;
 use Mateus\ProtocolTracker\Model\Protocolo;
 
-interface ProtocoloRepositoryInterface
+interface ProtocoloRepositorySqlInterface
 {
     public function all(): array;
     public function allByUser(int $id_usuario): array;

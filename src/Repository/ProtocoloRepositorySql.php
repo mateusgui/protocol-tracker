@@ -8,7 +8,7 @@ use DateTimeZone;
 use PDO;
 use PDOStatement;
 
-final class ProtocoloRepositorySql implements ProtocoloRepositoryInterface
+final class ProtocoloRepositorySql implements ProtocoloRepositorySqlInterface
 {
     private PDO $connection;
 
