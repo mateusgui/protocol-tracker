@@ -100,7 +100,7 @@ a {
 /* === ESTILOS PARA O CABEÇALHO === */
 .content-header {
     width: 100%;
-    margin: 0 auto 2rem auto;
+    margin: 0 auto 1.4rem auto;
     
     display: flex;
     justify-content: space-between;
@@ -166,7 +166,7 @@ a {
 .conteudo-principal h2 {
     font-size: 1.8rem;
     color: var(--cor-fontes-body);
-    margin-bottom: 2.0rem;
+    margin-bottom: 1.0rem;
     align-self: center;
 }
 
@@ -594,7 +594,6 @@ textarea {
 
 /* === ESTILOS PARA PÁGINAS PÚBLICAS (LOGIN, CADASTRO, ETC.) === */
 
-/* Garante que o conteúdo fique centralizado na tela */
 .public-page-body {
     display: flex;
     align-items: center;
@@ -609,8 +608,9 @@ textarea {
 
 .login-box {
     background-color: var(--cor-fundo-header);
-    padding: 1.5rem 2.5rem;
+    padding: 1.0rem 2.0rem;
     border-radius: 8px;
+    width: 100%;
 }
 
 .login-logo {
@@ -631,7 +631,7 @@ textarea {
 
 .login-box p {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
     color: var(--cor-fontes-body);
 }
 
