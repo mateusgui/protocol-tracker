@@ -5,6 +5,7 @@ namespace Mateus\ProtocolTracker\Repository;
 use Mateus\ProtocolTracker\Model\Protocolo;
 use DateTimeImmutable;
 use DateTimeZone;
+use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
 use PDO;
 use PDOStatement;
 

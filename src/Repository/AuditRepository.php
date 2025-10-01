@@ -4,6 +4,7 @@ namespace Mateus\ProtocolTracker\Repository;
 
 use DateTimeImmutable;
 use DateTimeZone;
+use Mateus\ProtocolTracker\Interface\AuditRepositoryInterface;
 use PDO;
 use PDOStatement;
 

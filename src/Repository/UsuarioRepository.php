@@ -2,6 +2,7 @@
 
 namespace Mateus\ProtocolTracker\Repository;
 
+use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
 use PDO;
 use PDOStatement;

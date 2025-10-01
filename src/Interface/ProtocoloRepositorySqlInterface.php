@@ -1,6 +1,6 @@
 <?php
 
-namespace Mateus\ProtocolTracker\Repository;
+namespace Mateus\ProtocolTracker\Interface;
 
 use DateTimeImmutable;
 use Mateus\ProtocolTracker\Model\Protocolo;
