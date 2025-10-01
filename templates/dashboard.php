@@ -2,8 +2,6 @@
 
 <div class="form-container dashboard-filters">
     <form action="/dashboard" method="get">
-        <p>Selecione um período para visualizar a produtividade.</p>
-        
         <div class="form-row">
             <div class="form-group">
                 <label for="dia">Produtividade do Dia:</label>
