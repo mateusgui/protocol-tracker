@@ -2,7 +2,6 @@
 
 namespace Mateus\ProtocolTracker\Controller;
 
-use Mateus\ProtocolTracker\Repository\UsuarioRepository;
 use Mateus\ProtocolTracker\Service\LoginService;
 use Mateus\ProtocolTracker\Service\UsuarioService;
 use Exception;
