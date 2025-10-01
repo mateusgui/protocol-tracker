@@ -14,16 +14,16 @@
         <form action="/editar-cadastro" method="post" class="login-form">
             <div class="form-group">
                 <label for="nome">Nome Completo</label>
-                <input type="text" id="nome" name="nome" required value="<?= htmlspecialchars($usuario->nome() ?? '') ?>">
+                <input type="text" id="nome" name="nome" required value="<?= htmlspecialchars($usuarioLogado->nome() ?? '') ?>">
             </div>
             <div class="form-group">
                 <label for="email">E-mail</label>
-                <input type="email" id="email" name="email" required value="<?= htmlspecialchars($usuario->email() ?? '') ?>">
+                <input type="email" id="email" name="email" required value="<?= htmlspecialchars($usuarioLogado->email() ?? '') ?>">
             </div>
             <div class="form-group">
                 <label for="cpf_formatado">CPF</label>
-                <input type="text" id="cpf_formatado" placeholder="000.000.000-00" required maxlength="14" value="<?= htmlspecialchars($usuario->cpf() ?? '') ?>">
-                <input type="hidden" id="cpf_puro" name="cpf" value="<?= htmlspecialchars($usuario->cpf() ?? '') ?>">
+                <input type="text" id="cpf_formatado" placeholder="000.000.000-00" required maxlength="14" value="<?= htmlspecialchars($usuarioLogado->cpf() ?? '') ?>">
+                <input type="hidden" id="cpf_puro" name="cpf" value="<?= htmlspecialchars($usuarioLogado->cpf() ?? '') ?>">
             </div>
             
             <div class="form-actions">
