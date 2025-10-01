@@ -772,3 +772,37 @@ textarea {
     appearance: none;
     background-color: #fff; /* Fundo branco explícito */
 }
+
+/* === ESTILOS ADICIONAIS PARA A LISTA DE USUÁRIOS === */
+/* Estilo para as "badges" de status (Ativo/Inativo) */
+.badge {
+    padding: 4px 8px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    border-radius: 10px;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.badge-success {
+    background-color: #28a745; /* Verde */
+}
+
+.badge-danger {
+    background-color: #dc3545; /* Vermelho */
+}
+
+/* Novos botões de Ação para Ativar/Desativar */
+.btn-ativar {
+    background-color: #17a2b8; /* Azul claro (info) */
+}
+.btn-ativar:hover {
+    background-color: #138496;
+}
+
+.btn-desativar {
+    background-color: #6c757d; /* Cinza */
+}
+.btn-desativar:hover {
+    background-color: #5a6268;
+}

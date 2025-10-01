@@ -192,6 +192,27 @@ try {
 
             break;
 
+        case '/admin/usuarios':
+
+            rotaAutenticada($usuarioEstaLogado);
+            rotaAdmin($permissao);
+
+            $adminController->listaUsuarios();
+
+            break;
+
+        case '/admin/editar-cadastro':
+
+            rotaAutenticada($usuarioEstaLogado);
+            rotaAdmin($permissao);
+
+            if ($method === 'POST'){
+                $adminController->atualizarDadosUsuario();
+            } else {
+                $adminController->exibirFormularioEdicaoCadastro();
+            }
+            break;
+
         // ----- ROTA NÃO ENCONTRADA - 404 NOT FOUND -----
         default:
             $webController->notFound();

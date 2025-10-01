@@ -200,13 +200,13 @@ class UsuarioController
     public function alterarStatusUsuario()
     {
         try {
-            $id_usuario = $this->usuarioLogado?->id();
+            $id_usuario = isset($_POST['id']) ? (int)$_POST['id'] : null;
 
             $this->usuarioService->alterarStatusUsuario($id_usuario);
 
             $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
 
-            header('Location: /editar-cadastro');
+            header('Location: /admin/usuarios');
             exit();
 
         } catch (Exception $e) {
