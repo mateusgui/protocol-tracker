@@ -70,7 +70,7 @@ final class UsuarioService
             $email,
             $cpf,
             $dadosAtuaisUsuario->senha(),
-            'operador',
+            $dadosAtuaisUsuario->permissao(),
             $dadosAtuaisUsuario->criadoEm(),
             $dadosAtuaisUsuario->isAtivo()
         );

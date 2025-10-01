@@ -39,7 +39,7 @@
                         <?php endif; ?>
                     </td>
                     <td class="acoes-cell">
-                        <form action="/admin/editar-cadastro" method="get" style="display:inline;">
+                        <form action="/admin/usuarios/editar-cadastro" method="get" style="display:inline;">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->id()) ?>">
                             <button type="submit" class="btn-acao btn-editar" title="Editar Usuário">
                                 <span class="material-icons-outlined">manage_accounts</span>

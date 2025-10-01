@@ -201,7 +201,7 @@ try {
 
             break;
 
-        case '/admin/editar-cadastro':
+        case '/admin/usuarios/editar-cadastro':
 
             rotaAutenticada($usuarioEstaLogado);
             rotaAdmin($permissao);

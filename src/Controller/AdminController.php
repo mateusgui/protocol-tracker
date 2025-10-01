@@ -38,7 +38,6 @@ class AdminController {
     public function exibirPainelAdmin()
     {
         try {
-            // Pega os mesmos filtros da página de busca
             $numero = $_GET['numero'] ?? null;
             $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
             $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
@@ -82,13 +81,18 @@ class AdminController {
     public function exibirFormularioEdicaoCadastro()
     {
         try {
+            $id_usuario = isset($_GET['id']) ? (int)$_GET['id'] : null; 
+            $usuario = $this->usuarioRepositorio->buscaPorId($id_usuario);
+            if ($usuario === null) {
+                header('Location: /admin/usuarios');
+                exit();
+            }
+
             $tituloDaPagina = "Editar cadastro";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
 
-            $id_usuario = isset($_GET['id']) ? (int)$_GET['id'] : null; 
-
-            $usuario = $this->usuarioRepositorio->buscaPorId($id_usuario);
+            $dadosDoFormulario = $_POST;
 
             require __DIR__ . '/../../templates/admin/editarCadastro.php';
 
@@ -98,17 +102,17 @@ class AdminController {
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
             
-            require __DIR__ . '/../../templates/admin/usuarios.php';
+            require __DIR__ . '/../../templates/admin/editarCadastro.php';
         }
     }
 
     public function atualizarDadosUsuario()
     {
         try {
-            $id_usuario = isset($_POST['id']) ? (int)$_POST['id'] : null; 
             $nome = $_POST['nome'] ?? '';
             $email = $_POST['email'] ?? '';
             $cpf = $_POST['cpf'] ?? '';
+            $id_usuario = $this->usuarioRepositorio->buscaPorCpf($cpf)->id();
 
             $this->usuarioService->atualizarDadosCadastrais($id_usuario, $nome, $email, $cpf);
 
@@ -119,11 +123,13 @@ class AdminController {
 
         } catch (Exception $e) {
             $erro = $e->getMessage();
+            $listaDeUsuarios = $this->usuarioRepositorio->all();
+
             $tituloDaPagina = "Painel do Administrador - Usuários";
             $usuarioLogado = $this->usuarioLogado;
             $isAdmin = $this->isAdmin;
 
-            require __DIR__ . '/../../templates/admin/usuarios.php';
+            require __DIR__ . '/../../templates/home.php';
         }
     }
 }
