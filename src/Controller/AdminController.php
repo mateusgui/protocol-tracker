@@ -64,6 +64,10 @@ class AdminController {
         }
     }
 
+    /**
+     * URL_PATH = /admin/usuarios
+     * REQUEST_METHOD = GET
+     */
     public function listaUsuarios()
     {
         try {
@@ -83,6 +87,10 @@ class AdminController {
         }
     }
 
+    /**
+     * URL_PATH = /admin/usuarios/editar-cadastro
+     * REQUEST_METHOD = GET
+     */
     public function exibirFormularioEdicaoCadastro()
     {
         try {
@@ -111,6 +119,10 @@ class AdminController {
         }
     }
 
+    /**
+     * URL_PATH = /admin/usuarios/editar-cadastro
+     * REQUEST_METHOD = POST
+     */
     public function atualizarDadosUsuario()
     {
         try {
@@ -139,6 +151,10 @@ class AdminController {
         }
     }
 
+    /**
+     * URL_PATH = /admin/auditoria
+     * REQUEST_METHOD = GET
+     */
     public function listaAuditoria()
     {
         try {
@@ -159,6 +175,10 @@ class AdminController {
         }
     }
 
+    /**
+     * URL_PATH = /admin/dashboard
+     * REQUEST_METHOD = GET
+     */
     public function dashboard()
     {
         try {
