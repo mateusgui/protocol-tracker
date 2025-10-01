@@ -37,7 +37,7 @@ class DashboardService{
         ];
     }
 
-    public function metricarPorUsuarioDia(int $id_usuario, DateTimeImmutable $dia): int
+    public function metricarPorUsuarioDia(?int $id_usuario, DateTimeImmutable $dia): int
     {
         $todosOsProtocolos = [];
         if ($id_usuario !== null) {
@@ -49,7 +49,7 @@ class DashboardService{
         return $this->quantidadeDePaginasDia($todosOsProtocolos, $dia);
     }
 
-    public function metricarPorUsuarioMes(int $id_usuario, DateTimeImmutable $mes): int
+    public function metricarPorUsuarioMes(?int $id_usuario, DateTimeImmutable $mes): int
     {
         $todosOsProtocolos = [];
         if ($id_usuario !== null) {
@@ -61,7 +61,7 @@ class DashboardService{
         return $this->quantidadeDePaginasMes($todosOsProtocolos, $mes);
     }
 
-    public function metricarPorUsuarioTotal(int $id_usuario): int
+    public function metricarPorUsuarioTotal(?int $id_usuario): int
     {
         $todosOsProtocolos = [];
         if ($id_usuario !== null) {
