@@ -3,11 +3,10 @@
 namespace Mateus\ProtocolTracker\Service;
 
 use Mateus\ProtocolTracker\Model\Protocolo;
-use Mateus\ProtocolTracker\Repository\ProtocoloRepositoryInterface;
 use DateTimeImmutable;
 use DateTimeZone;
 use Ramsey\Uuid\Uuid;
-use Exception; // Usaremos para reportar erros de validação
+use Exception;
 use Mateus\ProtocolTracker\Interface\ProtocoloRepositorySqlInterface;
 
 final class ProtocoloService
@@ -20,6 +19,10 @@ final class ProtocoloService
     /**
      * Valida os dados e registra um novo protocolo.
      * @throws Exception Se os dados forem inválidos.
+     * @param string $id_usuario
+     * @param string $numero
+     * @param int $quantidade_paginas
+     * @param string $observacoes
      * @return Protocolo
      */
     public function registrarNovoProtocolo(string $id_usuario, string $numero, int $quantidade_paginas, string $observacoes): Protocolo
@@ -54,16 +57,19 @@ final class ProtocoloService
             null
         );
 
-        //chama a função add para adicionar a instancia de protocolo que foi criada acima
         $this->repositorio->add($protocolo);
 
-        //NENHUMA EXCEÇÃO, RETORNA O PROTOCOLO CRIADO
         return $protocolo;
     }
     
     /**
      * Valida os dados e edita um protocolo.
      * @throws Exception Se os dados forem inválidos.
+     * @param string $id_usuario
+     * @param string $id
+     * @param string $numero
+     * @param int $quantidade_paginas
+     * @param string $observacoes
      * @return Protocolo
      */
     public function editarProtocolo(string $id_usuario, string $id, string $numero, int $quantidade_paginas, string $observacoes): void
@@ -97,18 +103,18 @@ final class ProtocoloService
             new DateTimeImmutable('now', new DateTimeZone('America/Campo_Grande'))
         );
 
-        //chama a função update para atualizar um protocolo usando a instancia de protocolo que foi criada acima
         $this->repositorio->update($protocolo);
 
         $this->auditoria->registraAlteracao($protocolo->id(), $id_usuario, $protocolo->numero(), 'EDIÇÃO');
     }
 
     /**
-     * Deleta um protocolo
+     * Decide para qual método vai enviar para alterar o status de um Protocolo para ativo ou inativo
      * @throws Exception Se os dados forem inválidos.
+     * @param string $id_usuario
+     * @param string $id
      * @return void
      */
-    
     public function alteraStatusProtocolo(string $id_usuario, string $id): void
     {
         $protocoloParaAlterar = $this->repositorio->buscaPorId($id);
@@ -124,6 +130,13 @@ final class ProtocoloService
         }
     }
 
+    /**
+     * Inativa um Protocolo
+     * @throws Exception Se os dados forem inválidos.
+     * @param string $id_usuario
+     * @param string $id
+     * @return void
+     */
     private function desativar(string $id_usuario, string $id): void
     {
         $protocoloParaDeletar = $this->repositorio->buscaPorId($id);
@@ -140,6 +153,13 @@ final class ProtocoloService
 
     }
 
+    /**
+     * Ativa um Protocolo
+     * @throws Exception Se os dados forem inválidos.
+     * @param string $id_usuario
+     * @param string $id
+     * @return void
+     */
     private function reativar(string $id_usuario, string $id): void
     {
         $protocoloParaReativar = $this->repositorio->buscaPorId($id);
