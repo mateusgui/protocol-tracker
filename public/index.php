@@ -221,6 +221,14 @@ try {
             $adminController->listaAuditoria();
             break;
 
+        case '/admin/dashboard':
+
+            rotaAutenticada($usuarioEstaLogado);
+            rotaAdmin($permissao);
+
+            $adminController->dashboard();
+            break;
+
         // ----- ROTA NÃO ENCONTRADA - 404 NOT FOUND -----
         default:
             $webController->notFound();
