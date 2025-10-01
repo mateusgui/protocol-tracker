@@ -37,10 +37,15 @@
                         <li class="menu-admin-title">
                             <span>ADMINISTRAÇÃO</span>
                         </li>
-                        
+
                         <li>
                             <a href="/admin/protocolos" class="<?= (str_starts_with($uri, '/admin/protocolos')) ? 'active' : '' ?>">
                                 <span class="material-icons-outlined">description</span> Protocolos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/dashboard" class="<?= (str_starts_with($uri, '/admin/dashboard')) ? 'active' : '' ?>">
+                                <span class="material-icons-outlined">show_chart</span> Produtividade Geral
                             </a>
                         </li>
                         <li>
