@@ -213,6 +213,14 @@ try {
             }
             break;
 
+        case '/admin/auditoria':
+
+            rotaAutenticada($usuarioEstaLogado);
+            rotaAdmin($permissao);
+
+            $adminController->listaAuditoria();
+            break;
+
         // ----- ROTA NÃO ENCONTRADA - 404 NOT FOUND -----
         default:
             $webController->notFound();
