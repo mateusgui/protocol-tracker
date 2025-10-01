@@ -30,6 +30,10 @@ final class UsuarioRepository implements UsuarioRepositoryInterface
         return $listaDeUsuarios;
     }
 
+    /**
+     * Busca um Usuario pelo Id
+     * @return Usuario|null Usuario
+     */
     public function buscaPorId(int $id): ?Usuario
     {
         $sqlQuery = "SELECT * FROM usuarios WHERE id = :id;";
@@ -112,14 +116,6 @@ final class UsuarioRepository implements UsuarioRepositoryInterface
         return $this->buscaPorId($novoId);
     }
 
-/**
- *  -----------------------------------------------
- *  -----------------------------------------------
- *  IMPORTANTE: NA SERVICE VAI TER O MÉTODO save() QUE DECIDE QUAL DOS MÉTODOS ABAIXO VAI CHAMAR, PARA: UPDATE, DESATIVAR USUÁRIO OU ATIVAR USUÁRIO
- *  -----------------------------------------------
- *  -----------------------------------------------
- */
-
     /**
      * Edita um Usuario no banco
      * @param Usuario $usuario Usuario que será editado
@@ -140,6 +136,12 @@ final class UsuarioRepository implements UsuarioRepositoryInterface
         $stmt->execute();
     }
 
+    /**
+     * Edita um Usuario no banco
+     * @param $id Id do Usuario que terá a senha alterada
+     * @param $hashDaNovaSenha Hash da nova senha
+     * @return void
+     */
     public function alterarSenha(int $id, string $hashDaNovaSenha): void
     {
         $sqlQuery = "UPDATE usuarios SET senha = :senha WHERE id = :id;";
