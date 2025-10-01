@@ -34,11 +34,21 @@
                     <?php if (isset($isAdmin) && $isAdmin === true): ?>
                         <li>
                             <a href="/admin/protocolos" class="<?= (str_starts_with($uri, '/admin/protocolos')) ? 'active' : '' ?>">
-                                <span class="material-icons-outlined">group</span> Gerenciar Usuários
+                                <span class="material-icons-outlined">description</span> Protocolos
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/usuarios" class="<?= (str_starts_with($uri, '/admin/usuarios')) ? 'active' : '' ?>">
+                                <span class="material-icons-outlined">group</span> Usuarios
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/admin/auditoria" class="<?= (str_starts_with($uri, '/admin/auditoria')) ? 'active' : '' ?>">
+                                <span class="material-icons-outlined">inventory</span> Auditoria
                             </a>
                         </li>
                     <?php endif; ?>
-                    </ul>
+                </ul>
             </nav>
         </aside>
 
