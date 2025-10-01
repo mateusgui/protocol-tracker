@@ -5,7 +5,6 @@ namespace Mateus\ProtocolTracker\Service;
 use DateTimeImmutable;
 use DateTimeZone;
 use Mateus\ProtocolTracker\Interface\AuditRepositoryInterface;
-use Mateus\ProtocolTracker\Repository\AuditRepository;
 
 final class AuditService
 {
