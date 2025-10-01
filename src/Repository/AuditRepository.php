@@ -18,7 +18,11 @@ final class AuditRepository
 
     public function listaAuditoria(): array
     {
-        $sqlQuery = "SELECT * FROM protocolos_auditoria ORDER BY numero_protocolo, data_acao;";
+        $sqlQuery = "SELECT audit.numero_protocolo, audit.acao, audit.data_acao, user.nome, user.permissao
+        FROM protocolos_auditoria AS audit
+        JOIN usuarios AS user
+        ON audit.usuario_id = user.id
+        ORDER BY numero_protocolo, data_acao;";
 
         $stmt = $this->connection->query($sqlQuery);
 
