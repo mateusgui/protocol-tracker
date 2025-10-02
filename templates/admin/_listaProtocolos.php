@@ -30,7 +30,7 @@
                         <a href="/editar?id=<?= htmlspecialchars($protocolo->id()) ?>" class="btn-acao btn-editar" title="Editar">
                             <span class="material-icons-outlined">edit</span>
                         </a>
-                        <form action="/excluir" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este protocolo?');">
+                        <form action="/admin/excluir" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este protocolo?');">
                             <input type="hidden" name="id" value="<?= htmlspecialchars($protocolo->id()) ?>">
                             <button type="submit" class="btn-acao btn-excluir" title="Excluir">
                                 <span class="material-icons-outlined">delete</span>

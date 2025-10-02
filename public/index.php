@@ -247,6 +247,19 @@ try {
             $adminController->dashboard();
             break;
 
+        // ----- ALTERAR O STATUS DE UM PROTOCOLO (ADM) -----
+        case '/admin/excluir':
+
+            rotaAutenticada($usuarioEstaLogado);
+            rotaAdmin($permissao);
+
+            if($method === 'POST'){
+                $adminController->alteraStatusProtocolo();
+            } else {
+                header('Location: /busca');
+            }
+            break;
+
         // ----- ROTA NÃO ENCONTRADA - 404 NOT FOUND -----
         default:
             $webController->notFound();
