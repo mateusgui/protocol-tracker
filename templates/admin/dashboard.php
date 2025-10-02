@@ -4,6 +4,15 @@
     <form action="/admin/dashboard" method="get">
         <div class="form-row">
             <div class="form-group">
+                <label for="nomes">Selecione um Usuario:</label>
+                <select id="nomes" name="id_selecionado">
+                    <option value="<?= null?>">Todos</option>
+                    <?php foreach ($listaDeUsuarios as $usuario): ?>
+                        <option value="<?= htmlspecialchars($usuario->id()) ?>" <?= $usuario->id() === $usuario_selecionado? 'selected' : '' ?>><?= htmlspecialchars($usuario->nome()) ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+            <div class="form-group">
                 <label for="dia">Produtividade do Dia:</label>
                 <input type="date" id="dia" name="dia" value="<?= $diaSelecionado->format('Y-m-d') ?>">
             </div>
@@ -19,21 +28,6 @@
         </div>
     </form>
 </div>
-
-<!--         return [
-            'quantidade_paginas_dia'   => $this->quantidadeDePaginasDia($todosOsProtocolos, $agora),
-            'media_paginas_dia'        => $this->mediaDePaginasDia($todosOsProtocolos),
-            'quantidade_protocolos_dia'  => $this->quantidadeDeProtocolosDia($todosOsProtocolos, $agora),
-            'media_protocolos_dia'     => $this->mediaDeProtocolosDia($todosOsProtocolos),
-            
-            'quantidade_paginas_mes'   => $this->quantidadeDePaginasMes($todosOsProtocolos, $agora),
-            'media_paginas_mes'        => $this->mediaDePaginasMes($todosOsProtocolos, $agora),
-            'quantidade_protocolos_mes'  => $this->quantidadeDeProtocolosMes($todosOsProtocolos, $agora),
-            'media_protocolos_mes'     => $this->mediaDeProtocolosMes($todosOsProtocolos, $agora),
-            
-            'quantidade_paginas_total'   => $this->quantidadeDePaginasTotal($todosOsProtocolos),
-            'quantidade_protocolos_total'  => $this->quantidadeDeProtocolosTotal($todosOsProtocolos),
-        ]; -->
 
 <div class="dashboard-container">
     <div class="dashboard-row">

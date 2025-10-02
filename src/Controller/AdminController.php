@@ -184,9 +184,12 @@ class AdminController {
             $diaSelecionado = !empty($_GET['dia']) ? new DateTimeImmutable($_GET['dia']) : new DateTimeImmutable('now');
             $mesSelecionado = !empty($_GET['mes']) ? new DateTimeImmutable($_GET['mes']) : new DateTimeImmutable('now');
 
-            $totalPorDiaUsuario = $this->dashboardService->metricarPorUsuarioDia(null, $diaSelecionado);
-            $totalPorMesUsuario = $this->dashboardService->metricarPorUsuarioMes(null, $mesSelecionado);
-            $totalUsuario = $this->dashboardService->metricarPorUsuarioTotal(null);
+            $listaDeUsuarios = $this->usuarioRepositorio->all();
+            $usuario_selecionado = !empty($_GET['id_selecionado']) ? (int) $_GET['id_selecionado'] : null;
+
+            $totalPorDiaUsuario = $this->dashboardService->metricarPorUsuarioDia($usuario_selecionado, $diaSelecionado);
+            $totalPorMesUsuario = $this->dashboardService->metricarPorUsuarioMes($usuario_selecionado, $mesSelecionado);
+            $totalUsuario = $this->dashboardService->metricarPorUsuarioTotal($usuario_selecionado);
 
             $tituloDaPagina = "Dashboard de Produtividade Geral";
             $usuarioLogado = $this->usuarioLogado;
