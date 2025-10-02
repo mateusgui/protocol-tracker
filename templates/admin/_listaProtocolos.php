@@ -27,7 +27,7 @@
                         <?= $protocolo->deletadoEm() !== null ? 'INATIVO' : 'ATIVO'; ?>
                     </td>
                     <td class="acoes-cell">
-                        <a href="/editar?id=<?= htmlspecialchars($protocolo->id()) ?>" class="btn-acao btn-editar" title="Editar">
+                        <a href="/admin/editarprotocolo?id=<?= htmlspecialchars($protocolo->id()) ?>" class="btn-acao btn-editar" title="Editar">
                             <span class="material-icons-outlined">edit</span>
                         </a>
                         <form action="/admin/excluir" method="post" onsubmit="return confirm('Tem certeza que deseja excluir este protocolo?');">

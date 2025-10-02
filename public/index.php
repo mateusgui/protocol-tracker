@@ -34,7 +34,7 @@ try {
 
     $usuarioController = new UsuarioController($usuarioRepositorio, $usuarioService, $loginService);
     $webController = new WebController($repositorio, $dashboardService, $protocoloService, $usuarioRepositorio);
-    $adminController = new AdminController($usuarioRepositorio, $usuarioService, $repositorio, $dashboardService, $auditService);
+    $adminController = new AdminController($usuarioRepositorio, $usuarioService, $repositorio, $protocoloService, $dashboardService, $auditService);
 
     $usuarioEstaLogado = isset($_SESSION['usuario_logado_id']);
     $idUsuarioLogado = $_SESSION['usuario_logado_id'] ?? null;
@@ -257,6 +257,14 @@ try {
                 $adminController->alteraStatusProtocolo();
             } else {
                 header('Location: /busca');
+            }
+            break;
+
+        case '/admin/editarprotocolo':
+            if($method === 'POST'){
+                $adminController->editarProtocolo();
+            } else {
+                $adminController->exibirFormularioEdicao();
             }
             break;
 

@@ -10,6 +10,7 @@ use Mateus\ProtocolTracker\Interface\UsuarioRepositoryInterface;
 use Mateus\ProtocolTracker\Model\Usuario;
 use Mateus\ProtocolTracker\Service\AuditService;
 use Mateus\ProtocolTracker\Service\DashboardService;
+use Mateus\ProtocolTracker\Service\ProtocoloService;
 
 class AdminController {
 
@@ -21,6 +22,7 @@ class AdminController {
         private UsuarioRepositoryInterface $usuarioRepositorio,
         private UsuarioService $usuarioService,
         private ProtocoloRepositorySqlInterface $protocoloRepositorio,
+        private ProtocoloService $protocoloService,
         private DashboardService $dashboardService,
         private AuditService $auditService
     ) {
@@ -207,5 +209,87 @@ class AdminController {
 
             require __DIR__ . '/../../templates/home.php';
         }
+    }
+
+    public function alteraStatusProtocolo()
+    {
+        try {
+            $id_usuario = $this->usuarioLogado?->id();
+            $id = $_POST['id'] ?? '';
+            
+            $this->protocoloService->alteraStatusProtocolo($id_usuario, $id);
+
+            $_SESSION['mensagem_sucesso'] = "Status alterado com sucesso!";
+
+            header('Location: /admin/protocolos');
+            exit();
+
+        } catch (Exception $e) {
+            $erro = $e->getMessage();
+            
+            $numero = $_GET['numero'] ?? null;
+            $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
+            $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
+
+            $tituloDaPagina = "Painel do Administrador - Protocolos";
+            $usuarioLogado = $this->usuarioLogado;
+            $isAdmin = $this->isAdmin;
+
+            require __DIR__ . '/../../templates/admin/protocolos.php';
+        }
+    }
+
+    //edit
+    public function exibirFormularioEdicao()
+    {
+        $id = $_GET['id'] ?? null;
+
+        if (!$id) {
+            $this->notFound();
+            return;
+        }
+        $protocolo = $this->protocoloRepositorio->buscaPorId($id);
+
+        if ($protocolo === null) {
+            $this->notFound();
+            return;
+        }
+
+        $tituloDaPagina = "Editando Protocolo";
+        $usuarioLogado = $this->usuarioLogado;
+        $isAdmin = $this->isAdmin;
+        
+        require __DIR__ . '/../../templates/admin/editarprotocolo.php';
+    }
+
+    //edit
+    public function editarProtocolo()
+    {
+        try {
+            $id_usuario = $this->usuarioLogado?->id();
+            $id = $_POST['id'] ?? '';
+            $numero = $_POST['numero'] ?? '';
+            $quantidade_paginas = (int)($_POST['paginas'] ?? 0);
+            $observacoes = $_POST['observacoes'] ?? '';
+
+            $this->protocoloService->editarProtocolo($id_usuario, $id, $numero, $quantidade_paginas, $observacoes);
+            $_SESSION['mensagem_sucesso'] = "Protocolo atualizado com sucesso!";
+
+            header('Location: /admin/protocolos');
+            exit();
+
+        } catch (Exception $e) {
+            $this->exibirFormularioEdicao($e->getMessage());
+        }
+    }
+
+    public function notFound()
+    {
+        http_response_code(404);
+        $tituloDaPagina = "Página Não Encontrada";
+        $usuarioLogado = $this->usuarioLogado;
+        $isAdmin = $this->isAdmin;
+
+        require __DIR__ . '/../../templates/404.php';
     }
 }
