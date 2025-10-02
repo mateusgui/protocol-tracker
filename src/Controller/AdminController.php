@@ -127,7 +127,8 @@ class AdminController {
             $nome = $_POST['nome'] ?? '';
             $email = $_POST['email'] ?? '';
             $cpf = $_POST['cpf'] ?? '';
-            $id_usuario = $this->usuarioRepositorio->buscaPorCpf($cpf)->id();
+            // SÓ FAZER A BUSCA POR CPF SE O CPF QUE VEM FOR CORRETO
+            $id_usuario = $_POST['id'] ?? '';
 
             $this->usuarioService->atualizarDadosCadastrais($id_usuario, $nome, $email, $cpf);
 

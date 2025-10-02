@@ -12,6 +12,7 @@
         <?php endif; ?>
 
         <form action="/admin/usuarios/editar-cadastro" method="post" class="login-form">
+            <input type="hidden" name="id" value="<?= htmlspecialchars($usuario->id() ?? '') ?>">
             <div class="form-group">
                 <label for="nome">Nome Completo</label>
                 <input type="text" id="nome" name="nome" required value="<?= htmlspecialchars($usuario->nome() ?? '') ?>">
