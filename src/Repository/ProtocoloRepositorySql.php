@@ -89,6 +89,49 @@ final class ProtocoloRepositorySql implements ProtocoloRepositorySqlInterface
     }
 
     /**
+     * Busca protocolos com múltipos filtros opcionais e retorna também deletado_em preenchido
+     * @param string|null $numero Número do protocolo
+     * @param DateTimeImmutable|null $dataInicio Data de início para o filtro
+     * @param DateTimeImmutable|null $dataFim Data final para o filtro
+     * @return Protocolo[] Um array de objetos Protocolo que correspondem aos filtros
+     */
+    public function searchNulls(?int $id_usuario = null, ?string $numero = null, ?DateTimeImmutable $dataInicio = null, ?DateTimeImmutable $dataFim = null): array
+    {
+        $sqlConditions = [];
+        $parametros = [];
+
+        if ($id_usuario !== null) {
+            $sqlConditions[] = 'id_usuario = :id_usuario';
+            $parametros[':id_usuario'] = $id_usuario;
+        }
+        if (!empty($numero)) {
+            $sqlConditions[] = 'numero = :numero';
+            $parametros[':numero'] = $numero;
+        }
+        if ($dataInicio !== null) {
+            $sqlConditions[] = 'criado_em >= :dataInicio';
+            $parametros[':dataInicio'] = $dataInicio->format('Y-m-d H:i:s');
+        }
+        if ($dataFim !== null) {
+            $sqlConditions[] = 'criado_em <= :dataFim';
+            $parametros[':dataFim'] = $dataFim->format('Y-m-d H:i:s');
+        }
+
+        $sqlQuery = 'SELECT * FROM protocolos';
+
+        if (!empty($sqlConditions)) {
+            $sqlQuery .= ' WHERE ' . implode(' AND ', $sqlConditions);
+        }
+        
+        $sqlQuery .= ' ORDER BY criado_em DESC;';
+
+        $stmt = $this->connection->prepare($sqlQuery);
+        $stmt->execute($parametros);
+
+        return $this->hidrataListaDeProtocolos($stmt);
+    }
+
+    /**
      * Busca um único protocolo pelo número
      * @param string $numero Número do protocolo
      * @return Protocolo|null

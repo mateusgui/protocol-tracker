@@ -29,8 +29,6 @@
 
     <!-- CRIAR UMA _listaAuditoria REUTILIZAVEL -->
 
-    <div class="listagem-container">
-        <h3>Auditoria dos Protocolos</h3>
         <section class="listagem-container">
             <h3>Histórico</h3>
             
@@ -63,7 +61,6 @@
                 </tbody>
             </table>
         </section>
-    </div>
 </div>
 
 <?php require __DIR__ . '/../_partials/_footer.php'; ?>

@@ -1,7 +1,8 @@
 <?php require __DIR__ . '/../_partials/_header.php'; ?>
 <div class="container-principal-busca">
     <div class="busca-form-container">
-        <form action="/admin/protocolos" method="get" class="busca-form"> <div class="form-row">
+        <form action="/admin/protocolos" method="get" class="busca-form">
+            <div class="form-row">
                 <div class="form-group">
                     <label for="numero">Número do Protocolo</label>
                     <input type="text" id="numero" name="numero" value="<?= htmlspecialchars($_GET['numero'] ?? '') ?>" placeholder="Ex: 123456">
@@ -24,10 +25,8 @@
         </form>
     </div>
 
-    <div class="listagem-container">
-        <h3>Todos os Protocolos Registrados</h3>
-        <?php require __DIR__ . '/_listaProtocolos.php'; ?> 
-    </div>
+    <?php require __DIR__ . '/_listaProtocolos.php'; ?> 
+
 </div>
 
 <?php require __DIR__ . '/../_partials/_footer.php'; ?>

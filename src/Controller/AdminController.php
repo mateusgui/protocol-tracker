@@ -45,7 +45,7 @@ class AdminController {
             $dataInicio = !empty($_GET['data_inicio']) ? new DateTimeImmutable($_GET['data_inicio'] . ' 00:00:00') : null;
             $dataFim = !empty($_GET['data_fim']) ? new DateTimeImmutable($_GET['data_fim'] . ' 23:59:59') : null;
             
-            $listaDeProtocolos = $this->protocoloRepositorio->all();
+            $listaDeProtocolos = $this->protocoloRepositorio->searchNulls(null, $numero, $dataInicio, $dataFim);
 
             $tituloDaPagina = "Painel do Administrador - Protocolos";
             $usuarioLogado = $this->usuarioLogado;
