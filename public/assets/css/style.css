@@ -1,14 +1,15 @@
 /* === RESET BÁSICO E ESTILOS GLOBAIS === */
 :root {
-    --cor-fundo-sidebar: #2c3e50;
-    --cor-fundo-sidebar-hover: #33465c;
-    --cor-fontes-sidebar: #ffffff;
-    --cor-fundo-header: #ffffff;
+    --cor-fundo-sidebar: #ffffff;
+    --cor-fundo-sidebar-hover: #ffffff;
+    --cor-fontes-sidebar: #454545;
+    --cor-fundo-header: #2563eb;
+    --cor-fontes-header: #ffffff;
     --cor-bordas: #ddd;
     --cor-fundo-body: #f0f2f5;
     --cor-fontes-body: #394034;
-    --cor-fundo-sidebar-active: #253547;
-    --cor-fontes-sidebar-active: #007bff;
+    --cor-fundo-sidebar-active: #e4e4e4;
+    --cor-fontes-sidebar-active: #2563eb;
     --cor-bordas-focus: #80bdff;
     --cor-fontes-main-button: #ffffff;
     --cor-main-button: #28a745;
@@ -60,6 +61,7 @@ a {
 .sidebar {
     width: 250px;
     background-color: var(--cor-fundo-sidebar);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     padding: 1.5rem;
     flex-shrink: 0;
 }
@@ -107,7 +109,13 @@ a {
     align-items: center;
 
     background-color: var(--cor-fundo-header);
+    color: var(--cor-fontes-header);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     padding: 1rem;
+}
+
+.content-header span {
+    color: var(--cor-fontes-header);
 }
 
 .content-header p {
@@ -178,10 +186,10 @@ a {
 .protocolo-form {
     max-width: 800px;
     width: 100%;
-    background-color: var(--cor-fundo-header);
+    background-color: var(--cor-fundo-sidebar);
     padding: 2rem;
     border-radius: 8px;
-    border: 1px solid var(--cor-bordas);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -334,9 +342,9 @@ textarea {
 .busca-form-container, .listagem-container {
     width: 100%;
     max-width: 1400px;
-    border: 1px solid var(--cor-bordas);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     margin: 0 auto;
-    background-color: var(--cor-fundo-header);
+    background-color: var(--cor-fundo-sidebar);
     padding: 2rem;
     border-radius: 8px;
 }
@@ -516,8 +524,8 @@ textarea {
 }
 
 .metric-card {
-    background-color: var(--cor-fundo-header);
-    border: 1px solid var(--cor-bordas);
+    background-color: var(--cor-fundo-sidebar);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     border-radius: 8px;
     padding: 25px;
     flex: 1;
@@ -611,7 +619,7 @@ textarea {
 }
 
 .login-box {
-    background-color: var(--cor-fundo-header);
+    background-color: var(--cor-fundo-sidebar);
     padding: 1.5rem;
     border-radius: 8px;
     width: 100%;
@@ -713,11 +721,10 @@ textarea {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: var(--cor-fundo-header);
+    background-color: var(--cor-fundo-sidebar);
     min-width: 180px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     border-radius: 8px;
-    border: 1px solid var(--cor-bordas);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     z-index: 100;
     padding: 8px 0;
 }
