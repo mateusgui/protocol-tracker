@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
         language: {
             url: 'https://cdn.datatables.net/plug-ins/2.0.8/i18n/pt-BR.json',
         },
-        order: [[3, 'asc']], 
+        order: [], 
         pageLength: 5, 
         lengthMenu: [5, 10, 25, 50, 100],
     });
