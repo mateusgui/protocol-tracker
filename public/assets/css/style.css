@@ -19,25 +19,6 @@
     --cor-primaria-erro: #ff2c2c;
 }
 
-body.dark-mode {
-    --cor-fundo-sidebar: #272727;
-    --cor-fundo-sidebar-hover: #333333;
-    --cor-fontes-sidebar: #ffffff;
-    --cor-fundo-header: #363636;
-    --cor-bordas: #272727;
-    --cor-fundo-body: #555555;
-    --cor-fontes-body: #ffffff;
-    --cor-fundo-sidebar-active: #1d1d1d;
-    --cor-fontes-sidebar-active: #ffc107;
-    --cor-bordas-focus: #1d1d1d;
-    --cor-fontes-main-button: #ffffff;
-    --cor-main-button: #28a745;
-    --cor-fontes-cards: #ffffff;
-    --cor-icones-header: #969696;
-    --cor-icones-header-hover: #ffc107;
-    --cor-primaria-erro: #ff2c2c;
-}
-
 * {
     margin: 0;
     padding: 0;

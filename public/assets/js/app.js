@@ -13,37 +13,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- LÓGICA PARA O DARK MODE ---
-    const themeToggle = document.getElementById('theme-toggle');
-
-    function aplicarTema(tema) {
-        if (tema === 'dark') {
-            document.body.classList.add('dark-mode');
-        } else {
-            document.body.classList.remove('dark-mode');
-        }
-    }
-
-    const temaSalvo = localStorage.getItem('theme');
-    if (temaSalvo) {
-        aplicarTema(temaSalvo);
-    }
-
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            const isDarkMode = document.body.classList.contains('dark-mode');
-            
-            if (isDarkMode) {
-                localStorage.setItem('theme', 'light');
-                aplicarTema('light');
-            } else {
-                localStorage.setItem('theme', 'dark');
-                aplicarTema('dark');
-            }
-        });
-    }
-
-
     // --- LÓGICA PARA A MÁSCARA DE CPF ---
     const campoCpfVisivel = document.getElementById('cpf_formatado');
     const campoCpfPuro = document.getElementById('cpf_puro');
