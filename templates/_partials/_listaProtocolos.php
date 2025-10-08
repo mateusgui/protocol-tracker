@@ -17,11 +17,6 @@
             </tr>
         </thead>
         <tbody>
-            <?php 
-            // O bloco "if (empty(...))" foi REMOVIDO daqui.
-            // O foreach simplesmente não executará se a lista estiver vazia,
-            // resultando em um <tbody> vazio, que é o correto.
-            ?>
             <?php foreach ($listaDeProtocolos as $protocolo): ?>
                 <tr>
                     <td><?= htmlspecialchars($protocolo->numero()) ?></td>
