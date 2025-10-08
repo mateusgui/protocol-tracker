@@ -1,14 +1,14 @@
 /* === RESET BÁSICO E ESTILOS GLOBAIS === */
 :root {
     --cor-fundo-sidebar: #ffffff;
-    --cor-fundo-sidebar-hover: #ffffff;
+    --cor-fundo-sidebar-hover: #f2f6ff;
     --cor-fontes-sidebar: #454545;
     --cor-fundo-header: #2563eb;
     --cor-fontes-header: #ffffff;
     --cor-bordas: #ddd;
     --cor-fundo-body: #f0f2f5;
     --cor-fontes-body: #394034;
-    --cor-fundo-sidebar-active: #e4e4e4;
+    --cor-fundo-sidebar-active: #dbe6ff;
     --cor-fontes-sidebar-active: #2563eb;
     --cor-bordas-focus: #80bdff;
     --cor-fontes-main-button: #ffffff;
